@@ -259,6 +259,14 @@ declare interface KeyCode {
   // todo
 }
 
+declare interface Channel {
+  // todo
+}
+
+declare interface Thread {
+  // todo
+}
+
 declare interface WindowOpenOptions {
   width: number;
   height: number;
@@ -724,6 +732,13 @@ declare namespace lovr {
     function isWindowOpen(): number;
     function openWindow(options: WindowOpenOptions): void;
     function pollEvents(): void;
+  }
+
+  namespace thread {
+    function getChannel(name: string): Channel;
+    function newThread(code: string): Thread;
+    function newThread(filename: string): Thread;
+    function newThread(blob: Blob): Thread;
   }
 
 
