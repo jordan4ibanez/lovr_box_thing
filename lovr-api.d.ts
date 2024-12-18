@@ -466,7 +466,6 @@ declare namespace lovr {
     function isFormatSupported(format: TextureFormat, ...features: [TextureFeature]): LuaMultiReturn<[linear: boolean, srgb: boolean]>;
   }
 
-
   namespace headset {
     function getAngularVelocity(): LuaMultiReturn<[x: number, y: number, z: number]>;
     function getAxis(device: Device, axis: DeviceAxis): number;
