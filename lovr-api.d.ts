@@ -118,8 +118,34 @@ declare interface ShaderStage {
   // todo
 }
 
-declare interface Font {
+declare interface HorizontalAlign {
   // todo
+}
+
+declare interface VerticalAlign {
+  // todo
+}
+
+declare interface Font {
+  getAscent(): number;
+  getDescent(): number;
+  getHeight(): number;
+  getKerning(first: string, second: string): number;
+  getKerning(firstCodepoint: number, second: string): number;
+  getKerning(first: string, secondCodepoint: number): number;
+  getKerning(firstCodepoint: number, secondCodepoint: number): number;
+  getLineSpacing(): number;
+  getLines(str: string, wrap: number): LuaTable;
+  getLines(strs: LuaTable, wrap: number): LuaTable;
+  getPixelDensity(): number;
+  getRasterizer(): Rasterizer;
+  getVertices(str: string, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): LuaMultiReturn<[vertices: LuaTable, material: Material]>;
+  getVertices(strs: LuaTable, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): LuaMultiReturn<[vertices: LuaTable, material: Material]>;
+  getWidth(str: string): number;
+  getWidth(strs: LuaTable): number;
+  setLineSpacing(spacing: number): void;
+  setPixelDensity(density: number): void;
+  setPixelDensity(): void;
 }
 
 declare interface Pass {
