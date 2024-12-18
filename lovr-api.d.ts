@@ -741,6 +741,14 @@ declare namespace lovr {
     function newThread(blob: Blob): Thread;
   }
 
+  namespace timer {
+    function getAverageDelta(): number;
+    function getDelta(): number;
+    function getFPS(): number;
+    function getTime(): number;
+    function sleep(duration: number): void;
+    function step(): number;
+  }
 
 
 
