@@ -198,13 +198,9 @@ declare interface ShaderStage extends Object {
   // todo
 }
 
-declare interface HorizontalAlign {
-  // todo
-}
+declare type HorizontalAlign = "left" | "center" | "right";
 
-declare interface VerticalAlign {
-  // todo
-}
+declare type VerticalAlign = "top" | "middle" | "bottom";
 
 declare interface Font extends Object {
   getAscent(): number;
@@ -228,8 +224,188 @@ declare interface Font extends Object {
   setPixelDensity(): void;
 }
 
+declare type DrawStyle = "fill" | "line";
+
+declare type StackType = "transform" | "state";
+
+declare type BlendMode = "alpha" | "add" | "subtract" | "multiply" | "lighten" | "darken" | "screen";
+
+declare type BlendAlphaMode = "alphamultiply" | "premultiplied";
+
+declare type CullMode = "none" | "back" | "front";
+
+declare type StencilAction = "keep" | "zero" | "replace" | "increment" | "decrement" | "incrementwrap" | "decrementwrap" | "invert";
+
+declare type Winding = "clockwise" | "counterclockwise";
+
+declare interface CanvasData {
+  depth: Texture | TextureFormat;
+  samples: number;
+}
+
+declare interface PassStats {
+  draws: number;
+  computes: number;
+  drawsCulled: number;
+  cpuMemoryReserved: number;
+  cpuMemoryUsed: number;
+  submitTime: number;
+  gpuTime: number;
+}
+
 declare interface Pass extends Object {
-  // todo
+  box(x: number, y: number, z: number, width: number, height: number, depth: number, angle: number, ax: number, ay: number, az: number, style: DrawStyle): void;
+  box(position: Vec3, size: Vec3, orientation: Quat, style: DrawStyle): void;
+  box(transform: Mat4, style: DrawStyle): void;
+  capsule(x: number, y: number, z: number, radius: number, length: number, angle: number, ax: number, ay: number, az: number, segments: number): void;
+  capsule(position: Vec3, radius: number, length: number, orientation: Quat, segments: number): void;
+  capsule(transform: Mat4, segments: number): void;
+  capsule(p1: Vec3, p2: Vec3, radius: number, segments: number): void;
+  circle(x: number, y: number, z: number, radius: number, angle: number, ax: number, ay: number, az: number, style: DrawStyle, angle1: number, angle2: number, segments: number): void;
+  circle(position: Vec3, radius: number, orientation: Quat, style: DrawStyle, angle1: number, angle2: number, segments: number): void;
+  circle(transform: Mat4, style: DrawStyle, angle1: number, angle2: number, segments: number): void;
+  cone(x: number, y: number, z: number, radius: number, length: number, angle: number, ax: number, ay: number, az: number, segments: number): void;
+  cone(position: Vec3, radius: number, length: number, orientation: Quat, segments: number): void;
+  cone(transform: Mat4, segments: number): void;
+  cone(p1: Vec3, p2: Vec3, radius: number, segments: number): void;
+  cube(x: number, y: number, z: number, size: number, angle: number, ax: number, ay: number, az: number, style: DrawStyle): void;
+  cube(position: Vec3, size: number, orientation: Quat, style: DrawStyle): void;
+  cube(transform: Mat4, style: DrawStyle): void;
+  cylinder(x: number, y: number, z: number, radius: number, length: number, angle: number, ax: number, ay: number, az: number, capped: boolean, angle1: number, angle2: number, segments: number): void;
+  cylinder(position: Vec3, radius: number, length: number, orientation: Quat, capped: boolean, angle1: number, angle2: number, segments: number): void;
+  cylinder(transform: Mat4, capped: boolean, angle1: number, angle2: number, segments: number): void;
+  cylinder(p1: Vec3, p2: Vec3, radius: number, capped: boolean, angle1: number, angle2: number, segments: number): void;
+  draw(object: Model | Mesh | Texture, x: number, y: number, z: number, scale: number, angle: number, ax: number, ay: number, az: number, instances: number): void;
+  draw(object: Model | Mesh | Texture, position: Vec3, scale: number, orientation: Quat, instance: number): void;
+  draw(object: Model | Mesh | Texture, transform: Mat4, instances: number): void;
+  fill(texture: Texture): void;
+  fill(): void;
+  line(...points: [number]): void;
+  line(t: LuaTable): void;
+  line(...points: [Vec3]): void;
+  mesh(vertices: Buffer, x: number, y: number, z: number, scale: number, angle: number, ax: number, ay: number, az: number, start: number, count: number, instances: number): void;
+  mesh(vertices: Buffer, position: Vec3, scales: Vec3, orientation: Quat, start: number, count: number, instances: number): void;
+  mesh(vertices: Buffer, transform: Mat4, start: number, count: number, instances: number): void;
+  mesh(vertices: Buffer, indices: Buffer, x: number, y: number, z: number, scale: number, angle: number, ax: number, ay: number, az: number, start: number, count: number, instances: number, base: number): void;
+  mesh(vertices: Buffer, indices: Buffer, positions: Vec3, scales: Vec3, orientation: Quat, start: number, count: number, instances: number, base: number): void;
+  mesh(vertices: Buffer, indices: Buffer, transform: Mat4, start: number, count: number, instances: number, base: number): void;
+  mesh(vertices: Buffer, indices: Buffer, draws: Buffer, drawcount: number, offset: number, strider: number): void;
+  plane(x: number, y: number, z: number, width: number, height: number, angle: number, ax: number, ay: number, az: number, style: DrawStyle, columns: number, rows: number): void;
+  plane(position: Vec3, size: Vec2, orientation: Quat, style: DrawStyle, columns: number, rows: number): void;
+  plane(transform: Mat4, style: DrawStyle, columns: number, rows: number): void;
+  points(...points: [number]): void;
+  points(points: LuaTable): void;
+  points(...points: [Vec3]): void;
+  roundrect(x: number, y: number, z: number, width: number, height: number, thickness: number, angle: number, ax: number, ay: number, az: number, radius: number, segments: number): void;
+  roundrect(position: Vec3, size: Vec3, orientation: Quat, radius: number, segments: number): void;
+  roundrect(transform: Mat4, radius: number, segments: number): void;
+  skybox(skybox: Texture): void;
+  skybox(): void;
+  sphere(x: number, y: number, z: number, radius: number, angle: number, ax: number, ay: number, az: number, longitudes: number, latitudes: number): void;
+  sphere(position: Vec3, radius: number, orientation: Quat, longitudes: number, latitudes: number): void;
+  sphere(transform: Mat4, longitudes: number, latitudes: number): void;
+  text(text: string, x: number, y: number, z: number, scale: number, angle: number, ax: number, ay: number, az: number, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): void;
+  text(text: string, position: Vec3, scale: number, orientation: Quat, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): void;
+  text(text: string, transform: Mat4, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): void;
+  text(colortext: LuaTable, x: number, y: number, z: number, scale: number, angle: number, ax: number, ay: number, az: number, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): void;
+  text(colortext: LuaTable, position: Vec3, scale: number, orientation: Quat, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): void;
+  text(colortext: LuaTable, transform: Mat4, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): void;
+  torus(x: number, y: number, z: number, radius: number, thickness: number, angle: number, ax: number, ay: number, az: number, tsegments: number, psegments: number): void;
+  torus(position: Vec3, scale: Vec3, orientation: Quat, tsegments: number, psegments: number): void;
+  torus(transform: Mat4, tsegments: number, psegments: number): void;
+  origin(): void;
+  pop(stack: StackType): void;
+  push(stack: StackType): void;
+  rotate(angle: number, ax: number, ay: number, az: number): void;
+  rotate(rotation: Quat): void;
+  scale(sx: number, sy: number, sz: number): void;
+  scale(scale: Vec3): void;
+  transform(x: number, y: number, z: number, sx: number, sy: number, sz: number, angle: number, ax: number, ay: number, az: number): void;
+  transform(translation: Vec3, scale: Vec3, rotation: Quat): void;
+  transform(transform: Mat4): void;
+  translate(x: number, y: number, z: number): void;
+  translate(translation: Vec3): void;
+  setAlphaToCoverage(enable: boolean): void;
+  setBlendMode(blend: BlendMode, alphaBlend: BlendAlphaMode): void;
+  setBlendMode(): void;
+  setBlendMode(index: number, blend: BlendMode, alphaBlend: BlendAlphaMode): void;
+  setBlendMode(index: number): void;
+  setColor(r: number, g: number, b: number, a: number): void;
+  setColor(t: LuaTable): void;
+  setColor(hex: number, a: number): void;
+  setColorWrite(enable: boolean): void;
+  setColorWrite(r: boolean, g: boolean, b: boolean, a: boolean): void;
+  setColorWrite(index: number, enable: boolean): void;
+  setColorWrite(index: number, r: boolean, g: boolean, b: boolean, a: boolean): void;
+  setCullMode(mode: CullMode): void;
+  setCullMode(): void;
+  setDepthClamp(enable: boolean): void;
+  setDepthOffset(offset: number, sloped: number): void;
+  setDepthTest(test: CompareMode): void;
+  setDepthTest(): void;
+  setDepthWrite(write: boolean): void;
+  setFont(font: Font): void;
+  setMaterial(material: Material): void;
+  setMaterial(texture: Texture): void;
+  setMaterial(): void;
+  setMeshMode(mode: DrawMode): void;
+  setSampler(filter: FilterMode): void;
+  setSampler(sampler: Sampler): void;
+  setStencilTest(test: CompareMode, value: number, mask: number): void;
+  setStencilTest(): void;
+  setStencilWrite(action: StencilAction, value: number, mask: number): void;
+  setStencilWrite(actions: Array<StencilAction>, value: number, mask: number): void;
+  setStencilWrite(): void;
+  setViewCull(enable: boolean): void;
+  setWinding(winding: Winding): void;
+  setWireframe(enabled: boolean): void;
+  send(name: string, buffer: Buffer, offset: number, extent: number): void;
+  send(name: string, texture: Texture): void;
+  send(name: string, sampler: Sampler): void;
+  // I literally have no idea lol.
+  send(name: string, constant: any): void;
+  send(binding: number, buffer: Buffer, offset: number, extent: number): void;
+  send(binding: number, texture: Texture): void;
+  send(binding: number, sampler: Sampler): void;
+  setShader(shader: Shader): void;
+  setShader(defaul: DefaultShader): void;
+  setShader(): void;
+  barrier(): void;
+  compute(x: number, y: number, z: number): void;
+  compute(buffer: Buffer, offset: number): void;
+  beginTally(): number;
+  finishTally(): number;
+  getTallyBuffer(): LuaMultiReturn<[buffer: Buffer, offset: number]>;
+  setTallyBuffer(buffer: Buffer, offset: number): void;
+  getProjection(view: number): LuaMultiReturn<[left: number, right: number, up: number, down: number]>;
+  getScissor(): LuaMultiReturn<[x: number, y: number, w: number, h: number]>;
+  getViewCount(): number;
+  getViewPose(view: number): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getViewPose(view: number, matrix: Mat4, invert: boolean): Mat4;
+  getViewport(): LuaMultiReturn<[x: number, y: number, w: number, h: number, dmin: number, dmax: number]>;
+  setProjection(view: number, left: number, right: number, up: number, down: number, near: number, far: number): void;
+  setProjection(view: number, matrix: Mat4): void;
+  setScissor(x: number, y: number, w: number, h: number): void;
+  setScissor(): void;
+  setViewPose(view: number, x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number): void;
+  setViewPose(view: number, position: Vec3, orientation: Quat): void;
+  setViewPose(view: number, matrix: Mat4, inverted: boolean): void;
+  setViewport(x: number, y: number, w: number, h: number, dmin: number, dmax: number): void;
+  setViewport(): void;
+  getCanvas(): CanvasData | null;
+  getClear(): LuaTable;
+  getDimensions(): LuaMultiReturn<[width: number, height: number]>;
+  getHeight(): number;
+  getWidth(): number;
+  setCanvas(...textures: [Texture]): void;
+  setCanvas(canvas: CanvasData): void;
+  setCanvas(): void;
+  setClear(hex: number): void;
+  setClear(r: number, g: number, b: number, a: number): void;
+  setClear(clear: boolean): void;
+  setClear(t: LuaTable): void;
+  getStats(): PassStats;
+  reset(): void;
 }
 
 declare interface Readback extends Object {
@@ -387,33 +563,28 @@ declare interface ModelData extends Object {
   getWidth(): number;
 }
 
-declare interface TextureFormat extends Object {
-  // todo
-}
+declare type TextureFormat = "r8" | "rg8" | "rgba8" | "r16" | "rg16" | "rgba16" | "r16f" | "rg16f" | "rgba16f" | "r32f" | "rg32f" | "rgba32f" |
+  "rgb565" | "rgb5a1" | "rgb10a2" | "rg11b10f" | "d16" | "d24s8" | "d32f" | "d32fs8" | "bc1" | "bc2" | "bc3" | "bc4u" | "bc4s" | "bc5u" |
+  "bc5s" | "bc6uf" | "bc6sf" | "bc7" | "astc4x4" | "astc5x4" | "astc5x5" | "astc6x5" | "astc6x6" | "astc8x5" | "astc8x6" | "astc8x8" | "astc10x5" |
+  "astc10x6" | "astc10x8" | "astc10x10" | "astc12x10" | "astc12x12";
 
 declare interface Sampler extends Object {
   // todo
 }
 
-declare interface FilterMode extends Object {
-  // todo
-}
+declare type FilterMode = "nearest" | "linear";
 
 declare interface WrapMode extends Object {
   // todo
 }
 
-declare interface CompareMode extends Object {
-  // todo
-}
+declare type CompareMode = "none" | "equal" | "notequal" | "less" | "lequal" | "greater" | "gequal";
 
 declare interface Shader extends Object {
   // todo
 }
 
-declare interface DefaultShader extends Object {
-  // todo
-}
+declare type DefaultShader = "unlit" | "normal" | "font" | "cubemap" | "equirect" | "fill";
 
 declare interface TextureType extends Object {
   // todo
