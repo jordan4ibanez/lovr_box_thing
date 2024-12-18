@@ -407,7 +407,15 @@ declare interface BallJoint {
 }
 
 declare interface DistanceJoint {
-  // todo
+  getAnchors(): LuaMultiReturn<[x1: number, y1: number, z1: number, x2: number, y2: number, z2: number]>;
+  getDistance(): number;
+  getResponseTime(): number;
+  getTightness(): number;
+  setAnchors(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): void;
+  setAnchors(first: Vec3, second: Vec3): void;
+  setDistance(distance: number): void;
+  setResponseTime(responseTime: number): void;
+  setTightness(tightness: number): void;
 }
 
 declare interface HingeJoint {
