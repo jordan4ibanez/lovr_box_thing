@@ -170,6 +170,10 @@ declare interface TextureType {
   // todo
 }
 
+declare interface TextureFeature {
+  // todo
+}
+
 declare interface newSourceOptions {
   decode: boolean;
   pitchable: boolean;
@@ -279,6 +283,39 @@ declare interface DeviceFeatures {
   float64: boolean;
   int64: boolean;
   int16: boolean;
+}
+
+declare interface DeviceLimits {
+  textureSize2D: number;
+  textureSize3D: number;
+  textureSizeCube: number;
+  textureLayers: number;
+  renderSize: LuaTable;
+  uniformBuffersPerStage: number;
+  storageBuffersPerStage: number;
+  sampledTexturesPerStage: number;
+  storageTexturesPerStage: number;
+  samplersPerStage: number;
+  resourcesPerShader: number;
+  uniformBufferRange: number;
+  storageBufferRange: number;
+  uniformBufferAlign: number;
+  storageBufferAlign: number;
+  vertexAttributes: number;
+  vertexBufferStride: number;
+  vertexShaderOutputs: number;
+  clipDistances: number;
+  cullDistances: number;
+  clipAndCullDistances: number;
+  workgroupCount: LuaTable;
+  workgroupSize: LuaTable;
+  totalWorkgroupSize: number;
+  computeSharedMemory: number;
+  shaderConstantSize: number;
+  indirectDrawCount: number;
+  instances: number;
+  anisotropy: number;
+  pointSize: number;
 }
 
 
@@ -403,7 +440,8 @@ declare namespace lovr {
     function wait(): void;
     function getDevice(): Device;
     function getFeatures(): DeviceFeatures;
-    
+    function getLimits(): DeviceLimits;
+    function isFormatSupported(format: TextureFormat, ...features: [TextureFeature]): LuaMultiReturn<[linear: boolean, srgb: boolean]>;
 
   }
 }

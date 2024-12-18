@@ -3,4 +3,4 @@
 
 I'm shipping executables because that's just kind of how LOVR works lol.
 
-https://lovr.org/docs/v0.17.0/lovr.graphics.getLimits
+https://lovr.org/docs/lovr.headset
