@@ -27,6 +27,29 @@ interface lovrConfigGraphics {
   shadercache: boolean;
 }
 
+interface lovrConfigHeadset {
+  drivers: Array<string>;
+  supersample: number;
+  seated: boolean;
+  antialias: boolean;
+  stencil: boolean;
+  submitdepth: boolean;
+  overlay: boolean;
+}
+
+interface lovrConfigMath {
+  globals: boolean;
+}
+
+interface lovrConfigWindow {
+  width: number;
+  height: number;
+  fullscreen: boolean;
+  resizable: boolean;
+  title: string;
+  icon: string;
+}
+
 interface lovrConfig {
   version: string;
   identity: string;
@@ -34,6 +57,9 @@ interface lovrConfig {
   modules: lovrConfigModules;
   audio: lovrConfigAudio;
   graphics: lovrConfigGraphics;
+  headset: lovrConfigHeadset;
+  math: lovrConfigMath;
+  window: lovrConfigWindow;
 }
 
 
