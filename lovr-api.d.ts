@@ -348,7 +348,16 @@ declare interface Collider {
 }
 
 declare interface Image {
-  // todo
+  encode(): Blob;
+  getBlob(): Blob;
+  getDimensions(): LuaMultiReturn<[width: number, height: number]>;
+  getFormat(): TextureFormat;
+  getHeight(): number;
+  getPixel(x: number, y: number): LuaMultiReturn<[r: number, g: number, b: number, a: number]>;
+  getWidth(): number;
+  mapPixel(callback: (x: number, y: number, r: number, g: number, b: number, a: number) => LuaMultiReturn<[r: number, g: number, b: number, a: number]>, x: number, y: number, w: number, h: number): void;
+  paste(source: Image, x: number, y: number, fromX: number, fromY: number, width: number, height: number): void;
+  setPixel(x: number, y: number, r: number, g: number, b: number, a: number): void;
 }
 
 declare interface BoxShape {
