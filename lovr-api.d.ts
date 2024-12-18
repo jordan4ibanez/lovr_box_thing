@@ -90,8 +90,83 @@ declare interface Blob {
   getF64(offset: number, count: number): Array<number>;
 }
 
+declare type OriginType = "root" | "parent";
+
 declare interface Model {
-  // todo
+  animate(name: string, time: number, blend: number): void;
+  animate(index: number, time: number, blend: number): void;
+  clone(): Model;
+  getAnimationCount(): number;
+  getAnimationDuration(index: number): number;
+  getAnimationDuration(name: string): number;
+  getAnimationName(index: number): string;
+  getBlendShapeCount(): number;
+  getBlendShapeName(index: number): string;
+  getBlendShapeWeight(index: number): number;
+  getBlendShapeWeight(name: string): number;
+  getBoundingBox(): LuaMultiReturn<[minx: number, miny: number, minz: number, maxx: number, maxy: number, maxz: number]>;
+  getBoundingSphere(): LuaMultiReturn<[x: number, y: number, z: number, radius: number]>;
+  getCenter(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getData(): ModelData;
+  getDepth(): number;
+  getDimensions(): LuaMultiReturn<[width: number, height: number, depth: number]>;
+  getHeight(): number;
+  getIndexBuffer(): Buffer;
+  getMaterial(name: string): Material;
+  getMaterial(index: number): Material;
+  getMaterialCount(): number;
+  getMaterialName(index: number): string;
+  getMetadata(): string;
+  getNodeChildren(index: number): LuaTable;
+  getNodeChildren(name: string): LuaTable;
+  getNodeCount(): number;
+  getNodeName(index: number): string;
+  getNodeOrientation(index: number, origin: OriginType): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+  getNodeOrientation(name: string, origin: OriginType): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+  getNodeParent(index: number): number;
+  getNodeParent(name: string): number;
+  getNodePose(index: number, origin: OriginType): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getNodePose(name: string, origin: OriginType): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getNodePosition(index: number, space: OriginType): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getNodePosition(name: string, space: OriginType): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getNodeScale(index: number, origin: OriginType): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getNodeScale(name: string, origin: OriginType): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getNodeTransform(index: number, origin: OriginType): LuaMultiReturn<[x: number, y: number, z: number, sx: number, sy: number, sz: number, angle: number, ax: number, ay: number, az: number]>;
+  getNodeTransform(name: string, origin: OriginType): LuaMultiReturn<[x: number, y: number, z: number, sx: number, sy: number, sz: number, angle: number, ax: number, ay: number, az: number]>;
+  getRootNode(): number;
+  getTexture(index: number): Texture;
+  getTextureCount(): number;
+  getTriangleCount(): number;
+  getTriangles(): LuaMultiReturn<[vertices: Array<number>, indices: Array<number>]>;
+  getVertexBuffer(): Buffer;
+  getVertexCount(): number;
+  getWidth(): number;
+  hasJoints(): boolean;
+  resetNodeTransforms(): void;
+  setBlendShapeWeight(index: number, weight: number): void;
+  setBlendShapeWeight(name: string, weight: number): void;
+  setNodeOrientation(index: number, angle: number, ax: number, ay: number, az: number, blend: number): void;
+  setNodeOrientation(name: string, angle: number, ax: number, ay: number, az: number, blend: number): void;
+  setNodeOrientation(index: number, orientation: Quat, blend: number): void;
+  setNodeOrientation(name: string, orientation: Quat, blend: number): void;
+  setNodePose(index: number, x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number, blend: number): void;
+  setNodePose(name: string, x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number, blend: number): void;
+  setNodePose(index: number, position: Vec3, orientation: Quat, blend: number): void;
+  setNodePose(name: string, position: Vec3, orientation: Quat, blend: number): void;
+  setNodePosition(index: number, x: number, y: number, z: number, blen: number): void;
+  setNodePosition(name: string, x: number, y: number, z: number, blen: number): void;
+  setNodePosition(index: number, position: Vec3, blend: number): void;
+  setNodePosition(name: string, position: Vec3, blend: number): void;
+  setNodeScale(index: number, sx: number, sy: number, sz: number, blend: number): void;
+  setNodeScale(name: string, sx: number, sy: number, sz: number, blend: number): void;
+  setNodeScale(index: number, scale: Vec3, blend: number): void;
+  setNodeScale(name: string, scale: Vec3, blend: number): void;
+  setNodeTransform(index: number, x: number, y: number, z: number, sx: number, sy: number, sz: number, angle: number, ax: number, ay: number, az: number, blend: number): void;
+  setNodeTransform(name: string, x: number, y: number, z: number, sx: number, sy: number, sz: number, angle: number, ax: number, ay: number, az: number, blend: number): void;
+  setNodeTransform(index: number, position: Vec3, scale: Vec3, orientation: Quat, blend: number): void;
+  setNodeTransform(name: string, position: Vec3, scale: Vec3, orientation: Quat, blend: number): void;
+  setNodeTransform(index: number, transform: Mat4, blend: number): void;
+  setNodeTransform(name: string, transform: Mat4, blend: number): void;
 }
 
 declare interface Vec2 {
