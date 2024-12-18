@@ -82,11 +82,19 @@ declare interface Model {
   // todo
 }
 
-declare interface Quat {
-  // todo
+declare interface Vec2 {
+
 }
 
 declare interface Vec3 {
+  // todo
+}
+
+declare interface Vec4 {
+  // todo
+}
+
+declare interface Quat {
   // todo
 }
 
@@ -103,6 +111,50 @@ declare interface Pass {
 }
 
 declare interface Buffer {
+  // todo
+}
+
+declare interface Rasterizer {
+  // todo
+}
+
+declare interface Texture {
+  // todo
+}
+
+declare interface Material {
+  // todo
+}
+
+declare interface Mesh {
+  // todo
+}
+
+declare interface MeshStorage {
+  // todo
+}
+
+declare interface ModelData {
+  // todo
+}
+
+declare interface TextureFormat {
+  // todo
+}
+
+declare interface Sampler {
+  // todo
+}
+
+declare interface FilterMode {
+  // todo
+}
+
+declare interface WrapMode {
+  // todo
+}
+
+declare interface CompareMode {
   // todo
 }
 
@@ -136,6 +188,50 @@ declare interface BufferFormat {
 }
 
 declare type DataType = "i8x4" | "u8x4" | "sn8x4" | "un8x4" | "un10x3" | "i16" | "i16x2" | "i16x4" | "u16" | "u16x2" | "u16x4" | "sn16x2" | "sn16x4" | "un16x2" | "un16x4" | "i32" | "i32x2" | "i32x2" | "i32x3" | "i32x4" | "u32" | "u32x2" | "u32x3" | "u32x4" | "f16x2" | "f16x4" | "f32" | "f32x2" | "f32x3" | "f32x4" | "mat2" | "mat3" | "mat4" | "index16" | "index32";
+
+declare interface MaterialProperties {
+  color?: Vec4;
+  glow?: Vec4;
+  uvShift?: Vec2;
+  uvScale?: Vec2;
+  metalness?: number;
+  roughness?: number;
+  clearcoat?: number;
+  clearcoatRoughness?: number;
+  occlusionStrength?: number;
+  normalScale?: number;
+  alphaCutoff?: number;
+  texture?: Texture;
+  glowTexture?: Texture;
+  metalnessTexture?: Texture;
+  roughnessTexture?: Texture;
+  clearcoatTexture?: Texture;
+  occlusionTexture?: Texture;
+  normalTexture?: Texture;
+}
+
+declare interface ModelOptions {
+  mipmaps: boolean;
+  materials: boolean;
+}
+
+declare interface CanvasDepth {
+  format?: TextureFormat;
+  texture?: Texture;
+}
+
+declare interface Canvas {
+  depth: CanvasDepth;
+  samples: number;
+}
+
+declare interface SamplerParameters {
+  filter: Array<FilterMode>;
+  wrap: Array<WrapMode>;
+  compare: CompareMode;
+  anisotropy: number;
+  mipmaprange: LuaTable;
+}
 
 
 /** @noSelf **/
@@ -219,6 +315,24 @@ declare namespace lovr {
     function newBuffer(type: DataType, length: number): Buffer;
     function newBuffer(type: DataType, data: LuaTable): Buffer;
     function newBuffer(type: DataType, blob: Blob): Buffer;
-
+    function newFont(filename: string, size: number, spread: number): Font;
+    function newFont(blob: Blob, size: number, spread: number): Font;
+    function newFont(size: number, spread: number): Font;
+    function newFont(rasterizer: Rasterizer, spread: number): Font;
+    function newMaterial(properties: MaterialProperties): Material;
+    function newMesh(count: number, storage: MeshStorage): Mesh;
+    function newMesh(vertices: LuaTable, storage: MeshStorage): Mesh;
+    function newMesh(blob: Blob, storage: MeshStorage): Mesh;
+    function newMesh(format: LuaTable, count: number, storage: MeshStorage): Mesh;
+    function newMesh(format: LuaTable, vertices: LuaTable, storage: MeshStorage): Mesh;
+    function newMesh(format: LuaTable, blob: Blob, storage: MeshStorage): Mesh;
+    function newMesh(buffer: Buffer): Mesh;
+    function newModel(filename: string, options: ModelOptions): Model;
+    function newModel(blob: Blob, options: ModelOptions): Model;
+    function newModel(modelData: ModelData, options: ModelOptions): Model;
+    function newPass(...textures: Texture[]): Pass;
+    function newPass(canvas: Canvas): Pass;
+    function newPass(): Pass;
+    function newSampler(parameters: SamplerParameters): Sampler;
   }
 }
