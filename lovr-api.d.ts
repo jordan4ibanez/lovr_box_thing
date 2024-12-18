@@ -126,9 +126,33 @@ declare interface Pass {
   // todo
 }
 
+declare interface Readback {
+  // todo
+}
+
+declare interface BufferFormatElement {
+  name: string;
+  type: DataType;
+  offset: number;
+  length: number;
+  stride: number;
+}
 
 declare interface Buffer {
-  
+  getFormat(): Array<BufferFormatElement>;
+  getLength(): number;
+  getSize(): number;
+  getStride(): number;
+  clear(offset: number, extent: number | null, value: number): void;
+  getData(index: number, count: number | null): LuaTable;
+  // I have no idea what lightuserdata is.
+  mapData(offset: number, extent: number | null): LuaUserdata;
+  newReadback(offset: number, extent: number | null): Readback;
+  setData(table: LuaTable, destinationIndex: number, sourceIndex: number, count: number | null): void;
+  setData(...numbers: [number]): void;
+  setData(vector: Vec2 | Vec3 | Vec4): void;
+  setData(blob: Blob, destinationIndex: number, sourceIndex: number, count: number | null): void;
+  setData(buffer: Buffer, destinationIndex: number, sourceIndex: number, count: number | null): void;
 }
 
 declare interface Rasterizer {
