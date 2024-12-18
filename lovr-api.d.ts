@@ -1,5 +1,6 @@
 
-//* Version: 0.17.1
+//* Version: 0.17.1.
+//* If something is marked as deprecated I'm skipping it.
 
 declare interface lovrConfigModules {
   audio: boolean;
@@ -127,6 +128,16 @@ declare interface AudioDeviceType {
   default: boolean;
 }
 
+declare type DataLayout = "packed" | "std140" | "std430";
+
+declare interface BufferFormat {
+  layout: DataLayout;
+  stride: number;
+}
+
+declare type DataType = "i8x4" | "u8x4" | "sn8x4" | "un8x4" | "un10x3" | "i16" | "i16x2" | "i16x4" | "u16" | "u16x2" | "u16x4" | "sn16x2" | "sn16x4" | "un16x2" | "un16x4" | "i32" | "i32x2" | "i32x2" | "i32x3" | "i32x4" | "u32" | "u32x2" | "u32x3" | "u32x4" | "f16x2" | "f16x4" | "f32" | "f32x2" | "f32x3" | "f32x4" | "mat2" | "mat3" | "mat4" | "index16" | "index32";
+
+
 /** @noSelf **/
 declare namespace lovr {
   function conf(t: lovrConfig): void;
@@ -198,19 +209,16 @@ declare namespace lovr {
   namespace graphics {
     function compileShader(stage: ShaderStage, source: string): Blob;
     function compileShader(stage: ShaderStage, blob: Blob): Blob;
-    // getBuffer is deprecated.
     function getDefaultFont(): Font;
-    // getPass is deprecated.
     function getWindowPass(): Pass;
-
     function newBuffer(size: number): Buffer;
     function newBuffer(blob: Blob): Buffer;
-    function newBuffer(): Buffer;
-    function newBuffer(): Buffer;
-    function newBuffer(): Buffer;
-    function newBuffer(): Buffer;
-    function newBuffer(): Buffer;
-    function newBuffer(): Buffer;
+    function newBuffer(format: BufferFormat, length: number): Buffer;
+    function newBuffer(format: BufferFormat, data: LuaTable): Buffer;
+    function newBuffer(format: BufferFormat, blob: Blob): Buffer;
+    function newBuffer(type: DataType, length: number): Buffer;
+    function newBuffer(type: DataType, data: LuaTable): Buffer;
+    function newBuffer(type: DataType, blob: Blob): Buffer;
 
   }
 }
