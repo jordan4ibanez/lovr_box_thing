@@ -299,8 +299,87 @@ declare interface MeshStorage {
   // todo
 }
 
+declare type AnimationProperty = "translation" | "rotation" | "scale" | "weights";
+
+declare type SmoothMode = "step" | "linear" | "cubic";
+
+declare type ModelDrawMode = "points" | "lines" | "linestrip" | "lineloop" | "strip" | "triangles" | "fan";
+
+declare type AttributeType = "i8" | "u8" | "i16" | "u16" | "i32" | "u32" | "f32";
+
 declare interface ModelData {
-  // todo
+  getAnimationChannelCount(index: number): number;
+  getAnimationChannelCount(name: string): number;
+  getAnimationCount(): number;
+  getAnimationDuration(index: number): number;
+  getAnimationDuration(name: string): number;
+  // I have no idea if this is correct.
+  getAnimationKeyframe(index: number, channel: number, keyframe: number): LuaMultiReturn<[time: number, ...data: [number]]>;
+  getAnimationKeyframe(name: string, channel: number, keyframe: number): LuaMultiReturn<[time: number, ...data: [number]]>;
+  getAnimationKeyframeCount(index: number, channel: number): number;
+  getAnimationKeyframeCount(name: string, channel: number): number;
+  getAnimationName(index: number): string;
+  getAnimationNode(index: number, channel: number): number;
+  getAnimationNode(name: string, channel: number): number;
+  getAnimationProperty(index: number, channel: number): AnimationProperty;
+  getAnimationProperty(name: string, channel: number): AnimationProperty;
+  getAnimationSmoothMode(index: number, channel: number): SmoothMode;
+  getAnimationSmoothMode(name: string, channel: number): SmoothMode;
+  getBlendShapeCount(): number;
+  getBlendShapeName(index: number): string;
+  getBlob(index: number): Blob;
+  getBlobCount(): number;
+  getBoundingBox(): LuaMultiReturn<[minx: number, miny: number, minz: number, maxx: number, maxy: number, maxz: number]>;
+  getBoundingSphere(): LuaMultiReturn<[x: number, y: number, z: number, radius: number]>;
+  getCenter(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getDepth(): number;
+  getDimensions(): LuaMultiReturn<[width: number, height: number, depth: number]>;
+  getHeight(): number;
+  getImage(index: number): Image;
+  getImageCount(): number;
+  getMaterial(index: number): MaterialProperties;
+  getMaterial(name: string): MaterialProperties;
+  getMaterialCount(): number;
+  getMaterialName(index: number): string;
+  getMeshCount(): number;
+  getMeshDrawMode(mesh: number): ModelDrawMode;
+  getMeshIndex(mesh: number, index: number): number;
+  getMeshIndexCount(mesh: number): number;
+  getMeshIndexFormat(mesh: number): LuaMultiReturn<[type: AttributeType, blob: number, offset: number, stride: number]>;
+  getMeshMaterial(mesh: number): number;
+  getMeshVertex(mesh: number, vertex: number): Array<number>;
+  getMeshVertexCount(mesh: number): number;
+  getMeshVertexFormat(mesh: number): LuaTable;
+  getMetadata(): string;
+  getNodeChildren(index: number): LuaTable;
+  getNodeChildren(name: string): LuaTable;
+  getNodeCount(): number;
+  getNodeMeshes(index: number): LuaTable;
+  getNodeMeshes(name: string): LuaTable;
+  getNodeName(index: number): string;
+  getNodeOrientation(index: number): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+  getNodeOrientation(name: string): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+  getNodeParent(index: number): number;
+  getNodeParent(name: string): number;
+  getNodePose(index: number): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getNodePose(name: string): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getNodePosition(index: number): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getNodePosition(name: string): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getNodeScale(index: number): LuaMultiReturn<[sx: number, sy: number, sz: number]>;
+  getNodeScale(name: string): LuaMultiReturn<[sx: number, sy: number, sz: number]>;
+  getNodeSkin(index: number): number;
+  getNodeSkin(name: string): number;
+  getNodeTransform(index: number): LuaMultiReturn<[x: number, y: number, z: number, sx: number, sy: number, sz: number, angle: number, ax: number, ay: number, az: number]>;
+  getNodeTransform(name: string): LuaMultiReturn<[x: number, y: number, z: number, sx: number, sy: number, sz: number, angle: number, ax: number, ay: number, az: number]>;
+  getRootNode(): number;
+  getSkinCount(): number;
+  // I think this is right?
+  getSkinInverseBindMatrix(skin: number, joint: number): Array<number>;
+  getSkinJoints(skin: number): LuaTable;
+  getTriangleCount(): number;
+  getTriangles(): LuaMultiReturn<[vertices: Array<number>, indices: Array<number>]>;
+  getVertexCount(): number;
+  getWidth(): number;
 }
 
 declare interface TextureFormat {
