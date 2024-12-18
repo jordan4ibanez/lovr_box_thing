@@ -64,7 +64,7 @@ declare interface lovrConfig {
   graphics: lovrConfigGraphics;
   headset: lovrConfigHeadset;
   math: lovrConfigMath;
-  window: lovrConfigWindow;
+  window: lovrConfigWindow | null;
 }
 
 declare interface Source {
@@ -249,6 +249,23 @@ declare interface HingeJoint {
 
 declare interface SliderJoint {
   // todo
+}
+
+declare interface Permission {
+  // todo
+}
+
+declare interface KeyCode {
+  // todo
+}
+
+declare interface WindowOpenOptions {
+  width: number;
+  height: number;
+  fullscreen: boolean;
+  resizable: boolean;
+  title: string;
+  icon: string;
 }
 
 declare interface World {
@@ -686,4 +703,30 @@ declare namespace lovr {
     function newSliderJoint(colliderA: Collider, colliderB: Collider, ax: number, ay: number, az: number): SliderJoint;
     function newSliderJoint(colliderA: Collider, colliderB: Collider, axis: Vec3): SliderJoint;
   }
+
+  namespace system {
+    function getCoreCount(): number;
+    function getOS(): string;
+    function requestPermission(permission: Permission): void;
+    function hasKeyRepeat(): boolean;
+    function isKeyDown(...keys: [KeyCode]): boolean;
+    function setKeyRepeat(enable: boolean): void;
+    function wasKeyPressed(...keys: [KeyCode]): boolean;
+    function wasKeyReleased(...keys: [KeyCode]): boolean;
+    function getMousePosition(): LuaMultiReturn<[x: number, y: number]>;
+    function getMouseX(): number;
+    function getMouseY(): number;
+    function isMouseDown(button: number): boolean;
+    function getWindowDensity(): number;
+    function getWindowDimensions(): LuaMultiReturn<[width: number, height: number]>;
+    function getWindowHeight(): number;
+    function getWindowWidth(): number;
+    function isWindowOpen(): number;
+    function openWindow(options: WindowOpenOptions): void;
+    function pollEvents(): void;
+  }
+
+
+
+
 }
