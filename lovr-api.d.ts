@@ -435,7 +435,16 @@ declare interface HingeJoint {
 }
 
 declare interface SliderJoint extends Joint {
-  // todo
+  getAxis(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getLimits(): LuaMultiReturn<[lower: number, upper: number]>;
+  getLowerLimit(): number;
+  getPosition(): number;
+  getUpperLimit(): number;
+  setAxis(x: number, y: number, z: number): void;
+  setAxis(axis: Vec3): void;
+  setLimits(lower: number, upper: number): void;
+  setLowerLimit(limit: number): void;
+  setUpperLimit(limit: number): void;
 }
 
 declare interface Permission {
