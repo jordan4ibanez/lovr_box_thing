@@ -158,6 +158,18 @@ declare interface CompareMode {
   // todo
 }
 
+declare interface Shader {
+  // todo
+}
+
+declare interface DefaultShader {
+  // todo
+}
+
+declare interface TextureType {
+  // todo
+}
+
 declare interface newSourceOptions {
   decode: boolean;
   pitchable: boolean;
@@ -231,6 +243,21 @@ declare interface SamplerParameters {
   compare: CompareMode;
   anisotropy: number;
   mipmaprange: LuaTable;
+}
+
+declare interface ShaderOptions {
+  flags: LuaTable;
+  label: string;
+}
+
+declare interface TextureOptions {
+  type: TextureType;
+  format: TextureFormat;
+  linear: boolean;
+  samples: number;
+  mipmaps: boolean | number;
+  usage: LuaTable;
+  label: string;
 }
 
 
@@ -334,5 +361,14 @@ declare namespace lovr {
     function newPass(canvas: Canvas): Pass;
     function newPass(): Pass;
     function newSampler(parameters: SamplerParameters): Sampler;
+    function newShader(vertex: string, fragment: string, options: ShaderOptions): Shader;
+    function newShader(compute: string, options: ShaderOptions): Shader;
+    function newShader(default1: DefaultShader, options: ShaderOptions): Shader;
+    function newTexture(filename: string, options: TextureOptions): Texture;
+    function newTexture(width: number, height: number, options: TextureOptions): Texture;
+    function newTexture(width: number, height: number, layers: number, options: TextureOptions): Texture;
+    function newTexture(image: string, options: TextureOptions): Texture;
+    function newTexture(images: Array<string>, options: TextureOptions): Texture;
+    function newTexture(blob: Blob, options: TextureOptions): Texture;
   }
 }
