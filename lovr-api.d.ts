@@ -193,8 +193,32 @@ declare interface Material {
   getProperties(): LuaTable;
 }
 
+declare type DrawMode = "points" | "lines" | "triangles";
+
+
 declare interface Mesh {
-  // todo
+  computeBoundingBox(): boolean;
+  getBoundingBox(): LuaMultiReturn<[minx: number, miny: number, minz: number, maxx: number, maxy: number, maxz: number]>;
+  getDrawMode(): DrawMode;
+  getIndexBuffer(): Buffer;
+  getIndices(): Array<number>;
+  getMaterial(): Material;
+  getVertexBuffer(): Buffer;
+  getVertexCount(): number;
+  getVertexFormat(): LuaTable;
+  getVertexStride(): number;
+  getVertices(index: number, count: number | null): LuaTable;
+  setBoundingBox(minx: number, miny: number, minz: number, maxx: number, maxy: number, maxz: number): void;
+  setBoundingBox(): void;
+  setDrawMode(mode: DrawMode): void;
+  // I think the documentation on this one is wrong.
+  setIndexBuffer(buffer: Buffer): void;
+  setIndices(t: Array<number>): void;
+  setIndices(blob: Blob, type: DataType): void;
+  setIndices(): void;
+  setMaterial(material: Material): void;
+  setVertices(vertices: Array<number>, index: number, count: number | null): void;
+  setVertices(blob: Blob, index: number, count: number | null): void;
 }
 
 declare interface MeshStorage {
