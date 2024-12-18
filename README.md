@@ -3,4 +3,5 @@
 
 I'm shipping executables because that's just kind of how LOVR works lol.
 
-https://lovr.org/docs/lovr.headset
+Bookmark:
+https://lovr.org/docs/v0.17.0/RandomGenerator
