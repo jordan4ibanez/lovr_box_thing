@@ -10,7 +10,9 @@
       "lua-types/jit",
       "./lovr-api"
     ],
-    "strict": true
+    "strict": true,
+    "rootDir": "src/",
+    "outDir": "out/",
   },
   "tstl": {
     "luaTarget": "JIT",

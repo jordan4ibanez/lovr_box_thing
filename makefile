@@ -1,5 +1,5 @@
 default:
-	@./scripts/build.sh
+	@npx tstl
 
 install:
-	@./scripts/install.sh
+	@npm install
