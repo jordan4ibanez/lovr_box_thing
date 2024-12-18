@@ -384,6 +384,18 @@ declare interface TerrainShape {
   // todo
 }
 
+declare type JointType = "ball" | "distance" | "hinge" | "slider";
+
+declare interface Joint {
+  destroy(): void;
+  getColliders(): LuaMultiReturn<[colliderA: Collider, colliderB: Collider]>;
+  getType(): JointType;
+  getUserData(): LuaUserdata;
+  isEnabled(): boolean;
+  setEnabled(enabled: boolean): void;
+  setUserData(data: LuaUserdata): void;
+}
+
 declare interface BallJoint {
   // todo
 }
@@ -396,7 +408,7 @@ declare interface HingeJoint {
   // todo
 }
 
-declare interface SliderJoint {
+declare interface SliderJoint extends Joint {
   // todo
 }
 
