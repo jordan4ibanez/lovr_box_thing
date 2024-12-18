@@ -1,6 +1,7 @@
 
 //* Version: 0.17.1.
 //* If something is marked as deprecated I'm skipping it.
+// todo: anything that says LuaTable needs to be revisited.
 
 declare interface lovrConfigModules {
   audio: boolean;
@@ -174,6 +175,22 @@ declare interface TextureFeature {
   // todo
 }
 
+declare interface DeviceAxis {
+  // todo
+}
+
+declare interface DeviceButton {
+  // todo
+}
+
+declare interface PassthroughMode {
+  // todo
+}
+
+declare interface HeadsetDriver {
+  // todo
+}
+
 declare interface newSourceOptions {
   decode: boolean;
   pitchable: boolean;
@@ -319,6 +336,11 @@ declare interface DeviceLimits {
 }
 
 
+declare interface DeviceModelOptions {
+  animated: boolean;
+}
+
+
 /** @noSelf **/
 declare namespace lovr {
   function conf(t: lovrConfig): void;
@@ -442,6 +464,61 @@ declare namespace lovr {
     function getFeatures(): DeviceFeatures;
     function getLimits(): DeviceLimits;
     function isFormatSupported(format: TextureFormat, ...features: [TextureFeature]): LuaMultiReturn<[linear: boolean, srgb: boolean]>;
-
   }
+
+
+  namespace headset {
+    function getAngularVelocity(): LuaMultiReturn<[x: number, y: number, z: number]>;
+    function getAxis(device: Device, axis: DeviceAxis): number;
+    function getDirection(device: Device): LuaMultiReturn<[x: number, y: number, z: number]>;
+    function getHands(): LuaTable;
+    function getOrientation(device: Device): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+    function getPose(device: Device): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+    function getPosition(device: Device): LuaMultiReturn<[x: number, y: number, z: number]>;
+    function getSkeleton(device: Device): LuaTable;
+    function getSkeleton(device: Device, t: LuaTable): LuaTable;
+    function getVelocity(device: Device): LuaMultiReturn<[vx: number, vy: number, vz: number]>;
+    function isDown(device: Device, button: DeviceButton): boolean;
+    function isTouched(device: Device, button: DeviceButton): boolean;
+    function isTracked(device: Device): boolean;
+    function stopVibration(device: Device): void;
+    function vibrate(device: Device, strength: number, duration: number, frequency: number): boolean;
+    function wasPressed(device: Device, button: DeviceButton): boolean;
+    function wasReleased(device: Device, button: DeviceButton): boolean;
+    function animate(model: Model): boolean;
+    function animate(device: Device, model: Model): boolean;
+    function newModel(device: Device, options: DeviceModelOptions): Model;
+    function getClipDistance(): LuaMultiReturn<[near: number, far: number]>;
+    function getDisplayDimensions(): LuaMultiReturn<[width: number, height: number]>;
+    function getDisplayHeight(): number;
+    function getDisplayWidth(): number;
+    function getPassthrough(): PassthroughMode;
+    function getPassthroughModes(): LuaTable;
+    function getRefreshRate(): number | null;
+    function getRefreshRates(): Array<number> | null;
+    function getViewAngles(view: number): LuaMultiReturn<[left: number, right: number, top: number, bottom: number]>;
+    function getViewCount(): number;
+    function getViewPose(view: number): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+    function setClipDistance(near: number, far: number): void;
+    function setPassthrough(mode: PassthroughMode): boolean;
+    function setPassthrough(transparent: boolean): boolean;
+    function setPassthrough(): boolean;
+    function setRefreshRate(rate: number): boolean;
+    function getBoundsDepth(): number;
+    function getBoundsDimensions(): LuaMultiReturn<[width: number, depth: number]>;
+    function getBoundsGeometry(t: LuaTable): LuaTable;
+    function getBoundsWidth(): number;
+    function isSeated(): boolean;
+    function getDeltaTime(): number;
+    function getDriver(): LuaMultiReturn<[driver: HeadsetDriver, runtime: string]>;
+    function getName(): string;
+    function getPass(): Pass;
+    function getTexture(): Texture;
+    function getTime(): number;
+    function isFocused(): boolean;
+    function isVisible(): boolean;
+    function submit(): void;
+  }
+
+
 }
