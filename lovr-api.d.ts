@@ -396,7 +396,7 @@ declare interface Joint {
   setUserData(data: LuaUserdata): void;
 }
 
-declare interface BallJoint {
+declare interface BallJoint extends Joint {
   getAnchors(): LuaMultiReturn<[x1: number, y1: number, z1: number, x2: number, y2: number, z2: number]>;
   getResponseTime(): number;
   getTightness(): number;
@@ -406,7 +406,7 @@ declare interface BallJoint {
   setTightness(tightness: number): void;
 }
 
-declare interface DistanceJoint {
+declare interface DistanceJoint extends Joint {
   getAnchors(): LuaMultiReturn<[x1: number, y1: number, z1: number, x2: number, y2: number, z2: number]>;
   getDistance(): number;
   getResponseTime(): number;
@@ -418,7 +418,7 @@ declare interface DistanceJoint {
   setTightness(tightness: number): void;
 }
 
-declare interface HingeJoint {
+declare interface HingeJoint extends Joint {
   getAnchors(): LuaMultiReturn<[x1: number, y1: number, z1: number, x2: number, y2: number, z2: number]>;
   getAngle(): number;
   getAxis(): LuaMultiReturn<[x: number, y: number, z: number]>;
