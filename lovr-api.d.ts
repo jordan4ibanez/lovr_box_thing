@@ -245,8 +245,6 @@ declare interface Curve {
   removePoint(index: number): void;
   render(n: number, t1: number, t2: number): Array<number>;
   setPoint(index: number, x: number, y: number, z: number): void;
-
-
 }
 
 declare interface Shape {
