@@ -296,7 +296,11 @@ declare interface KeyCode {
 }
 
 declare interface Channel {
-  // todo
+  clear(): void;
+  hasRead(id: number): boolean;
+  peek(): LuaMultiReturn<[message: any, present: boolean]>;
+  pop(wait: number | boolean): any;
+  push(message: any, wait: number | boolean): LuaMultiReturn<[id: number, read: boolean]>;
 }
 
 declare interface Thread {
