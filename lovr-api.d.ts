@@ -236,7 +236,17 @@ declare interface RandomGenerator {
 }
 
 declare interface Curve {
-  // todo
+  slice(t1: number, t2: number): Curve;
+  addPoint(x: number, y: number, z: number, index: number | null): void;
+  evaluate(t: number): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getPoint(index: number): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getPointCount(): number;
+  getTangent(t: number): LuaMultiReturn<[x: number, y: number, z: number]>;
+  removePoint(index: number): void;
+  render(n: number, t1: number, t2: number): Array<number>;
+  setPoint(index: number, x: number, y: number, z: number): void;
+
+
 }
 
 declare interface Shape {
