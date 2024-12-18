@@ -195,7 +195,6 @@ declare interface Material {
 
 declare type DrawMode = "points" | "lines" | "triangles";
 
-
 declare interface Mesh {
   computeBoundingBox(): boolean;
   getBoundingBox(): LuaMultiReturn<[minx: number, miny: number, minz: number, maxx: number, maxy: number, maxz: number]>;
