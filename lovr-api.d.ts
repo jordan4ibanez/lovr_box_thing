@@ -95,6 +95,10 @@ declare interface Vec4 {
   // todo
 }
 
+declare interface Mat4 {
+  // todo
+}
+
 declare interface Quat {
   // todo
 }
@@ -188,6 +192,14 @@ declare interface PassthroughMode {
 }
 
 declare interface HeadsetDriver {
+  // todo
+}
+
+declare interface RandomGenerator {
+  // todo
+}
+
+declare interface Curve {
   // todo
 }
 
@@ -517,6 +529,73 @@ declare namespace lovr {
     function isFocused(): boolean;
     function isVisible(): boolean;
     function submit(): void;
+  }
+
+  namespace math {
+    function getRandomSeed(): number;
+    function newRandomGenerator(): RandomGenerator;
+    function newRandomGenerator(seed: number): RandomGenerator;
+    function newRandomGenerator(low: number, high: number): RandomGenerator;
+    function noise(x: number): number;
+    function noise(x: number, y: number): number;
+    function noise(x: number, y: number, z: number): number;
+    function noise(x: number, y: number, z: number, w: number): number;
+    function random(): number;
+    function random(high: number): number;
+    function random(low: number, high: number): number;
+    function randomNormal(sigma: number, mu: number): number;
+    function setRandomSeed(seed: number): void;
+    function drain(): void;
+    function mat4(): Mat4;
+    function mat4(n: Mat4): Mat4;
+    function mat4(position: Vec3, scale: Vec3, rotation: Quat): Mat4;
+    function mat4(position: Vec3, rotation: Quat): Mat4;
+    function mat4(x1: number, y1: number, z1: number, w1: number, x2: number, y2: number, z2: number, w2: number, x3: number, y3: number, z3: number, w3: number, x4: number, y4: number, z4: number, w4: number): Mat4;
+    function mat4(d: number): Mat4;
+    function newMat4(): Mat4;
+    function newMat4(n: Mat4): Mat4;
+    function newMat4(position: Vec3, scale: Vec3, rotation: Quat): Mat4;
+    function newMat4(position: Vec3, rotation: Quat): Mat4;
+    function newMat4(x1: number, y1: number, z1: number, w1: number, x2: number, y2: number, z2: number, w2: number, x3: number, y3: number, z3: number, w3: number, x4: number, y4: number, z4: number, w4: number): Mat4;
+    function newMat4(d: number): Mat4;
+    function newQuat(angle: number, ax: number, ay: number, az: number, raw: boolean): Quat;
+    function newQuat(r: Quat): Quat;
+    function newQuat(v: Vec3): Quat;
+    function newQuat(v: Vec3, u: Vec3): Quat;
+    function newQuat(m: Mat4): Quat;
+    function newQuat(): Quat;
+    function newVec2(x: number, y: number): Vec2;
+    function newVec2(u: Vec2): Vec2;
+    function newVec3(x: number, y: number, z: number): Vec3;
+    function newVec3(u: Vec3): Vec3;
+    function newVec3(m: Mat4): Vec3;
+    function newVec3(q: Quat): Vec3;
+    function newVec4(x: number, y: number, z: number, w: number): Vec4;
+    function newVec4(u: Vec4): Vec4;
+    function quat(angle: number, ax: number, ay: number, az: number, raw: boolean): Quat;
+    function quat(r: Quat): Quat;
+    function quat(v: Vec3): Quat;
+    function quat(v: Vec3, u: Vec3): Quat;
+    function quat(m: Mat4): Quat;
+    function quat(): Quat;
+    function vec2(x: number, y: number): Vec2;
+    function vec2(u: Vec2): Vec2;
+    function vec3(x: number, y: number, z: number): Vec3;
+    function vec3(u: Vec3): Vec3;
+    function vec3(m: Mat4): Vec3;
+    function vec3(q: Quat): Vec3;
+    function vec4(x: number, y: number, z: number, w: number): Vec4;
+    function vec4(u: Vec4): Vec4;
+    function gammaToLinear(gr: number, gg: number, gb: number): LuaMultiReturn<[lr: number, lg: number, lb: number]>;
+    function gammaToLinear(color: LuaTable): LuaMultiReturn<[lr: number, lg: number, lb: number]>;
+    function gammaToLinear(x: number): number;
+    function linearToGamma(gr: number, gg: number, gb: number): LuaMultiReturn<[lr: number, lg: number, lb: number]>;
+    function linearToGamma(color: LuaTable): LuaMultiReturn<[lr: number, lg: number, lb: number]>;
+    function linearToGamma(x: number): number;
+    function newCurve(...points: [number]): Curve;
+    function newCurve(...points: [Vec3]): Curve;
+    function newCurve(points: LuaTable): Curve;
+    function newCurve(n: number): Curve;
   }
 
 
