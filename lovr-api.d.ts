@@ -419,7 +419,19 @@ declare interface DistanceJoint {
 }
 
 declare interface HingeJoint {
-  // todo
+  getAnchors(): LuaMultiReturn<[x1: number, y1: number, z1: number, x2: number, y2: number, z2: number]>;
+  getAngle(): number;
+  getAxis(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getLimits(): LuaMultiReturn<[lower: number, upper: number]>;
+  getLowerLimit(): number;
+  getUpperLimit(): number;
+  setAnchor(x: number, y: number, z: number): void;
+  setAnchor(anchor: Vec3): void;
+  setAxis(x: number, y: number, z: number): void;
+  setAxis(axis: Vec3): void;
+  setLimits(lower: number, upper: number): void;
+  setLowerLimit(limit: number): void;
+  setUpperLimit(limit: number): void;
 }
 
 declare interface SliderJoint extends Joint {
