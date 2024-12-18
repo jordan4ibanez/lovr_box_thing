@@ -260,6 +260,27 @@ declare interface TextureOptions {
   label: string;
 }
 
+declare interface Device {
+  id: number;
+  vendor: number;
+  name: string;
+  renderer: string;
+  subgroupSize: number;
+  discrete: boolean;
+}
+
+declare interface DeviceFeatures {
+  textureBC: boolean;
+  textureASTC: boolean;
+  wireframe: boolean;
+  depthClamp: boolean;
+  depthResolve: boolean;
+  indirectDrawFirstInstance: boolean;
+  float64: boolean;
+  int64: boolean;
+  int16: boolean;
+}
+
 
 /** @noSelf **/
 declare namespace lovr {
@@ -370,5 +391,19 @@ declare namespace lovr {
     function newTexture(image: string, options: TextureOptions): Texture;
     function newTexture(images: Array<string>, options: TextureOptions): Texture;
     function newTexture(blob: Blob, options: TextureOptions): Texture;
+    function getBackgroundColor(): LuaMultiReturn<[r: number, g: number, b: number, a: number]>;
+    function isTimingEnabled(): boolean;
+    function setBackgroundColor(r: number, g: number, b: number, a: number): void;
+    function setBackgroundColor(hex: number, a: number): void;
+    function setBackgroundColor(table: LuaTable): void;
+    function setTimingEnabled(): boolean;
+    function present(): void;
+    function submit(any: [...any]): boolean;
+    function submit(t: LuaTable): boolean;
+    function wait(): void;
+    function getDevice(): Device;
+    function getFeatures(): DeviceFeatures;
+    
+
   }
 }
