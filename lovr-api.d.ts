@@ -190,7 +190,7 @@ declare interface Texture {
 }
 
 declare interface Material {
-  // todo
+  getProperties(): LuaTable;
 }
 
 declare interface Mesh {
