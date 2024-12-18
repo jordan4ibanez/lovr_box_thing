@@ -147,4 +147,35 @@ declare namespace lovr {
     function quit(code: number): void;
     function restart(): void;
   }
+
+  namespace filesystem {
+    function append(filename: string, contents: string): number;
+    function append(filename: string, blob: Blob): number;
+    function createDirectory(path: string): boolean;
+    function getDirectoryItems(path: string): Array<string>;
+    function getLastModified(path: string): number | null;
+    function getSize(file: string): number;
+    function isDirectory(path: string): boolean;
+    function isFile(path: string): boolean;
+    function newBlob(filename: string): Blob;
+    function read(filename: string, bytes: number): LuaMultiReturn<[contents: string, bytes: number]>;
+    function remove(path: string): boolean;
+    function write(filename: string, content: string): boolean;
+    function write(filename: string, blob: Blob): boolean;
+    function getIdentity(): string | null;
+    function getRealDirectory(path: string): string;
+    function isFused(): boolean;
+    function mount(path: string, mountpoint: string, append: boolean, root: string): boolean;
+    function setIdentity(identity: string): void;
+    function unmount(path: string): boolean;
+    function getAppdataDirectory(): string;
+    function getExecutablePath(): string | null;
+    function getSaveDirectory(): string;
+    function getSource(): string | null;
+    function getUserDirectory(): string;
+    function getWorkingDirectory(): string | null;
+    function getRequirePath(): string;
+    function load(filename: string, mode: string): (...any: any) => LuaMultiReturn<[...any]>;
+    function setRequirePath(path: string): void;
+  }
 }
