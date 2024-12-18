@@ -169,27 +169,32 @@ declare interface Model {
   setNodeTransform(name: string, transform: Mat4, blend: number): void;
 }
 
-declare interface Vec2 {
+declare interface Object {
+  release(): void;
+  type(): string;
+}
+
+declare interface Vec2 extends Object {
 
 }
 
-declare interface Vec3 {
+declare interface Vec3 extends Object {
   // todo
 }
 
-declare interface Vec4 {
+declare interface Vec4 extends Object {
   // todo
 }
 
-declare interface Mat4 {
+declare interface Mat4 extends Object {
   // todo
 }
 
-declare interface Quat {
+declare interface Quat extends Object {
   // todo
 }
 
-declare interface ShaderStage {
+declare interface ShaderStage extends Object {
   // todo
 }
 
@@ -201,7 +206,7 @@ declare interface VerticalAlign {
   // todo
 }
 
-declare interface Font {
+declare interface Font extends Object {
   getAscent(): number;
   getDescent(): number;
   getHeight(): number;
@@ -223,11 +228,11 @@ declare interface Font {
   setPixelDensity(): void;
 }
 
-declare interface Pass {
+declare interface Pass extends Object {
   // todo
 }
 
-declare interface Readback {
+declare interface Readback extends Object {
   // todo
 }
 
@@ -239,7 +244,7 @@ declare interface BufferFormatElement {
   stride: number;
 }
 
-declare interface Buffer {
+declare interface Buffer extends Object {
   getFormat(): Array<BufferFormatElement>;
   getLength(): number;
   getSize(): number;
@@ -256,21 +261,21 @@ declare interface Buffer {
   setData(buffer: Buffer, destinationIndex: number, sourceIndex: number, count: number | null): void;
 }
 
-declare interface Rasterizer {
+declare interface Rasterizer extends Object {
   // todo
 }
 
-declare interface Texture {
+declare interface Texture extends Object {
   // todo
 }
 
-declare interface Material {
+declare interface Material extends Object {
   getProperties(): LuaTable;
 }
 
 declare type DrawMode = "points" | "lines" | "triangles";
 
-declare interface Mesh {
+declare interface Mesh extends Object {
   computeBoundingBox(): boolean;
   getBoundingBox(): LuaMultiReturn<[minx: number, miny: number, minz: number, maxx: number, maxy: number, maxz: number]>;
   getDrawMode(): DrawMode;
@@ -295,7 +300,7 @@ declare interface Mesh {
   setVertices(blob: Blob, index: number, count: number | null): void;
 }
 
-declare interface MeshStorage {
+declare interface MeshStorage extends Object {
   // todo
 }
 
@@ -307,7 +312,7 @@ declare type ModelDrawMode = "points" | "lines" | "linestrip" | "lineloop" | "st
 
 declare type AttributeType = "i8" | "u8" | "i16" | "u16" | "i32" | "u32" | "f32";
 
-declare interface ModelData {
+declare interface ModelData extends Object {
   getAnimationChannelCount(index: number): number;
   getAnimationChannelCount(name: string): number;
   getAnimationCount(): number;
@@ -382,63 +387,63 @@ declare interface ModelData {
   getWidth(): number;
 }
 
-declare interface TextureFormat {
+declare interface TextureFormat extends Object {
   // todo
 }
 
-declare interface Sampler {
+declare interface Sampler extends Object {
   // todo
 }
 
-declare interface FilterMode {
+declare interface FilterMode extends Object {
   // todo
 }
 
-declare interface WrapMode {
+declare interface WrapMode extends Object {
   // todo
 }
 
-declare interface CompareMode {
+declare interface CompareMode extends Object {
   // todo
 }
 
-declare interface Shader {
+declare interface Shader extends Object {
   // todo
 }
 
-declare interface DefaultShader {
+declare interface DefaultShader extends Object {
   // todo
 }
 
-declare interface TextureType {
+declare interface TextureType extends Object {
   // todo
 }
 
-declare interface TextureFeature {
+declare interface TextureFeature extends Object {
   // todo
 }
 
-declare interface DeviceAxis {
+declare interface DeviceAxis extends Object {
   // todo
 }
 
-declare interface DeviceButton {
+declare interface DeviceButton extends Object {
   // todo
 }
 
-declare interface PassthroughMode {
+declare interface PassthroughMode extends Object {
   // todo
 }
 
-declare interface HeadsetDriver {
+declare interface HeadsetDriver extends Object {
   // todo
 }
 
-declare interface RandomGenerator {
+declare interface RandomGenerator extends Object {
   // todo
 }
 
-declare interface Curve {
+declare interface Curve extends Object {
   slice(t1: number, t2: number): Curve;
   addPoint(x: number, y: number, z: number, index: number | null): void;
   evaluate(t: number): LuaMultiReturn<[x: number, y: number, z: number]>;
@@ -450,11 +455,11 @@ declare interface Curve {
   setPoint(index: number, x: number, y: number, z: number): void;
 }
 
-declare interface Shape {
+declare interface Shape extends Object {
   // todo
 }
 
-declare interface Collider {
+declare interface Collider extends Object {
   addShape(shape: Shape): void;
   applyForce(x: number, y: number, z: number): void;
   applyForce(x: number, y: number, z: number, px: number, py: number, pz: number): void;
@@ -524,7 +529,7 @@ declare interface Collider {
   setUserData(data: LuaUserdata): void;
 }
 
-declare interface Image {
+declare interface Image extends Object {
   encode(): Blob;
   getBlob(): Blob;
   getDimensions(): LuaMultiReturn<[width: number, height: number]>;
@@ -537,33 +542,33 @@ declare interface Image {
   setPixel(x: number, y: number, r: number, g: number, b: number, a: number): void;
 }
 
-declare interface BoxShape {
+declare interface BoxShape extends Object {
   // todo
 }
 
-declare interface CapsuleShape {
+declare interface CapsuleShape extends Object {
   // todo
 }
 
-declare interface CylinderShape {
+declare interface CylinderShape extends Object {
   // todo
 }
 
-declare interface MeshShape {
+declare interface MeshShape extends Object {
   // todo
 }
 
-declare interface SphereShape {
+declare interface SphereShape extends Object {
   // todo
 }
 
-declare interface TerrainShape {
+declare interface TerrainShape extends Object {
   // todo
 }
 
 declare type JointType = "ball" | "distance" | "hinge" | "slider";
 
-declare interface Joint {
+declare interface Joint extends Object {
   destroy(): void;
   getColliders(): LuaMultiReturn<[colliderA: Collider, colliderB: Collider]>;
   getType(): JointType;
@@ -624,15 +629,15 @@ declare interface SliderJoint extends Joint {
   setUpperLimit(limit: number): void;
 }
 
-declare interface Permission {
+declare interface Permission extends Object {
   // todo
 }
 
-declare interface KeyCode {
+declare interface KeyCode extends Object {
   // todo
 }
 
-declare interface Channel {
+declare interface Channel extends Object {
   clear(): void;
   hasRead(id: number): boolean;
   peek(): LuaMultiReturn<[message: any, present: boolean]>;
@@ -640,7 +645,7 @@ declare interface Channel {
   push(message: any, wait: number | boolean): LuaMultiReturn<[id: number, read: boolean]>;
 }
 
-declare interface Thread {
+declare interface Thread extends Object {
   // todo
 }
 
