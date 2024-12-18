@@ -1,7 +1,7 @@
 
 //* Version: 0.17.1
 
-interface lovrConfigModules {
+declare interface lovrConfigModules {
   audio: boolean;
   data: boolean;
   event: boolean;
@@ -16,13 +16,13 @@ interface lovrConfigModules {
 
 declare type lovrConfigSpatializer = "simple" | "oculus" | "phonon";
 
-interface lovrConfigAudio {
+declare interface lovrConfigAudio {
   spatializer?: lovrConfigSpatializer;
   samplerate: number;
   start: boolean;
 }
 
-interface lovrConfigGraphics {
+declare interface lovrConfigGraphics {
   debug: boolean;
   vsync: boolean;
   stencil: boolean;
@@ -30,7 +30,7 @@ interface lovrConfigGraphics {
   shadercache: boolean;
 }
 
-interface lovrConfigHeadset {
+declare interface lovrConfigHeadset {
   drivers: Array<string>;
   supersample: number;
   seated: boolean;
@@ -40,11 +40,11 @@ interface lovrConfigHeadset {
   overlay: boolean;
 }
 
-interface lovrConfigMath {
+declare interface lovrConfigMath {
   globals: boolean;
 }
 
-interface lovrConfigWindow {
+declare interface lovrConfigWindow {
   width: number;
   height: number;
   fullscreen: boolean;
@@ -53,7 +53,7 @@ interface lovrConfigWindow {
   icon: string;
 }
 
-interface lovrConfig {
+declare interface lovrConfig {
   version: string;
   identity: string;
   saveprecedence: boolean;
@@ -65,31 +65,47 @@ interface lovrConfig {
   window: lovrConfigWindow;
 }
 
-declare class Source {
+declare interface Source {
   // todo
 }
 
-declare class Sound {
+declare interface Sound {
   // todo
 }
 
-declare class Blob {
+declare interface Blob {
   // todo
 }
 
-declare class Model {
+declare interface Model {
   // todo
 }
 
-declare class Quat {
+declare interface Quat {
   // todo
 }
 
-declare class Vec3 {
+declare interface Vec3 {
   // todo
 }
 
-interface newSourceOptions {
+declare interface ShaderStage {
+  // todo
+}
+
+declare interface Font {
+  // todo
+}
+
+declare interface Pass {
+  // todo
+}
+
+declare interface Buffer {
+  // todo
+}
+
+declare interface newSourceOptions {
   decode: boolean;
   pitchable: boolean;
   spatial: boolean;
@@ -105,7 +121,7 @@ declare type AudioType = "playback" | "capture";
 
 declare type AudioShareMode = "shared" | "exclusive";
 
-interface AudioDeviceType {
+declare interface AudioDeviceType {
   id: LuaUserdata;
   name: string;
   default: boolean;
@@ -177,5 +193,24 @@ declare namespace lovr {
     function getRequirePath(): string;
     function load(filename: string, mode: string): (...any: any) => LuaMultiReturn<[...any]>;
     function setRequirePath(path: string): void;
+  }
+
+  namespace graphics {
+    function compileShader(stage: ShaderStage, source: string): Blob;
+    function compileShader(stage: ShaderStage, blob: Blob): Blob;
+    // getBuffer is deprecated.
+    function getDefaultFont(): Font;
+    // getPass is deprecated.
+    function getWindowPass(): Pass;
+
+    function newBuffer(size: number): Buffer;
+    function newBuffer(blob: Blob): Buffer;
+    function newBuffer(): Buffer;
+    function newBuffer(): Buffer;
+    function newBuffer(): Buffer;
+    function newBuffer(): Buffer;
+    function newBuffer(): Buffer;
+    function newBuffer(): Buffer;
+
   }
 }
