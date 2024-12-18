@@ -126,8 +126,9 @@ declare interface Pass {
   // todo
 }
 
+
 declare interface Buffer {
-  // todo
+  
 }
 
 declare interface Rasterizer {
@@ -331,7 +332,7 @@ declare interface AudioDeviceType {
 
 declare type DataLayout = "packed" | "std140" | "std430";
 
-declare interface BufferFormat {
+declare interface BufferFormatOptions {
   layout: DataLayout;
   stride: number;
 }
@@ -532,9 +533,9 @@ declare namespace lovr {
     function getWindowPass(): Pass;
     function newBuffer(size: number): Buffer;
     function newBuffer(blob: Blob): Buffer;
-    function newBuffer(format: BufferFormat, length: number): Buffer;
-    function newBuffer(format: BufferFormat, data: LuaTable): Buffer;
-    function newBuffer(format: BufferFormat, blob: Blob): Buffer;
+    function newBuffer(format: BufferFormatOptions, length: number): Buffer;
+    function newBuffer(format: BufferFormatOptions, data: LuaTable): Buffer;
+    function newBuffer(format: BufferFormatOptions, blob: Blob): Buffer;
     function newBuffer(type: DataType, length: number): Buffer;
     function newBuffer(type: DataType, data: LuaTable): Buffer;
     function newBuffer(type: DataType, blob: Blob): Buffer;
