@@ -76,7 +76,18 @@ declare interface Sound {
 }
 
 declare interface Blob {
-  // todo
+  getSize(): number;
+  getName(): string;
+  getPointer(): LuaUserdata;
+  getString(offset: number, size: number | null): string;
+  getI8(offset: number, count: number): Array<number>;
+  getU8(offset: number, count: number): Array<number>;
+  getI16(offset: number, count: number): Array<number>;
+  getU16(offset: number, count: number): Array<number>;
+  getI32(offset: number, count: number): Array<number>;
+  getU32(offset: number, count: number): Array<number>;
+  getF32(offset: number, count: number): Array<number>;
+  getF64(offset: number, count: number): Array<number>;
 }
 
 declare interface Model {
