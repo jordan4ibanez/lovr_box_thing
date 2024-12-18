@@ -1,4 +1,4 @@
-interface LOVRConfigModules {
+interface lovrConfigModules {
   audio: boolean;
   data: boolean;
   event: boolean;
@@ -11,15 +11,15 @@ interface LOVRConfigModules {
   timer: boolean;
 }
 
-declare type LOVRConfigSpatializer = "simple" | "oculus" | "phonon";
+declare type lovrConfigSpatializer = "simple" | "oculus" | "phonon";
 
-interface LOVRConfigAudio {
-  spatializer?: LOVRConfigSpatializer;
+interface lovrConfigAudio {
+  spatializer?: lovrConfigSpatializer;
   samplerate: number;
   start: boolean;
 }
 
-interface LOVRConfigGraphics {
+interface lovrConfigGraphics {
   debug: boolean;
   vsync: boolean;
   stencil: boolean;
@@ -27,18 +27,18 @@ interface LOVRConfigGraphics {
   shadercache: boolean;
 }
 
-interface LOVRConfig {
+interface lovrConfig {
   version: string;
   identity: string;
   saveprecedence: boolean;
-  modules: LOVRConfigModules;
-  audio: LOVRConfigAudio;
-  graphics: LOVRConfigGraphics;
+  modules: lovrConfigModules;
+  audio: lovrConfigAudio;
+  graphics: lovrConfigGraphics;
 }
 
 
 
 /** @noSelf **/
 declare namespace lovr {
-  function conf(t: LOVRConfig): void;
+  function conf(t: lovrConfig): void;
 }
