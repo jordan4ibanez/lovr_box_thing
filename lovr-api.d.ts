@@ -139,4 +139,12 @@ declare namespace lovr {
     function start(type: AudioType): boolean;
     function stop(type: AudioType): boolean;
   }
+
+  namespace event {
+    function clear(): void;
+    function poll(): LuaIterator<string, [...any]>;
+    function push(name: string, ...anything: any): void;
+    function quit(code: number): void;
+    function restart(): void;
+  }
 }
