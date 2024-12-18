@@ -239,8 +239,78 @@ declare interface Curve {
   // todo
 }
 
-declare interface Collider {
+declare interface Shape {
   // todo
+}
+
+declare interface Collider {
+  addShape(shape: Shape): void;
+  applyForce(x: number, y: number, z: number): void;
+  applyForce(x: number, y: number, z: number, px: number, py: number, pz: number): void;
+  applyForce(force: Vec3): void;
+  applyForce(force: Vec3, position: Vec3): void;
+  applyTorque(x: number, y: number, z: number): void;
+  applyTorque(torque: Vec3): void;
+  destroy(): void;
+  getAABB(): LuaMultiReturn<[minx: number, miny: number, minz: number, maxx: number, maxy: number, maxz: number]>;
+  getAngularDamping(): LuaMultiReturn<[damping: number, theshold: number]>;
+  getAngularVelocity(): LuaMultiReturn<[vx: number, vy: number, vz: number]>;
+  getFriction(): number;
+  getJoints(): LuaTable;
+  getLinearDamping(): LuaMultiReturn<[damping: number, threshold: number]>;
+  getLinearVelocity(): LuaMultiReturn<[vx: number, vy: number, vz: number]>;
+  getLinearVelocityFromLocalPoint(x: number, y: number, z: number): LuaMultiReturn<[vx: number, vy: number, vz: number]>;
+  getLinearVelocityFromLocalPoint(point: Vec3): LuaMultiReturn<[vx: number, vy: number, vz: number]>;
+  getLinearVelocityFromWorldPoint(x: number, y: number, z: number): LuaMultiReturn<[vx: number, vy: number, vz: number]>;
+  getLinearVelocityFromWorldPoint(point: Vec3): LuaMultiReturn<[vx: number, vy: number, vz: number]>;
+  getLocalCenter(): LuaMultiReturn<[cx: number, cy: number, cz: number]>;
+  getLocalPoint(wx: number, wy: number, wz: number): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getLocalPoint(point: Vec3): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getLocalVector(wx: number, wy: number, wz: number): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getLocalVector(point: Vec3): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getMass(): number;
+  getMassData(): LuaMultiReturn<[cx: number, cy: number, cz: number, mass: number, inerta: LuaTable]>;
+  getOrientation(): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+  getPose(): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getPosition(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getRestitution(): number;
+  getShapes(): LuaTable;
+  getTag(): string;
+  getUserData(): LuaUserdata;
+  getWorld(): World;
+  getWorldPoint(x: number, y: number, z: number): LuaMultiReturn<[wx: number, wy: number, wz: number]>;
+  getWorldPoint(point: Vec3): LuaMultiReturn<[wx: number, wy: number, wz: number]>;
+  getWorldVector(x: number, y: number, z: number): LuaMultiReturn<[wx: number, wy: number, wz: number]>;
+  getWorldVector(point: Vec3): LuaMultiReturn<[wx: number, wy: number, wz: number]>;
+  isAwake(): boolean;
+  isDestroyed(): boolean;
+  isGravityIgnored(): boolean;
+  isKinematic(): boolean;
+  isSleepingAllowed(): boolean;
+  removeShape(shape: Shape): void;
+  setAngularDamping(damping: number, threshold: number): void;
+  setAngularVelocity(vx: number, vy: number, vz: number): void;
+  setAngularVelocity(velocity: Vec3): void;
+  setAwake(awake: boolean): void;
+  setFriction(friction: number): void;
+  setGravityIgnored(ignored: boolean): void;
+  setKinematic(kinematic: boolean): void;
+  setLinearDamping(damping: number, theshold: number): void;
+  setLinearVelocity(vx: number, vy: number, vz: number): void;
+  setLinearVelocity(velocity: Vec3): void;
+  setMass(mass: number): void;
+  setMassData(cx: number, cy: number, cz: number, mass: number, interia: LuaTable): void;
+  setOrientation(angle: number, ax: number, ay: number, az: number): void;
+  setOrientation(orientation: Quat): void;
+  setPose(x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number): void;
+  setPose(position: Vec3, orientation: Quat): void;
+  setPosition(x: number, y: number, z: number): void;
+  setPosition(position: Vec3): void;
+  setRestitution(restitution: number): void;
+  setSleepingAllowed(allowed: boolean): void;
+  setTag(tag: string): void;
+  setTag(): void;
+  setUserData(data: LuaUserdata): void;
 }
 
 declare interface Image {
