@@ -203,6 +203,74 @@ declare interface Curve {
   // todo
 }
 
+declare interface Collider {
+  // todo
+}
+
+declare interface Image {
+  // todo
+}
+
+declare interface BoxShape {
+  // todo
+}
+
+declare interface CapsuleShape {
+  // todo
+}
+
+declare interface CylinderShape {
+  // todo
+}
+
+declare interface MeshShape {
+  // todo
+}
+
+declare interface SphereShape {
+  // todo
+}
+
+declare interface TerrainShape {
+  // todo
+}
+
+declare interface BallJoint {
+  // todo
+}
+
+declare interface DistanceJoint {
+  // todo
+}
+
+declare interface HingeJoint {
+  // todo
+}
+
+declare interface SliderJoint {
+  // todo
+}
+
+declare interface World {
+  getColliders(): LuaTable;
+  getColliders(t: LuaTable): LuaTable;
+  newBoxCollider(x: number, y: number, z: number, width: number, height: number, depth: number): Collider;
+  newBoxCollider(position: Vec3, size: Vec3): Collider;
+  newCapsuleCollider(x: number, y: number, z: number, radius: number, length: number): Collider;
+  newCapsuleCollider(position: Vec3, radius: number, length: number): Collider;
+  newCollider(x: number, y: number, z: number): Collider;
+  newCollider(position: Vec3): Collider;
+  newCylinderCollider(x: number, y: number, z: number, radius: number, length: number): Collider;
+  newCylinderCollider(position: Vec3, radius: number, length: number): Collider;
+  newMeshCollider(vertices: LuaTable, indices: LuaTable): Collider;
+  newMeshCollider(model: Model): Collider;
+  newSphereCollider(x: number, y: number, z: number, radius: number): Collider;
+  newSphereCollider(position: Vec3, radius: number): Collider;
+  newTerrainCollider(scale: number): Collider;
+  newTerrainCollider(scale: number, heightmap: Image, stretch: number): Collider;
+  newTerrainCollider(scale: number, callback: (x: number, z: number) => number, samples: number): Collider;
+}
+
 declare interface newSourceOptions {
   decode: boolean;
   pitchable: boolean;
@@ -598,5 +666,24 @@ declare namespace lovr {
     function newCurve(n: number): Curve;
   }
 
-
+  namespace physics {
+    function newWorld(xg: number, yg: number, zg: number, allowSleep: boolean, tags: LuaTable): World;
+    function newBoxShape(width: number, height: number, depth: number): BoxShape;
+    function newCapsuleShape(radius: number, length: number): CapsuleShape;
+    function newCylinderShape(radius: number, length: number): CylinderShape;
+    function newMeshShape(vertices: LuaTable, indices: LuaTable): MeshShape;
+    function newMeshShape(model: Model): MeshShape;
+    function newSphereShape(radius: number): SphereShape;
+    function newTerrainShape(scale: number): TerrainShape;
+    function newTerrainShape(scale: number, heightmap: Image, stretch: number): TerrainShape;
+    function newTerrainShape(scale: number, callback: (x: number, z: number) => number, samples: number): TerrainShape;
+    function newBallJoint(colliderA: Collider, colliderB: Collider, x: number, y: number, z: number): BallJoint;
+    function newBallJoint(colliderA: Collider, colliderB: Collider, anchor: Vec3): BallJoint;
+    function newDistanceJoint(colliderA: Collider, colliderB: Collider, x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): DistanceJoint;
+    function newDistanceJoint(colliderA: Collider, colliderB: Collider, first: Vec3, second: Vec3): DistanceJoint;
+    function newHingeJoint(colliderA: Collider, colliderB: Collider, x: number, y: number, z: number, ax: number, ay: number, az: number): HingeJoint;
+    function newHingeJoint(colliderA: Collider, colliderB: Collider, anchor: Vec3, axis: Vec3): HingeJoint;
+    function newSliderJoint(colliderA: Collider, colliderB: Collider, ax: number, ay: number, az: number): SliderJoint;
+    function newSliderJoint(colliderA: Collider, colliderB: Collider, axis: Vec3): SliderJoint;
+  }
 }
