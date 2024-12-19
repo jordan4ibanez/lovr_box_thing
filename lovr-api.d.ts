@@ -67,8 +67,41 @@ declare interface lovrConfig {
   window: lovrConfigWindow | null;
 }
 
+declare type TimeUnit = "seconds" | "frames";
+
+declare type Effect = "absorption" | "attenuation" | "occlusion" | "reverb" | "spatialization" | "transmission";
+
 declare interface Source {
-  // todo: 1
+  getDuration(unit: TimeUnit): number;
+  getPitch(): number;
+  getVolume(unit: VolumeUnit): void;
+  isLooping(): boolean;
+  isPlaying(): boolean;
+  pause(): void;
+  play(): boolean;
+  seek(position: number, unit: TimeUnit): void;
+  setLooping(loop: boolean): void;
+  setPitch(pitch: number): void;
+  setVolume(volume: number, unit: VolumeUnit): void;
+  stop(): void;
+  tell(unit: TimeUnit): number;
+  getDirectivity(): LuaMultiReturn<[weight: number, power: number]>;
+  getOrientation(): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+  getPose(): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getPosition(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getRadius(): number;
+  isEffectEnabled(effect: Effect): boolean;
+  isSpatial(): boolean;
+  setDirectivity(weight: number, power: number): void;
+  setEffectEnabled(effect: Effect, enabled: boolean): void;
+  setOrientation(angle: number, ax: number, ay: number, az: number): void;
+  setPose(x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number): void;
+  setPose(position: Vec3, orientation: Quat): void;
+  setPosition(x: number, y: number, z: number): void;
+  setPosition(position: Vec3): void;
+  setRadius(radius: number): void;
+  clone(): Source;
+  getSound(): Sound;
 }
 
 declare type ChannelLayout = "mono" | "stereo" | "ambisonic";
