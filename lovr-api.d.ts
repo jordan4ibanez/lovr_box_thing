@@ -245,6 +245,10 @@ declare interface Vec2 extends Object {
   // s: number;
   // t: number;
 
+  
+
+
+  // Swizzling.
   add: LuaAdditionMethod<Vec2 | number, Vec2>;
   sub: LuaSubtractionMethod<Vec2 | number, Vec2>;
   mul: LuaMultiplicationMethod<Vec2 | number, Vec2>;
@@ -283,6 +287,10 @@ declare interface Vec3 extends Object {
   div: LuaDivisionMethod<Vec3 | number, Vec3>;
   pow: LuaPowerMethod<Vec3 | number, Vec3>;
 
+
+
+
+  // Swizzling.
   xx: Vec2;
   xy: Vec2;
   xz: Vec2;
@@ -350,6 +358,9 @@ declare interface Vec4 extends Object {
   div: LuaDivisionMethod<Vec4 | number, Vec4>;
   pow: LuaPowerMethod<Vec4 | number, Vec4>;
 
+
+
+  // Swizzling.
   xx: Vec2;
   xy: Vec2;
   xz: Vec2;
