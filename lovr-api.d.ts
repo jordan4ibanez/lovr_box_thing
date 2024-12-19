@@ -267,11 +267,11 @@ declare interface Vec2 extends Object {
   unpack(): LuaMultiReturn<[x: number, y: number]>;
 }
 
-declare const addVec3: LuaAddition<Vec3, Vec3 | number, Vec3>;
-declare const subVec3: LuaSubtraction<Vec3, Vec3 | number, Vec3>;
-declare const mulVec3: LuaMultiplication<Vec3, Vec3 | number, Vec3>;
-declare const divVec3: LuaDivision<Vec3, Vec3 | number, Vec3>;
-declare const powVec3: LuaPower<Vec3, Vec3 | number, Vec3>;
+declare const addVec3: LuaAddition<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
+declare const subVec3: LuaSubtraction<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
+declare const mulVec3: LuaMultiplication<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
+declare const divVec3: LuaDivision<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
+declare const powVec3: LuaPower<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
 declare interface Vec3 extends Object {
   // todo: 1
 
@@ -287,13 +287,36 @@ declare interface Vec3 extends Object {
   // t: number;
   // p: number
 
-  add: LuaAdditionMethod<Vec3 | number, Vec3>;
-  sub: LuaSubtractionMethod<Vec3 | number, Vec3>;
-  mul: LuaMultiplicationMethod<Vec3 | number, Vec3>;
-  div: LuaDivisionMethod<Vec3 | number, Vec3>;
-  pow: LuaPowerMethod<Vec3 | number, Vec3>;
+  add: LuaAdditionMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
+  sub: LuaSubtractionMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
+  mul: LuaMultiplicationMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
+  div: LuaDivisionMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
+  pow: LuaPowerMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
 
-
+  angle(u: Vec3): number;
+  angle(x: number, y: number, z: number): number;
+  cross(u: Vec3): Vec3;
+  cross(x: number, y: number, z: number): Vec3;
+  distance(u: Vec3): number;
+  distance(x: number, y: number, z: number): number;
+  dot(u: Vec3): number;
+  dot(x: number, y: number, z: number): number;
+  equals(u: Vec3): boolean;
+  equals(x: number, y: number, z: number): boolean;
+  length(): number;
+  lerp(u: Vec3, t: number): Vec3;
+  lerp(x: number, y: number, z: number, t: number): Vec3;
+  normalize(): Vec3;
+  rotate(q: Quat): Vec3;
+  rotate(angle: number, ax: number, ay: number, az: number): Vec3;
+  set(x: number, y: number, z: number): Vec3;
+  set(u: Vec3): Vec3;
+  set(q: Quat): Vec3;
+  set(m: Mat4): Vec3;
+  transform(m: Mat4): Vec3;
+  transform(x: number, y: number, z: number, scale: number, angle: number, ax: number, ay: number, az: number): Vec3;
+  transform(translation: Vec3, scale: number, rotation: Quat): Vec3;
+  unpack(): LuaMultiReturn<[x: number, y: number, z: number]>;
 }
 
 declare const addVec4: LuaAddition<Vec4, Vec4 | number, Vec4>;
