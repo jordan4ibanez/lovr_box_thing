@@ -675,8 +675,29 @@ declare interface Curve extends Object {
   setPoint(index: number, x: number, y: number, z: number): void;
 }
 
+declare type ShapeType = "box" | "capsule" | "cylinder" | "sphere";
+
 declare interface Shape extends Object {
-  // todo
+  destroy(): void;
+  getAABB(): LuaMultiReturn<[minx: number, miny: number, minz: number, maxx: number, maxy: number, maxz: number]>;
+  getCollider(): Collider;
+  getMass(density: number): LuaMultiReturn<[cx: number, cy: number, cz: number, mass: number, inertia: LuaTable]>;
+  getOrientation(): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+  getPose(): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getPosition(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getType(): ShapeType;
+  getUserData(): LuaUserdata;
+  isEnabled(): boolean;
+  isSensor(): boolean;
+  setEnabled(enabled: boolean): void;
+  setOrientation(angle: number, ax: number, ay: number, az: number): void;
+  setOrientation(orientation: Quat): void;
+  setPose(x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number): void;
+  setPose(position: Vec3, orientation: Quat): void;
+  setPosition(x: number, y: number, z: number): void;
+  setPosition(position: Vec3): void;
+  setSensor(sensor: boolean): void;
+  setUserData(data: LuaUserdata): void;
 }
 
 declare interface Collider extends Object {
