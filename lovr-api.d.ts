@@ -359,7 +359,6 @@ declare interface Vec4 extends Object {
   pow: LuaPowerMethod<Vec4 | number, Vec4>;
 
 
-
   // Swizzling.
   xx: Vec2;
   xy: Vec2;
@@ -1969,6 +1968,26 @@ declare namespace lovr {
     function step(): number;
   }
 
+  namespace vec2 {
+    function zero(): Vec2;
+    function one(): Vec2;
+  }
 
+  namespace vec3 {
+    function zero(): Vec3;
+    function one(): Vec3;
+    function left(): Vec3;
+    function right(): Vec3;
+    function up(): Vec3;
+    function down(): Vec3;
+    function back(): Vec3;
+    function forward(): Vec3;
+  }
+
+  namespace vec4 {
+    function zero(): Vec4;
+    function one(): Vec4;
+    function identity(): Vec4;
+  }
 
 }
