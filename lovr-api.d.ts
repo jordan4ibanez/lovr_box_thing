@@ -229,15 +229,51 @@ declare interface Object {
 }
 
 declare interface Vec2 extends Object {
+  x: number;
+  y: number;
+
+  // r: number;
+  // g: number;
+
+  // s: number;
+  // t: number;
+
 
 }
 
 declare interface Vec3 extends Object {
   // todo: 1
+
+  x: number;
+  y: number;
+  z: number;
+
+  // r: number;
+  // g: number;
+  // b: number
+
+  // s: number;
+  // t: number;
+  // p: number
 }
 
 declare interface Vec4 extends Object {
   // todo: 1
+
+  x: number;
+  y: number;
+  z: number;
+  w: number;
+
+  // r: number;
+  // g: number;
+  // b: number
+  // a: number
+
+  // s: number;
+  // t: number;
+  // p: number
+  // q: number;
 }
 
 declare interface Mat4 extends Object {
@@ -248,6 +284,11 @@ declare interface Mat4 extends Object {
 
 declare interface Quat extends Object {
   // todo: 1
+
+  x: number;
+  y: number;
+  z: number;
+  w: number;
 }
 
 declare type ShaderStage = "vertex" | "fragment" | "compute";
