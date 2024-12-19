@@ -228,6 +228,7 @@ declare interface Object {
   type(): string;
 }
 
+// todo: this lol
 //* Note: I can't really figure out how to make swizzling work in a declaration file.
 //* So if you know how, open a PR!
 
