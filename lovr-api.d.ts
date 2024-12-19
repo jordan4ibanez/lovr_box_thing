@@ -602,14 +602,16 @@ declare type TextureFormat = "r8" | "rg8" | "rgba8" | "r16" | "rg16" | "rgba16" 
   "astc10x6" | "astc10x8" | "astc10x10" | "astc12x10" | "astc12x12";
 
 declare interface Sampler extends Object {
-  // todo
+  getAnisotropy(): number;
+  getCompareMode(): CompareMode;
+  getFilter(): LuaMultiReturn<[min: FilterMode, mag: FilterMode, mip: FilterMode]>;
+  getMipmapRange(): LuaMultiReturn<[min: number, max: number]>;
+  getWrap(): LuaMultiReturn<[x: WrapMode, y: WrapMode, z: WrapMode]>;
 }
 
 declare type FilterMode = "nearest" | "linear";
 
-declare interface WrapMode extends Object {
-  // todo
-}
+declare type WrapMode = "clamp" | "repeat";
 
 declare type CompareMode = "none" | "equal" | "notequal" | "less" | "lequal" | "greater" | "gequal";
 
