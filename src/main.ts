@@ -3,5 +3,9 @@ function main(): void {
 
   let thing: Vec2 = lovr.math.vec2(0, 0);
   print(addVec2(thing, thing));
+
+  print(thing.add(thing));
+  print(thing.pow(thing));
+  thing.add(1.9);
 }
 

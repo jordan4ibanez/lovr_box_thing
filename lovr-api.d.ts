@@ -228,11 +228,11 @@ declare interface Object {
   type(): string;
 }
 
-declare const addVec2: LuaAddition<Vec2, Vec2, Vec2>;
-declare const subVec2: LuaSubtraction<Vec2, Vec2, Vec2>;
-declare const mulVec2: LuaMultiplication<Vec2, Vec2, Vec2>;
-declare const divVec2: LuaDivision<Vec2, Vec2, Vec2>;
-declare const powVec2: LuaPower<Vec2, Vec2, Vec2>;
+declare const addVec2: LuaAddition<Vec2, Vec2 | number, Vec2>;
+declare const subVec2: LuaSubtraction<Vec2, Vec2 | number, Vec2>;
+declare const mulVec2: LuaMultiplication<Vec2, Vec2 | number, Vec2>;
+declare const divVec2: LuaDivision<Vec2, Vec2 | number, Vec2>;
+declare const powVec2: LuaPower<Vec2, Vec2 | number, Vec2>;
 declare interface Vec2 extends Object {
   x: number;
   y: number;
@@ -246,11 +246,11 @@ declare interface Vec2 extends Object {
 
 }
 
-declare const addVec3: LuaAddition<Vec3, Vec3, Vec3>;
-declare const subVec3: LuaSubtraction<Vec3, Vec3, Vec3>;
-declare const mulVec3: LuaMultiplication<Vec3, Vec3, Vec3>;
-declare const divVec3: LuaDivision<Vec3, Vec3, Vec3>;
-declare const powVec3: LuaPower<Vec3, Vec3, Vec3>;
+declare const addVec3: LuaAddition<Vec3, Vec3 | number, Vec3>;
+declare const subVec3: LuaSubtraction<Vec3, Vec3 | number, Vec3>;
+declare const mulVec3: LuaMultiplication<Vec3, Vec3 | number, Vec3>;
+declare const divVec3: LuaDivision<Vec3, Vec3 | number, Vec3>;
+declare const powVec3: LuaPower<Vec3, Vec3 | number, Vec3>;
 declare interface Vec3 extends Object {
   // todo: 1
 
@@ -267,11 +267,11 @@ declare interface Vec3 extends Object {
   // p: number
 }
 
-declare const addVec4: LuaAddition<Vec4, Vec4, Vec4>;
-declare const subVec4: LuaSubtraction<Vec4, Vec4, Vec4>;
-declare const mulVec4: LuaMultiplication<Vec4, Vec4, Vec4>;
-declare const divVec4: LuaDivision<Vec4, Vec4, Vec4>;
-declare const powVec4: LuaPower<Vec4, Vec4, Vec4>;
+declare const addVec4: LuaAddition<Vec4, Vec4 | number, Vec4>;
+declare const subVec4: LuaSubtraction<Vec4, Vec4 | number, Vec4>;
+declare const mulVec4: LuaMultiplication<Vec4, Vec4 | number, Vec4>;
+declare const divVec4: LuaDivision<Vec4, Vec4 | number, Vec4>;
+declare const powVec4: LuaPower<Vec4, Vec4 | number, Vec4>;
 declare interface Vec4 extends Object {
   // todo: 1
 
