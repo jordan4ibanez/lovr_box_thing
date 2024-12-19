@@ -228,6 +228,8 @@ declare interface Object {
   type(): string;
 }
 
+declare const addVec2: LuaAddition<number, number, number>;
+
 declare interface Vec2 extends Object {
   x: number;
   y: number;
@@ -1429,15 +1431,15 @@ declare namespace lovr {
 
     function vec2(x: number, y: number): Vec2;
     function vec2(u: Vec2): Vec2;
-    
+
     function vec3(x: number, y: number, z: number): Vec3;
     function vec3(u: Vec3): Vec3;
     function vec3(m: Mat4): Vec3;
     function vec3(q: Quat): Vec3;
-    
+
     function vec4(x: number, y: number, z: number, w: number): Vec4;
     function vec4(u: Vec4): Vec4;
-    
+
     function gammaToLinear(gr: number, gg: number, gb: number): LuaMultiReturn<[lr: number, lg: number, lb: number]>;
     function gammaToLinear(color: LuaTable): LuaMultiReturn<[lr: number, lg: number, lb: number]>;
     function gammaToLinear(x: number): number;
