@@ -409,7 +409,11 @@ declare interface Pass extends Object {
 }
 
 declare interface Readback extends Object {
-  // todo
+  getBlob(): Blob;
+  getData(): LuaTable;
+  getImage(): Image;
+  isComplete(): boolean;
+  wait(): boolean;
 }
 
 declare interface BufferFormatElement {
