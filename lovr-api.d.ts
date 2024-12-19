@@ -797,7 +797,10 @@ declare interface CapsuleShape extends Shape {
 }
 
 declare interface CylinderShape extends Shape {
-  // todo
+  getLength(): number;
+  getRadius(): number;
+  setLength(length: number): void;
+  setRadius(radius: number): void;
 }
 
 declare interface MeshShape extends Shape {
