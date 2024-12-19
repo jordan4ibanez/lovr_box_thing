@@ -1,7 +1,7 @@
 
 //* Version: 0.17.0.
 //* If something is marked as deprecated I'm skipping it.
-// todo: anything that says LuaTable needs to be revisited.
+// todo: 1: anything that says LuaTable needs to be revisited.
 
 declare interface lovrConfigModules {
   audio: boolean;
@@ -68,11 +68,11 @@ declare interface lovrConfig {
 }
 
 declare interface Source {
-  // todo
+  // todo: 1
 }
 
 declare interface Sound {
-  // todo
+  // todo: 1
 }
 
 declare interface Blob {
@@ -179,19 +179,19 @@ declare interface Vec2 extends Object {
 }
 
 declare interface Vec3 extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface Vec4 extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface Mat4 extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface Quat extends Object {
-  // todo
+  // todo: 1
 }
 
 declare type ShaderStage = "vertex" | "fragment" | "compute";
@@ -473,7 +473,7 @@ declare interface Rasterizer extends Object {
 }
 
 declare interface Texture extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface Material extends Object {
@@ -508,7 +508,7 @@ declare interface Mesh extends Object {
 }
 
 declare interface MeshStorage extends Object {
-  // todo
+  // todo: 1
 }
 
 declare type AnimationProperty = "translation" | "rotation" | "scale" | "weights";
@@ -628,27 +628,27 @@ declare interface Shader extends Object {
 declare type DefaultShader = "unlit" | "normal" | "font" | "cubemap" | "equirect" | "fill";
 
 declare interface TextureType extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface TextureFeature extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface DeviceAxis extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface DeviceButton extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface PassthroughMode extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface HeadsetDriver extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface RandomGenerator extends Object {
@@ -876,11 +876,11 @@ declare interface SliderJoint extends Joint {
 }
 
 declare interface Permission extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface KeyCode extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface Channel extends Object {
@@ -892,7 +892,7 @@ declare interface Channel extends Object {
 }
 
 declare interface Thread extends Object {
-  // todo
+  // todo: 1
 }
 
 declare interface WindowOpenOptions {
@@ -928,7 +928,7 @@ declare interface newSourceOptions {
   decode: boolean;
   pitchable: boolean;
   spatial: boolean;
-  // todo: touch this up
+  // todo: 1: touch this up
   effects: LuaTable;
 }
 
