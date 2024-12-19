@@ -243,7 +243,11 @@ declare interface Vec2 extends Object {
   // s: number;
   // t: number;
 
-
+  add: LuaAdditionMethod<Vec2 | number, Vec2>;
+  sub: LuaSubtractionMethod<Vec2 | number, Vec2>;
+  mul: LuaMultiplicationMethod<Vec2 | number, Vec2>;
+  div: LuaDivisionMethod<Vec2 | number, Vec2>;
+  pow: LuaPowerMethod<Vec2 | number, Vec2>;
 }
 
 declare const addVec3: LuaAddition<Vec3, Vec3 | number, Vec3>;
