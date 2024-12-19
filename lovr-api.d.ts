@@ -803,9 +803,7 @@ declare interface CylinderShape extends Shape {
   setRadius(radius: number): void;
 }
 
-declare interface MeshShape extends Shape {
-  // todo
-}
+declare interface MeshShape extends Shape { }
 
 declare interface SphereShape extends Shape {
   getRadius(): number;
