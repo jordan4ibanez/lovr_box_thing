@@ -228,6 +228,9 @@ declare interface Object {
   type(): string;
 }
 
+//* Note: I can't really figure out how to make swizzling work in a declaration file.
+//* So if you know how, open a PR!
+
 declare const addVec2: LuaAddition<Vec2, Vec2 | number, Vec2>;
 declare const subVec2: LuaSubtraction<Vec2, Vec2 | number, Vec2>;
 declare const mulVec2: LuaMultiplication<Vec2, Vec2 | number, Vec2>;
