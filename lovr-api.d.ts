@@ -295,24 +295,22 @@ declare interface Vec4 extends Object {
   // q: number;
 }
 
-
-declare const addMat4: LuaAddition<Mat4, Mat4, Mat4>;
-declare const subMat4: LuaSubtraction<Mat4, Mat4, Mat4>;
-declare const mulMat4: LuaMultiplication<Mat4, Mat4, Mat4>;
-declare const divMat4: LuaDivision<Mat4, Mat4, Mat4>;
-declare const powMat4: LuaPower<Mat4, Mat4, Mat4>;
+declare const addMat4: LuaAddition<Mat4, Mat4 | number, Mat4>;
+declare const subMat4: LuaSubtraction<Mat4, Mat4 | number, Mat4>;
+declare const mulMat4: LuaMultiplication<Mat4, Mat4 | number, Mat4>;
+declare const divMat4: LuaDivision<Mat4, Mat4 | number, Mat4>;
+declare const powMat4: LuaPower<Mat4, Mat4 | number, Mat4>;
 declare interface Mat4 extends Object {
   // todo: 1
   // note: this is a flat array.  
   1: number;
 }
 
-
-declare const addQuat: LuaAddition<Quat, Quat, Quat>;
-declare const subQuat: LuaSubtraction<Quat, Quat, Quat>;
-declare const mulQuat: LuaMultiplication<Quat, Quat, Quat>;
-declare const divQuat: LuaDivision<Quat, Quat, Quat>;
-declare const powQuat: LuaPower<Quat, Quat, Quat>;
+declare const addQuat: LuaAddition<Quat, Quat | number, Quat>;
+declare const subQuat: LuaSubtraction<Quat, Quat | number, Quat>;
+declare const mulQuat: LuaMultiplication<Quat, Quat | number, Quat>;
+declare const divQuat: LuaDivision<Quat, Quat | number, Quat>;
+declare const powQuat: LuaPower<Quat, Quat | number, Quat>;
 declare interface Quat extends Object {
   // todo: 1
 
