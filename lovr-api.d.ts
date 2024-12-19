@@ -230,11 +230,11 @@ declare interface Object {
 
 //* Swizzling has been implemented by hand.
 
-declare const addVec2: LuaAddition<Vec2, Vec2 | number, Vec2>;
-declare const subVec2: LuaSubtraction<Vec2, Vec2 | number, Vec2>;
-declare const mulVec2: LuaMultiplication<Vec2, Vec2 | number, Vec2>;
-declare const divVec2: LuaDivision<Vec2, Vec2 | number, Vec2>;
-declare const powVec2: LuaPower<Vec2, Vec2 | number, Vec2>;
+declare const addVec2: LuaAddition<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
+declare const subVec2: LuaSubtraction<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
+declare const mulVec2: LuaMultiplication<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
+declare const divVec2: LuaDivision<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
+declare const powVec2: LuaPower<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
 declare interface Vec2 extends Object {
   x: number;
   y: number;
@@ -249,7 +249,7 @@ declare interface Vec2 extends Object {
   sub: LuaSubtractionMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
   mul: LuaMultiplicationMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
   div: LuaDivisionMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
-  pow: LuaPowerMethod<Vec2 | number, Vec2>;
+  pow: LuaPowerMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
 
   angle(u: Vec2): number;
   angle(x: number, y: number): number;
