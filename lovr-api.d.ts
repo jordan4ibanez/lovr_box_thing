@@ -71,8 +71,29 @@ declare interface Source {
   // todo: 1
 }
 
+declare type ChannelLayout = "mono" | "stereo" | "ambisonic";
+
+declare type SampleFormat = "f32" | "i16";
+
 declare interface Sound {
-  // todo: 1
+  getBlob(): Blob;
+  getCapacity(): number;
+  getChannelCount(): number;
+  getChannelLayout(): ChannelLayout;
+  getDuration(): number;
+  getFormat(): SampleFormat;
+  getFrameCount(): number;
+  getFrames(count: number | null, srcOffset: number): LuaMultiReturn<[t: LuaTable, count: number]>;
+  getFrames(t: LuaTable, count: number | null, srcOffset: number, dstOffset: number): LuaMultiReturn<[t: LuaTable, count: number]>;
+  getFrames(blob: Blob, count: number | null, srcOffset: number, dstOffset: number): LuaMultiReturn<[t: LuaTable, count: number]>;
+  getFrames(sound: Sound, count: number | null, srcOffset: number, dstOffset: number): LuaMultiReturn<[t: LuaTable, count: number]>;
+  getSampleCount(): number;
+  getSampleRate(): number;
+  isCompressed(): boolean;
+  isStream(): boolean;
+  setFrames(t: LuaTable, count: number | null, dstOffset: number, srcOffset: number): number;
+  setFrames(blob: Blob, count: number | null, dstOffset: number, srcOffset: number): number;
+  setFrames(sound: Sound, count: number | null, dstOffset: number, srcOffset: number): number;
 }
 
 declare interface Blob {
