@@ -810,9 +810,7 @@ declare interface SphereShape extends Shape {
   setRadius(radius: number): void;
 }
 
-declare interface TerrainShape extends Shape {
-  // todo
-}
+declare interface TerrainShape extends Shape { }
 
 declare type JointType = "ball" | "distance" | "hinge" | "slider";
 
