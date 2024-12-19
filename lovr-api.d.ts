@@ -427,13 +427,43 @@ declare interface Mat4 extends Object {
   15: number;
   16: number;
 
-  add: LuaAdditionMethod<Mat4 | number, Mat4>;
-  sub: LuaSubtractionMethod<Mat4 | number, Mat4>;
-  mul: LuaMultiplicationMethod<Mat4 | number, Mat4>;
-  div: LuaDivisionMethod<Mat4 | number, Mat4>;
-  pow: LuaPowerMethod<Mat4 | number, Mat4>;
+  add: LuaAdditionMethod<Mat4 | Vec3 | Vec4, Mat4>;
+  sub: LuaSubtractionMethod<Mat4 | Vec3 | Vec4, Mat4>;
+  mul: LuaMultiplicationMethod<Mat4 | Vec3 | Vec4, Mat4>;
+  div: LuaDivisionMethod<Mat4 | Vec3 | Vec4, Mat4>;
+  pow: LuaPowerMethod<Mat4 | Vec3 | Vec4, Mat4>;
 
-
+  equals(n: Mat4): boolean;
+  fov(left: number, right: number, up: number, down: number, near: number, far: number): Mat4;
+  getOrientation(): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
+  getPose(): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
+  getPosition(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  getScale(): LuaMultiReturn<[sx: number, sy: number, sz: number]>;
+  identity(): Mat4;
+  invert(): Mat4;
+  lookAt(from: Vec3, to: Vec3, up: Vec3): Mat4;
+  orthographic(left: number, right: number, bottom: number, top: number, near: number, far: number): Mat4;
+  orthographic(width: number, height: number, near: number, far: number): Mat4;
+  perspective(fov: number, aspect: number, near: number, far: number): Mat4;
+  reflect(position: Vec3, normal: Vec3): Mat4;
+  rotate(q: Quat): Mat4;
+  rotate(angle: number, ax: number, ay: number, az: number): Mat4;
+  scale(scale: Vec3): Mat4;
+  scale(sx: number, sy?: number, sz?: number): Mat4;
+  set(): Mat4;
+  set(n: Mat4): Mat4;
+  set(x: number, y: number, z: number, sx: number, sy: number, sz: number, angle: number, ax: number, ay: number, az: number): Mat4;
+  set(x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number): Mat4;
+  set(position: Vec3, scale: Vec3, rotation: Quat): Mat4;
+  set(position: Vec3, rotation: Quat): Mat4;
+  set(...values: [number]): Mat4;
+  set(d: number): Mat4;
+  target(from: Vec3, to: Vec3, up: Vec3): Mat4;
+  translate(v: Vec3): Mat4;
+  translate(x: number, y: number, z: number): Mat4;
+  transpose(): Mat4;
+  // todo: fix this lol.
+  unpack(raw: boolean): any;
 }
 
 
