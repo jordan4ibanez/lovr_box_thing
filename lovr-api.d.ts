@@ -387,6 +387,19 @@ declare interface Quat extends Object {
   div: LuaDivisionMethod<Quat | number, Quat>;
   pow: LuaPowerMethod<Quat | number, Quat>;
 
+  conjugate(): Quat;
+  direction(): Vec3;
+  equals(r: Quat): boolean;
+  length(): number;
+  normalize(): Quat;
+  set(angle: number, ax: number, ay: number, az: number, raw: boolean): Quat;
+  set(r: Quat): Quat;
+  set(v: Vec3): Quat;
+  set(v: Vec3, u: Vec3): Quat;
+  set(m: Mat4): Quat;
+  set(): Quat;
+  slerp(r: Quat, t: number): Quat;
+  unpack(raw: boolean): LuaMultiReturn<[a: number, b: number, c: number, d: number]>;
 }
 
 declare const addMat4: LuaAddition<Mat4, Mat4 | number, Mat4>;
