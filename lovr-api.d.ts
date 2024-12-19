@@ -245,13 +245,26 @@ declare interface Vec2 extends Object {
   // s: number;
   // t: number;
 
-  add: LuaAdditionMethod<Vec2 | number, Vec2>;
-  sub: LuaSubtractionMethod<Vec2 | number, Vec2>;
-  mul: LuaMultiplicationMethod<Vec2 | number, Vec2>;
-  div: LuaDivisionMethod<Vec2 | number, Vec2>;
+  add: LuaAdditionMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
+  sub: LuaSubtractionMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
+  mul: LuaMultiplicationMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
+  div: LuaDivisionMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
   pow: LuaPowerMethod<Vec2 | number, Vec2>;
 
-
+  angle(u: Vec2): number;
+  angle(x: number, y: number): number;
+  distance(u: Vec2): number;
+  distance(x: number, y: number): number;
+  dot(u: Vec2): number;
+  dot(x: number, y: number): number;
+  equals(u: Vec2): boolean;
+  equals(x: number, y: number): boolean;
+  length(): number;
+  lerp(u: Vec2, t: number): Vec2;
+  normalize(): Vec2;
+  set(x: number, y?: number): Vec2;
+  set(u: Vec2): Vec2;
+  unpack(): LuaMultiReturn<[x: number, y: number]>;
 }
 
 declare const addVec3: LuaAddition<Vec3, Vec3 | number, Vec3>;
@@ -367,7 +380,6 @@ declare interface Quat extends Object {
   mul: LuaMultiplicationMethod<Quat | number, Quat>;
   div: LuaDivisionMethod<Quat | number, Quat>;
   pow: LuaPowerMethod<Quat | number, Quat>;
-
 
 }
 
