@@ -194,9 +194,7 @@ declare interface Quat extends Object {
   // todo
 }
 
-declare interface ShaderStage extends Object {
-  // todo
-}
+declare type ShaderStage = "vertex" | "fragment" | "compute";
 
 declare type HorizontalAlign = "left" | "center" | "right";
 
@@ -615,8 +613,16 @@ declare type WrapMode = "clamp" | "repeat";
 
 declare type CompareMode = "none" | "equal" | "notequal" | "less" | "lequal" | "greater" | "gequal";
 
+declare type ShaderType = "graphics" | "compute";
+
 declare interface Shader extends Object {
-  // todo
+  clone(source: Shader, flags: LuaTable): Shader;
+  getBufferFormat(name: string): LuaMultiReturn<[format: AnyTable, length: number]>;
+  getType(): ShaderType;
+  getWorkgroupSize(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  hasAttribute(name: string): boolean;
+  hasAttribute(location: number): boolean;
+  hasStage(stage: ShaderStage): boolean;
 }
 
 declare type DefaultShader = "unlit" | "normal" | "font" | "cubemap" | "equirect" | "fill";
