@@ -551,8 +551,8 @@ declare interface Texture extends Object {
   setPixels(texture: Texture, dstx: number, dsty: number, dstlayer: number, dstmipmap: number, srcx: number, srcy: number, srcmipmap: number, width: number, height: number, layers: number, srcwidth: number, srcheight: number, srcdepth: number, filter: FilterMode): void;
   getParent(): Texture | null;
   isView(): boolean;
-  newView(layer: number, mipmap: number): Texture
-  newView(type: TextureType, layer: number, layerCount: number | null, mipmap: number, mipmapCount: number | null): Texture
+  newView(layer: number, mipmap: number): Texture;
+  newView(type: TextureType, layer: number, layerCount: number | null, mipmap: number, mipmapCount: number | null): Texture;
 }
 
 declare interface Material extends Object {
