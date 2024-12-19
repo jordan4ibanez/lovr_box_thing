@@ -611,7 +611,15 @@ declare interface HeadsetDriver extends Object {
 }
 
 declare interface RandomGenerator extends Object {
-  // todo
+  getSeed(): LuaMultiReturn<[low: number, high: number]>;
+  getState(): string;
+  random(): number;
+  random(high: number): number;
+  random(low: number, high: number): number;
+  randomNormal(sigma: number, mu: number): number;
+  setSeed(seed: number): void;
+  setSeed(low: number, high: number): void;
+  setState(state: string): number;
 }
 
 declare interface Curve extends Object {
