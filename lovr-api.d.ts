@@ -969,7 +969,10 @@ declare interface Channel extends Object {
 }
 
 declare interface Thread extends Object {
-  // todo: 1
+  getError(): string | null;
+  isRunning(): boolean;
+  start(...args: [any]): void;
+  wait(): void;
 }
 
 declare interface WindowOpenOptions {
