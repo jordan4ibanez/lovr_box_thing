@@ -438,7 +438,36 @@ declare interface Buffer extends Object {
 }
 
 declare interface Rasterizer extends Object {
-  // todo
+  getAdvance(character: string): number;
+  getAdvance(codepoint: number): number;
+  getAscent(): number;
+  getBearing(character: string): number;
+  getBearing(codepoint: number): number;
+  getBoundingBox(character: string): LuaMultiReturn<[x1: number, y1: number, x2: number, y2: number]>;
+  getBoundingBox(codepoint: number): LuaMultiReturn<[x1: number, y1: number, x2: number, y2: number]>;
+  getBoundingBox(): LuaMultiReturn<[x1: number, y1: number, x2: number, y2: number]>;
+  getCurves(character: string, three: boolean): LuaTable;
+  getCurves(codepoint: number, three: boolean): LuaTable;
+  getDescent(): number;
+  getDimensions(character: string): LuaMultiReturn<[width: number, height: number]>;
+  getDimensions(codepoint: number): LuaMultiReturn<[width: number, height: number]>;
+  getDimensions(): LuaMultiReturn<[width: number, height: number]>;
+  getFontSize(): number;
+  getGlyphCount(): number;
+  getHeight(character: string): number;
+  getHeight(codepoint: number): number;
+  getHeight(): number;
+  getKerning(first: string, second: string): number;
+  getKerning(firstCodepoint: number, second: string): number;
+  getKerning(first: string, secondCodepoint: number): number;
+  getKerning(firstCodepoint: number, secondCodepoint: number): number;
+  getLeading(): number;
+  getWidth(character: string): number;
+  getWidth(codepoint: number): number;
+  getWidth(): number;
+  hasGlyphs(...glyphs: [string | number]): boolean;
+  newImage(character: string, spread: number, padding: number): Image;
+  newImage(codepoint: number, spread: number, padding: number): Image;
 }
 
 declare interface Texture extends Object {
