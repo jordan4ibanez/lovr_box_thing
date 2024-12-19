@@ -245,7 +245,7 @@ declare interface Vec2 extends Object {
   // s: number;
   // t: number;
 
-  
+
 
 
   // Swizzling.
@@ -708,6 +708,23 @@ declare interface Mat4 extends Object {
   // todo: 1
   // note: this is a flat array.  
   1: number;
+  2: number;
+  3: number;
+  4: number;
+  5: number;
+  6: number;
+  7: number;
+  8: number;
+  9: number;
+  10: number;
+  11: number;
+  12: number;
+  13: number;
+  14: number;
+  15: number;
+  16: number;
+
+
 
   add: LuaAdditionMethod<Mat4 | number, Mat4>;
   sub: LuaSubtractionMethod<Mat4 | number, Mat4>;
