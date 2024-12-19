@@ -238,6 +238,7 @@ declare interface Vec3 extends Object {
 
 declare interface Vec4 extends Object {
   // todo: 1
+  // note: this is a flat array. 
 }
 
 declare interface Mat4 extends Object {
