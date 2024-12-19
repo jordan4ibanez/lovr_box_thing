@@ -784,27 +784,27 @@ declare interface Shape extends Object {
   setUserData(data: LuaUserdata): void;
 }
 
-declare interface BoxShape extends Object {
+declare interface BoxShape extends Shape {
   // todo
 }
 
-declare interface CapsuleShape extends Object {
+declare interface CapsuleShape extends Shape {
   // todo
 }
 
-declare interface CylinderShape extends Object {
+declare interface CylinderShape extends Shape {
   // todo
 }
 
-declare interface MeshShape extends Object {
+declare interface MeshShape extends Shape {
   // todo
 }
 
-declare interface SphereShape extends Object {
+declare interface SphereShape extends Shape {
   // todo
 }
 
-declare interface TerrainShape extends Object {
+declare interface TerrainShape extends Shape {
   // todo
 }
 
