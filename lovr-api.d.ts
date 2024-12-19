@@ -785,7 +785,8 @@ declare interface Shape extends Object {
 }
 
 declare interface BoxShape extends Shape {
-  // todo
+  getDimensions(): LuaMultiReturn<[width: number, height: number, depth: number]>;
+  setDimensions(width: number, height: number, depth: number): void;
 }
 
 declare interface CapsuleShape extends Shape {
