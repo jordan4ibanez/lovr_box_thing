@@ -1410,42 +1410,34 @@ declare namespace lovr {
     function newQuat(v: Vec3, u: Vec3): Quat;
     function newQuat(m: Mat4): Quat;
     function newQuat(): Quat;
-
     function newVec2(scalar: number): Vec2;
     function newVec2(x: number, y: number): Vec2;
     function newVec2(u: Vec2): Vec2;
-
     function newVec3(scalar: number): Vec3;
     function newVec3(x: number, y: number, z: number): Vec3;
     function newVec3(u: Vec3): Vec3;
     function newVec3(m: Mat4): Vec3;
     function newVec3(q: Quat): Vec3;
-
     function newVec4(scalar: number): Vec4;
     function newVec4(x: number, y: number, z: number, w: number): Vec4;
     function newVec4(u: Vec4): Vec4;
-
     function quat(angle: number, ax: number, ay: number, az: number, raw: boolean): Quat;
     function quat(r: Quat): Quat;
     function quat(v: Vec3): Quat;
     function quat(v: Vec3, u: Vec3): Quat;
     function quat(m: Mat4): Quat;
     function quat(): Quat;
-
     function vec2(scalar: number): Vec2;
     function vec2(x: number, y: number): Vec2;
     function vec2(u: Vec2): Vec2;
-
     function vec3(scalar: number): Vec3;
     function vec3(x: number, y: number, z: number): Vec3;
     function vec3(u: Vec3): Vec3;
     function vec3(m: Mat4): Vec3;
     function vec3(q: Quat): Vec3;
-
     function vec4(scalar: number): Vec4;
     function vec4(x: number, y: number, z: number, w: number): Vec4;
     function vec4(u: Vec4): Vec4;
-
     function gammaToLinear(gr: number, gg: number, gb: number): LuaMultiReturn<[lr: number, lg: number, lb: number]>;
     function gammaToLinear(color: LuaTable): LuaMultiReturn<[lr: number, lg: number, lb: number]>;
     function gammaToLinear(x: number): number;
