@@ -368,6 +368,27 @@ declare interface Vec4 extends Object {
   unpack(): LuaMultiReturn<[x: number, y: number, z: number, w: number]>;
 }
 
+declare const addQuat: LuaAddition<Quat, Quat | number, Quat>;
+declare const subQuat: LuaSubtraction<Quat, Quat | number, Quat>;
+declare const mulQuat: LuaMultiplication<Quat, Quat | number, Quat>;
+declare const divQuat: LuaDivision<Quat, Quat | number, Quat>;
+declare const powQuat: LuaPower<Quat, Quat | number, Quat>;
+declare interface Quat extends Object {
+  // todo: 1
+
+  x: number;
+  y: number;
+  z: number;
+  w: number;
+
+  add: LuaAdditionMethod<Quat | number, Quat>;
+  sub: LuaSubtractionMethod<Quat | number, Quat>;
+  mul: LuaMultiplicationMethod<Quat | number, Quat>;
+  div: LuaDivisionMethod<Quat | number, Quat>;
+  pow: LuaPowerMethod<Quat | number, Quat>;
+
+}
+
 declare const addMat4: LuaAddition<Mat4, Mat4 | number, Mat4>;
 declare const subMat4: LuaSubtraction<Mat4, Mat4 | number, Mat4>;
 declare const mulMat4: LuaMultiplication<Mat4, Mat4 | number, Mat4>;
@@ -402,26 +423,7 @@ declare interface Mat4 extends Object {
 
 }
 
-declare const addQuat: LuaAddition<Quat, Quat | number, Quat>;
-declare const subQuat: LuaSubtraction<Quat, Quat | number, Quat>;
-declare const mulQuat: LuaMultiplication<Quat, Quat | number, Quat>;
-declare const divQuat: LuaDivision<Quat, Quat | number, Quat>;
-declare const powQuat: LuaPower<Quat, Quat | number, Quat>;
-declare interface Quat extends Object {
-  // todo: 1
 
-  x: number;
-  y: number;
-  z: number;
-  w: number;
-
-  add: LuaAdditionMethod<Quat | number, Quat>;
-  sub: LuaSubtractionMethod<Quat | number, Quat>;
-  mul: LuaMultiplicationMethod<Quat | number, Quat>;
-  div: LuaDivisionMethod<Quat | number, Quat>;
-  pow: LuaPowerMethod<Quat | number, Quat>;
-
-}
 
 declare type ShaderStage = "vertex" | "fragment" | "compute";
 
