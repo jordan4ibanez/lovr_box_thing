@@ -808,7 +808,8 @@ declare interface MeshShape extends Shape {
 }
 
 declare interface SphereShape extends Shape {
-  // todo
+  getRadius(): number;
+  setRadius(radius: number): void;
 }
 
 declare interface TerrainShape extends Shape {
