@@ -269,6 +269,12 @@ declare interface Vec3 extends Object {
   // s: number;
   // t: number;
   // p: number
+
+  add: LuaAdditionMethod<Vec3 | number, Vec3>;
+  sub: LuaSubtractionMethod<Vec3 | number, Vec3>;
+  mul: LuaMultiplicationMethod<Vec3 | number, Vec3>;
+  div: LuaDivisionMethod<Vec3 | number, Vec3>;
+  pow: LuaPowerMethod<Vec3 | number, Vec3>;
 }
 
 declare const addVec4: LuaAddition<Vec4, Vec4 | number, Vec4>;
@@ -293,6 +299,12 @@ declare interface Vec4 extends Object {
   // t: number;
   // p: number
   // q: number;
+
+  add: LuaAdditionMethod<Vec4 | number, Vec4>;
+  sub: LuaSubtractionMethod<Vec4 | number, Vec4>;
+  mul: LuaMultiplicationMethod<Vec4 | number, Vec4>;
+  div: LuaDivisionMethod<Vec4 | number, Vec4>;
+  pow: LuaPowerMethod<Vec4 | number, Vec4>;
 }
 
 declare const addMat4: LuaAddition<Mat4, Mat4 | number, Mat4>;
@@ -304,6 +316,12 @@ declare interface Mat4 extends Object {
   // todo: 1
   // note: this is a flat array.  
   1: number;
+
+  add: LuaAdditionMethod<Mat4 | number, Mat4>;
+  sub: LuaSubtractionMethod<Mat4 | number, Mat4>;
+  mul: LuaMultiplicationMethod<Mat4 | number, Mat4>;
+  div: LuaDivisionMethod<Mat4 | number, Mat4>;
+  pow: LuaPowerMethod<Mat4 | number, Mat4>;
 }
 
 declare const addQuat: LuaAddition<Quat, Quat | number, Quat>;
@@ -318,6 +336,12 @@ declare interface Quat extends Object {
   y: number;
   z: number;
   w: number;
+
+  add: LuaAdditionMethod<Quat | number, Quat>;
+  sub: LuaSubtractionMethod<Quat | number, Quat>;
+  mul: LuaMultiplicationMethod<Quat | number, Quat>;
+  div: LuaDivisionMethod<Quat | number, Quat>;
+  pow: LuaPowerMethod<Quat | number, Quat>;
 }
 
 declare type ShaderStage = "vertex" | "fragment" | "compute";
