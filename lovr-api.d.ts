@@ -526,8 +526,33 @@ declare interface Rasterizer extends Object {
   newImage(codepoint: number, spread: number, padding: number): Image;
 }
 
+declare type TextureUsage = "sample" | "render" | "storage" | "transfer";
+
 declare interface Texture extends Object {
-  // todo: 1
+  getDimensions(): LuaMultiReturn<[width: number, height: number, layers: number]>;
+  getFormat(): TextureFormat;
+  getHeight(): number;
+  getLayerCount(): number;
+  getMipmapCount(): number;
+  getSampleCount(): number;
+  getType(): TextureType;
+  getWidth(): number;
+  hasUsage(...usage: [TextureUsage]): boolean;
+  clear(): void;
+  clear(hex: number, layer: number, layerCount: number | null, mipmap: number, mipmapCount: number | null): void;
+  clear(r: number, g: number, b: number, a: number, layer: number, layerCount: number | null, mipmap: number, mipmapCount: number | null): void;
+  clear(t: LuaTable, layer: number, layerCount: number | null, mipmap: number, mipmapCount: number | null): void;
+  clear(v3: Vec3, layer: number, layerCount: number | null, mipmap: number, mipmapCount: number | null): void;
+  clear(v4: Vec4, layer: number, layerCount: number | null, mipmap: number, mipmapCount: number | null): void;
+  generateMipmaps(base: number, count: number | null): void;
+  getPixels(x: number, y: number, layer: number, mipmap: number, width: number | null, height: number | null): Image;
+  newReadback(x: number, y: number, layer: number, mipmap: number, width: number | null, height: number | null): Readback;
+  setPixels(image: Image, dstx: number, dsty: number, dstlayer: number, dstmipmap: number, srcx: number, srcy: number, srclayer: number, srcmipmap: number, width: number | null, height: number | null, layers: number | null): void;
+  setPixels(texture: Texture, dstx: number, dsty: number, dstlayer: number, dstmipmap: number, srcx: number, srcy: number, srcmipmap: number, width: number, height: number, layers: number, srcwidth: number, srcheight: number, srcdepth: number, filter: FilterMode): void;
+  getParent(): Texture | null;
+  isView(): boolean;
+  newView(layer: number, mipmap: number): Texture
+  newView(type: TextureType, layer: number, layerCount: number | null, mipmap: number, mipmapCount: number | null): Texture
 }
 
 declare interface Material extends Object {
@@ -681,9 +706,7 @@ declare interface Shader extends Object {
 
 declare type DefaultShader = "unlit" | "normal" | "font" | "cubemap" | "equirect" | "fill";
 
-declare interface TextureType extends Object {
-  // todo: 1
-}
+declare type TextureType = "2d" | "3d" | "cube" | "array";
 
 declare interface TextureFeature extends Object {
   // todo: 1
