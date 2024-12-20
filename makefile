@@ -7,9 +7,13 @@ install:
 	@npm install
 
 clean:
-	@rm -rf ./node_modules
 	@rm -rf ./out
 	@echo "Clean completed."
+
+deep_clean:
+	@rm -rf ./node_modules
+	@rm -rf ./out
+	@echo "Deep clean completed."
 
 update:
 	@npm update
