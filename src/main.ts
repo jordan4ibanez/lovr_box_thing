@@ -1,13 +1,20 @@
+
+
+
 lovr.load = () => {
-  print("hi");
+  lovr.event.quit();
 };
 
-lovr.draw = (pass: Pass) => {
-  pass.text("hello!", 0, 1.7, -3, 0.5);
-};
+// lovr.draw = (pass: Pass) => {
+//   pass.text("hello!", 0, 1.7, -3, 0.5);
+// };
 
-lovr.keypressed = (key: KeyCode) => {
-  if (key == "escape") {
-    lovr.event.quit();
-  }
-};
+// lovr.update = () => {
+//   lovr.event.quit();
+// };
+
+// lovr.keypressed = (key: KeyCode) => {
+//   if (key == "escape") {
+//     lovr.event.quit();
+//   }
+// };
