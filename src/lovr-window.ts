@@ -176,7 +176,7 @@ export function getDisplayDimensions(index: number): [width: number, height: num
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function setIcon(source: any): void {
+export function setIcon(source: string | Image): void {
 	if (!source) {
 		C.glfwSetWindowIcon(W, 0, null);
 		__params.icon = null;
@@ -184,13 +184,13 @@ export function setIcon(source: any): void {
 	}
 
 	if (type(source) == 'string') {
-		source = lovr.data.newImage(source);
+		source = lovr.data.newImage(source as string);
 	} else if (tostring(source) != 'Image') {
 		error('Bad argument #1 to setIcon (Image expected)', 2);
 	}
 	__params.icon = source;
 
-	source = source as Texture;
+	source = source as Image;
 
 	const icon = ffi.new_('GLFWimage', source.getWidth(), source.getHeight(), source.getBlob().getPointer());
 	C.glfwSetWindowIcon(W, 1, icon);
