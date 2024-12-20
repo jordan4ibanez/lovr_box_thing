@@ -1821,6 +1821,11 @@ declare namespace lovr {
   function visible(visible: boolean): void;
   function wheelmoved(deltaX: number, deltaY: number): void;
 
+  // This is a secret variable.
+  /** @customName windowmoved */
+  const windowmoved_: number;
+  function windowmoved(x: number, y: number): void;
+
   namespace audio {
     function newSource(data: string | Blob | Sound, options: NewSourceOptions): Source;
     function getOrientation(): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
