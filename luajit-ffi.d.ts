@@ -18,6 +18,7 @@ declare type ct = cdecl | ctype | cdata;
 declare type VLA = Array<any>;
 declare type VLSL = CStruct;
 
+
 /** 
  * This is the main LuaJIT FFI module.
  * @noResolution
@@ -29,8 +30,10 @@ declare module "ffi" {
   const C: AnyTable;
   function load(name: string, global?: boolean): CLib;
   // Can't use the "new" function.
+  // But you can do: const ffi_new = (ffi as unknown as AnyTable).new;
   function ctype(nelem: number, ...init: any): ctype;
   // Can't use the "typeof" function.
+  // But you can do: const ffi_typeof = (ffi as unknown as AnyTable).typeof;
   function cast(data: ct, ...init: any): cdata;
   function metatype(data: ct): ctype;
   function gc(data: cdata, finalizer: any): cdata;

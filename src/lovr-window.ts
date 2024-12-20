@@ -11,6 +11,9 @@ if (ffi.os == "Windows") {
 
 const Cstr = ffi.string;
 
+// I love typescript lol.
+const ffi_new = (ffi as unknown as AnyTable).new;
+
 //!! remove me!!
 export function blah(): void { print("blah"); }
 
@@ -158,15 +161,57 @@ function check_monitor(index: number, throwerr: boolean) {
 }
 
 
-window.getDisplayName = (index: number) => {
+window.getDisplayName = (index: number): any => {
 	check_monitor(index, true);
 	return Cstr(C.glfwGetMonitorName(__monitors[index]));
 };
 
-window.getDisplayDimensions = (index: number) => {
+window.getDisplayDimensions = (index: number): any => {
 	check_monitor(index, true);
 	const screenmode = C.glfwGetVideoMode(__monitors[index]);
 	return screenmode.width, screenmode.height;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// window.getDisplayCount = (): any => {
+// 	const count = ffi.new('int[1]')
+// 	__monitors = C.glfwGetMonitors(count)
+// 	return count[0]
+// end
+
+// local function check_monitor( index, throwerr )
+// 	if type(index) ~= 'number' then
+// 		if throwerr then
+// 			error('Bad argument #1: number expected got ' .. type(index), 3)
+// 		else
+// 			return false
+// 		end
+// 	end
+
+// 	local dcnt = window.getDisplayCount()
+// 	if index < 1 or index > dcnt then
+// 		if throwerr then
+// 			error('Invalid display index: ' .. tostring(index), 3)
+// 		else
+// 			return false
+// 		end
+// 	end
+
+// 	return true
+// }
+
+// function window.getDisplayName( index )
+// 	check_monitor( index, true )
+// 	return C_str(C.glfwGetMonitorName( __monitors[index-1] ))
+// end
+
+// function window.getDisplayDimensions( index )
+// 	check_monitor( index, true )
+// 	local screenmode = C.glfwGetVideoMode( __monitors[index-1] )
+// 	return screenmode.width, screenmode.height
+// end
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
