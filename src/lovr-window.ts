@@ -313,3 +313,88 @@ window.getFullscreen = (): [boolean, FullScreenType] => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+window.getMode = (): [number, number, AnyTable] => {
+	let flags: AnyTable = {};
+
+	flags.fullscreen = C.glfwGetWindowMonitor(W) != null;
+	flags.fullscreentype = __params.fullscreentype;
+
+	flags.x = ffi.new_('int[1]');
+	flags.y = ffi.new_('int[1]');
+	C.glfwGetWindowPos(W, flags.x, flags.y);
+	flags.x, flags.y = flags.x[0], flags.y[0];
+
+	let width: AnyTable = ffi.new_('int[1]');
+	let height: AnyTable = ffi.new_('int[1]');
+	C.glfwGetWindowSize(W, width, height);
+	width = width[0];
+	height = height[0];
+
+	flags.msaa = __params.msaa;
+	flags.vsync = __params.vsync;
+
+	flags.topmost = C.glfwGetWindowAttrib(W, C.GLFW_FLOATING) == 1;
+	flags.opacity = C.glfwGetWindowOpacity(W);
+
+	flags.borderless = C.glfwGetWindowAttrib(W, C.GLFW_DECORATED) == 0;
+	flags.resizable = C.glfwGetWindowAttrib(W, C.GLFW_RESIZABLE) == 1;
+	flags.centered = __params.centered;
+
+	flags.display = __params.display;
+
+	flags.minwidth = __params.minwidth;
+	flags.minheight = __params.minheight;
+
+	return [width as unknown as number, height as unknown as number, flags];
+};
+
+window.setMode = (width: number, height: number, flags?: AnyTable) => {
+	if (flags) {
+		let _a, _b, mode = window.getMode();
+		for (let [k, v] of Object.entries(mode)) {
+			if (!flags[k as string] || flags[k as string] == null) {
+				flags[k as string] = v;
+			}
+		}
+
+		flags.display = check_monitor(flags.display) && flags.display || 1;
+
+		if (flags.centered) {
+			const screenmode = C.glfwGetVideoMode(__monitors[flags.display - 1]);
+			const mx: AnyTable = ffi.new_('int[1]');
+			const my: AnyTable = ffi.new_('int[1]');
+			C.glfwGetMonitorPos(__monitors[flags.display - 1], mx, my);
+
+			flags.x = mx[0] + screenmode.width * 0.5 - width * 0.5;
+			flags.y = my[0] + screenmode.height * 0.5 - height * 0.5;
+		}
+		C.glfwSetWindowPos(W, flags.x, flags.y);
+
+		C.glfwSetWindowSizeLimits(W, flags.minwidth, flags.minheight, -1, -1);
+
+		C.glfwSetWindowAttrib(W, C.GLFW_DECORATED, flags.borderless && 0 || 1);
+		C.glfwSetWindowAttrib(W, C.GLFW_FLOATING, flags.topmost && 1 || 0);
+		C.glfwSetWindowAttrib(W, C.GLFW_RESIZABLE, flags.resizable && 1 || 0);
+
+		flags.opacity = math.max(0, math.min(flags.opacity, 1));
+		C.glfwSetWindowOpacity(W, flags.opacity);
+
+		if (flags.fullscreen) {
+			window.setFullscreen(flags.fullscreen, flags.fullscreentype, flags.display);
+		} else {
+			C.glfwSetWindowSize(W, width, height);
+		}
+
+		__params.width = width;
+		__params.height = height;
+		for (let [k, v] of Object.entries(flags)) {
+			__params[k] = v;
+		}
+	} else {
+		C.glfwSetWindowSize(W, width, height);
+	}
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
