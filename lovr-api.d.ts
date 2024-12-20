@@ -1784,6 +1784,28 @@ declare type LogLevel = "debug" | "info" | "warn" | "error";
 /** @noSelf **/
 declare namespace lovr {
   function conf(t: LovrConfig): void;
+  function draw(pass: Pass): boolean | void;
+  function errhand(message: string): (s: string) => string;
+  function focus(focused: boolean): void;
+  function keypressed(key: KeyCode, scancode: number, repeating: boolean): void;
+  function keyreleased(key: KeyCode, scancode: number): void;
+  function load(arg: LuaTable): void;
+  function log(message: string, level: LogLevel, tag: string): void;
+  function mirror(pass: Pass): boolean;
+  function mousemoved(x: number, y: number, dx: number, dy: number): void;
+  function mousepressed(x: number, y: number, button: number): void;
+  function mousereleased(x: number, y: number, button: number): void;
+  function permission(permission: Permission, granted: boolean): void;
+  function quit(): boolean;
+  function recenter(): void;
+  function resize(width: number, height: number): void;
+  function restart(): void | boolean | number | string;
+  function run(): void | string | number;
+  function textinput(text: string, code: number): void;
+  function threaderror(thread: Thread, message: string): void;
+  function update(dt: number): void;
+  function visible(visible: boolean): void;
+  function wheelmoved(deltaX: number, deltaY: number): void;
 
   namespace audio {
     function newSource(data: string | Blob | Sound, options: newSourceOptions): Source;
