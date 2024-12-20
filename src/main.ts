@@ -11,7 +11,11 @@ lovr.load = () => {
   print(window.getDisplayName(1));
   print(window.getIcon());
   print(window.getMode()[0]);
+  print(window.getOpacity());
+  print(window.getPosition()[0]);
+  print(window.getTitle());
 
+  window.setFullscreen(true, "desktop", 1);
 
   // lovr.event.quit();
 };
