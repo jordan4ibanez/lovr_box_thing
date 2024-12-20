@@ -1,8 +1,9 @@
-
-
+import * as ffi from "ffi";
+import * as jit from "jit";
 
 lovr.load = () => {
   lovr.event.quit();
+  jit.on();
 };
 
 // lovr.draw = (pass: Pass) => {
