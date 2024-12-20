@@ -1755,6 +1755,8 @@ declare interface LovrConfigMath {
   globals: boolean;
 }
 
+declare type FullScreenType = "desktop" | "exclusive";
+
 declare interface LovrConfigWindow {
   width: number;
   height: number;
@@ -1762,6 +1764,17 @@ declare interface LovrConfigWindow {
   resizable: boolean;
   title: string;
   icon: string;
+  // lovr-window variables
+  fullscreentype: FullScreenType;
+  x: number;
+  y: number;
+  minwidth: number;
+  minheight: number;
+  display: number;
+  centered: boolean;
+  topmost: boolean;
+  borderless: boolean;
+  opacity: number;
 }
 
 declare interface LovrConfig {
