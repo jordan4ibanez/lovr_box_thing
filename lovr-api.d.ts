@@ -4,70 +4,6 @@
 // todo: 1: anything that says LuaTable needs to be revisited.
 // todo: 2: anything that says any needs to be revisited.
 
-declare interface lovrConfigModules {
-  audio: boolean;
-  data: boolean;
-  event: boolean;
-  graphics: boolean;
-  headset: boolean;
-  math: boolean;
-  physics: boolean;
-  system: boolean;
-  thread: boolean;
-  timer: boolean;
-}
-
-declare type lovrConfigSpatializer = "simple" | "oculus" | "phonon";
-
-declare interface LovrConfigAudio {
-  spatializer?: lovrConfigSpatializer;
-  samplerate: number;
-  start: boolean;
-}
-
-declare interface LovrConfigGraphics {
-  debug: boolean;
-  vsync: boolean;
-  stencil: boolean;
-  antialias: boolean;
-  shadercache: boolean;
-}
-
-declare interface LovrConfigHeadset {
-  drivers: Array<string>;
-  supersample: number;
-  seated: boolean;
-  antialias: boolean;
-  stencil: boolean;
-  submitdepth: boolean;
-  overlay: boolean;
-}
-
-declare interface LovrConfigMath {
-  globals: boolean;
-}
-
-declare interface LovrConfigWindow {
-  width: number;
-  height: number;
-  fullscreen: boolean;
-  resizable: boolean;
-  title: string;
-  icon: string;
-}
-
-declare interface LovrConfig {
-  version: string;
-  identity: string;
-  saveprecedence: boolean;
-  modules: lovrConfigModules;
-  audio: LovrConfigAudio;
-  graphics: LovrConfigGraphics;
-  headset: LovrConfigHeadset;
-  math: LovrConfigMath;
-  window: LovrConfigWindow | null;
-}
-
 declare type TimeUnit = "seconds" | "frames";
 
 declare type Effect = "absorption" | "attenuation" | "occlusion" | "reverb" | "spatialization" | "transmission";
@@ -1778,6 +1714,70 @@ declare interface DeviceLimits {
 
 declare interface DeviceModelOptions {
   animated: boolean;
+}
+
+declare interface lovrConfigModules {
+  audio: boolean;
+  data: boolean;
+  event: boolean;
+  graphics: boolean;
+  headset: boolean;
+  math: boolean;
+  physics: boolean;
+  system: boolean;
+  thread: boolean;
+  timer: boolean;
+}
+
+declare type lovrConfigSpatializer = "simple" | "oculus" | "phonon";
+
+declare interface LovrConfigAudio {
+  spatializer?: lovrConfigSpatializer;
+  samplerate: number;
+  start: boolean;
+}
+
+declare interface LovrConfigGraphics {
+  debug: boolean;
+  vsync: boolean;
+  stencil: boolean;
+  antialias: boolean;
+  shadercache: boolean;
+}
+
+declare interface LovrConfigHeadset {
+  drivers: Array<string>;
+  supersample: number;
+  seated: boolean;
+  antialias: boolean;
+  stencil: boolean;
+  submitdepth: boolean;
+  overlay: boolean;
+}
+
+declare interface LovrConfigMath {
+  globals: boolean;
+}
+
+declare interface LovrConfigWindow {
+  width: number;
+  height: number;
+  fullscreen: boolean;
+  resizable: boolean;
+  title: string;
+  icon: string;
+}
+
+declare interface LovrConfig {
+  version: string;
+  identity: string;
+  saveprecedence: boolean;
+  modules: lovrConfigModules;
+  audio: LovrConfigAudio;
+  graphics: LovrConfigGraphics;
+  headset: LovrConfigHeadset;
+  math: LovrConfigMath;
+  window: LovrConfigWindow | null;
 }
 
 /** @noSelf **/
