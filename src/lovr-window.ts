@@ -101,7 +101,7 @@ ffi.cdef(`
 
 const W = ffi.C.os_get_glfw_window();
 let window: AnyTable = {};
-let __monitors;
+let __monitors: AnyTable = {};
 
 let __params: AnyTable = { // default parameters list;
 	title: 'LÖVR',
@@ -158,15 +158,15 @@ function check_monitor(index: number, throwerr: boolean) {
 }
 
 
-// window.getDisplayName = ( index: number ) => {
-// 	check_monitor( index, true )
-// 	return C_str(C.glfwGetMonitorName( __monitors[index] ))
-// }
+window.getDisplayName = (index: number) => {
+	check_monitor(index, true);
+	return Cstr(C.glfwGetMonitorName(__monitors[index]));
+};
 
-// function window.getDisplayDimensions( index: number ) {
-// 	check_monitor( index, true )
-// 	const screenmode = C.glfwGetVideoMode( __monitors[index] )
-// 	return screenmode.width, screenmode.height
-// }
+window.getDisplayDimensions = (index: number) => {
+	check_monitor(index, true);
+	const screenmode = C.glfwGetVideoMode(__monitors[index]);
+	return screenmode.width, screenmode.height;
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
