@@ -773,8 +773,16 @@ declare interface Mat4 extends Object {
   translate(v: Vec3): Mat4;
   translate(x: number, y: number, z: number): Mat4;
   transpose(): Mat4;
-  // todo: fix this lol.
-  unpack(raw: boolean): any;
+  unpack(raw: boolean): LuaMultiReturn<[
+    x1: number, y1: number, z1: number, w1: number,
+    x2: number, y2: number, z2: number, w2: number,
+    x3: number, y3: number, z3: number, w3: number,
+    x4: number, y4: number, z4: number, w4: number,
+  ]> | LuaMultiReturn<[
+    x: number, y: number, z: number,
+    sx: number, sy: number, sz: number,
+    rx: number, ry: number, rz: number, rw: number
+  ]>;
 }
 
 declare type ShaderStage = "vertex" | "fragment" | "compute";
