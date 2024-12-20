@@ -136,7 +136,7 @@ if (conf != null) {
 	conf = null;
 }
 
-function check_monitor(index: number, throwerr: boolean) {
+function check_monitor(index: number, throwerr?: boolean) {
 	if (type(index) != 'number') {
 		if (throwerr) {
 			error('Bad argument #1: number expected got ' + type(index), 3);
@@ -204,6 +204,112 @@ window.setOpacity = (value: number) => {
 
 window.getOpacity = (): number => {
 	return C.glfwGetWindowOpacity(W);
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+window.setPosition = (x: number, y: number) => {
+	C.glfwSetWindowPos(W, x || 0, y || 0);
+};
+
+window.getPosition = (): [any, any] => {
+	const x: AnyTable = ffi.new_('int[1]');
+	const y: AnyTable = ffi.new_('int[1]');
+	C.glfwGetWindowPos(W, x, y);
+	return [x[0], y[0]];
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+window.maximize = () => {
+	C.glfwMaximizeWindow(W);
+};
+
+window.minimize = () => {
+	C.glfwIconifyWindow(W);
+};
+
+window.restore = () => {
+	C.glfwRestoreWindow(W);
+};
+
+window.focus = () => {
+	C.glfwFocusWindow(W);
+};
+
+window.requestAttention = () => {
+	C.glfwRequestWindowAttention(W);
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+window.setTitle = (title: string) => {
+	C.glfwSetWindowTitle(W, title);
+	__params.title = title;
+};
+
+window.getTitle = () => {
+	return __params.title;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+window.visible = (state: boolean) => {
+	if (state) {
+		C.glfwShowWindow(W);
+	} else {
+		C.glfwHideWindow(W);
+	}
+};
+
+window.isVisible = (): boolean => {
+	return C.glfwGetWindowAttrib(W, C.GLFW_VISIBLE) == 1;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+window.setFullscreen = (state: boolean, fstype: string, index: number) => {
+	index = index || 1;
+	index = check_monitor(index) && index - 1 || 0;
+	const screenmode = C.glfwGetVideoMode(__monitors[index]);
+	if (state) {
+		assert(fstype == 'desktop' || fstype == 'exclusive', 'Invalid fullscreen type \'' + tostring(fstype) + '\', expected one of : \'exclusive\' or \'desktop\'');
+
+		if (fstype == 'desktop') {
+			C.glfwSetWindowAttrib(W, C.GLFW_DECORATED, 0);
+
+			const mx: AnyTable = ffi.new_('int[1]');
+			const my: AnyTable = ffi.new_('int[1]');
+			C.glfwGetMonitorPos(__monitors[index], mx, my);
+
+			C.glfwSetWindowMonitor(W, null, mx[0], my[0], screenmode.width, screenmode.height, 0);
+		} else if (fstype == 'exclusive') {
+			C.glfwSetWindowMonitor(W, __monitors[index], 0, 0, screenmode.width, screenmode.height, 0);
+		}
+
+		__params.fullscreentype = fstype;
+		__params.fullscreen = true;
+	} else {
+		__params.fullscreen = false;
+		__params.fullscreentype = null;
+
+		if (__params.x == null || __params.y == null) { }
+		__params.x = math.random(0, screenmode.width * 0.3);
+		__params.y = math.random(0, screenmode.height * 0.3);
+		// todo: figure out where this variable comes from.
+		// centered = false;
+	}
+
+	C.glfwSetWindowAttrib(W, C.GLFW_DECORATED, __params.borderless && 0 || 1);
+	C.glfwSetWindowMonitor(W, null, __params.x, __params.y, __params.width, __params.height, 0);
+};
+
+
+window.getFullscreen = (): [boolean, FullScreenType] => {
+	__params.fullscreen = C.glfwGetWindowMonitor(W) != null;
+	return [__params.fullscreen, __params.fullscreentype];
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

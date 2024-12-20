@@ -12,8 +12,8 @@ declare interface CStruct { }
 declare interface CLib extends LuaTable { }
 
 declare type cdecl = string;
-declare type ctype = CTypeObject;
-declare type cdata = CTypeObject;
+declare type ctype = CTypeObject | AnyTable;
+declare type cdata = CTypeObject | AnyTable;
 declare type ct = cdecl | ctype | cdata;
 declare type VLA = Array<any>;
 declare type VLSL = CStruct;
