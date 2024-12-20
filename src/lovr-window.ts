@@ -1,5 +1,9 @@
 import * as ffi from "ffi";
-import * as jit from "jit";
+
+/**
+ * Note: This was half hazardly translated to make sure it compiles.
+ * Things may look kind of weird in here.
+ */
 
 let C: AnyTable;
 
@@ -10,9 +14,6 @@ if (ffi.os == "Windows") {
 }
 
 const Cstr = ffi.string;
-
-//!! remove me!!
-export function blah(): void { print("blah"); }
 
 ffi.cdef(`
 	enum {
@@ -100,7 +101,6 @@ ffi.cdef(`
 `);
 
 const W = ffi.C.os_get_glfw_window();
-let window: AnyTable = {};
 let __monitors: AnyTable = {};
 
 let __params: AnyTable = { // default parameters list;
@@ -136,6 +136,12 @@ if (conf != null) {
 	conf = null;
 }
 
+export function getDisplayCount(): number {
+	const count: AnyTable = ffi.new_('int[1]');
+	__monitors = C.glfwGetMonitors(count);
+	return count[0];
+}
+
 function check_monitor(index: number, throwerr?: boolean) {
 	if (type(index) != 'number') {
 		if (throwerr) {
@@ -145,7 +151,7 @@ function check_monitor(index: number, throwerr?: boolean) {
 		}
 	}
 
-	const dcnt = window.getDisplayCount();
+	const dcnt = getDisplayCount();
 	if (index < 1 || index > dcnt) {
 		if (throwerr) {
 			error('Invalid display index: ' + tostring(index), 3);
@@ -157,21 +163,20 @@ function check_monitor(index: number, throwerr?: boolean) {
 	return true;
 }
 
-
-window.getDisplayName = (index: number): any => {
+export function getDisplayName(index: number): string {
 	check_monitor(index, true);
 	return Cstr(C.glfwGetMonitorName(__monitors[index - 1]));
 };
 
-window.getDisplayDimensions = (index: number): any => {
+export function getDisplayDimensions(index: number): [width: number, height: number] {
 	check_monitor(index, true);
 	const screenmode = C.glfwGetVideoMode(__monitors[index - 1]);
-	return screenmode.width, screenmode.height;
+	return [screenmode.width, screenmode.height];
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.setIcon = (source: any) => {
+export function setIcon(source: any): void {
 	if (!source) {
 		C.glfwSetWindowIcon(W, 0, null);
 		__params.icon = null;
@@ -191,30 +196,28 @@ window.setIcon = (source: any) => {
 	C.glfwSetWindowIcon(W, 1, icon);
 };
 
-window.getIcon = (): any => {
+export function getIcon(): Image | null {
 	return tostring(__params.icon) == 'Image' && __params.icon || null;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.setOpacity = (value: number) => {
+export function setOpacity(value: number): void {
 	value = math.max(0, math.min(value, 1));
 	C.glfwSetWindowOpacity(W, value);
 };
 
-window.getOpacity = (): number => {
+export function getOpacity(): number {
 	return C.glfwGetWindowOpacity(W);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-window.setPosition = (x: number, y: number) => {
+export function setPosition(x: number, y: number): void {
 	C.glfwSetWindowPos(W, x || 0, y || 0);
 };
 
-window.getPosition = (): [any, any] => {
+export function getPosition(): [number, number] {
 	const x: AnyTable = ffi.new_('int[1]');
 	const y: AnyTable = ffi.new_('int[1]');
 	C.glfwGetWindowPos(W, x, y);
@@ -223,40 +226,40 @@ window.getPosition = (): [any, any] => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.maximize = () => {
+export function maximize(): void {
 	C.glfwMaximizeWindow(W);
 };
 
-window.minimize = () => {
+export function minimize(): void {
 	C.glfwIconifyWindow(W);
 };
 
-window.restore = () => {
+export function restore(): void {
 	C.glfwRestoreWindow(W);
 };
 
-window.focus = () => {
+export function focus(): void {
 	C.glfwFocusWindow(W);
 };
 
-window.requestAttention = () => {
+export function requestAttention(): void {
 	C.glfwRequestWindowAttention(W);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.setTitle = (title: string) => {
+export function setTitle(title: string): void {
 	C.glfwSetWindowTitle(W, title);
 	__params.title = title;
 };
 
-window.getTitle = () => {
+export function getTitle(): string {
 	return __params.title;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.visible = (state: boolean) => {
+export function visible(state: boolean): void {
 	if (state) {
 		C.glfwShowWindow(W);
 	} else {
@@ -264,13 +267,13 @@ window.visible = (state: boolean) => {
 	}
 };
 
-window.isVisible = (): boolean => {
+export function isVisible(): boolean {
 	return C.glfwGetWindowAttrib(W, C.GLFW_VISIBLE) == 1;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.setFullscreen = (state: boolean, fstype: string, index: number) => {
+export function setFullscreen(state: boolean, fstype: string, index: number): void {
 	index = index || 1;
 	index = check_monitor(index) && index - 1 || 0;
 	const screenmode = C.glfwGetVideoMode(__monitors[index]);
@@ -306,15 +309,14 @@ window.setFullscreen = (state: boolean, fstype: string, index: number) => {
 	C.glfwSetWindowMonitor(W, null, __params.x, __params.y, __params.width, __params.height, 0);
 };
 
-
-window.getFullscreen = (): [boolean, FullScreenType] => {
+export function getFullscreen(): [boolean, FullScreenType] {
 	__params.fullscreen = C.glfwGetWindowMonitor(W) != null;
 	return [__params.fullscreen, __params.fullscreentype];
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.getMode = (): [number, number, AnyTable] => {
+export function getMode(): [number, number, AnyTable] {
 	let flags: AnyTable = {};
 
 	flags.fullscreen = C.glfwGetWindowMonitor(W) != null;
@@ -349,9 +351,9 @@ window.getMode = (): [number, number, AnyTable] => {
 	return [width as unknown as number, height as unknown as number, flags];
 };
 
-window.setMode = (width: number, height: number, flags?: AnyTable) => {
+export function setMode(width: number, height: number, flags?: AnyTable): void {
 	if (flags) {
-		let _a, _b, mode = window.getMode();
+		let _a, _b, mode = getMode();
 		for (let [k, v] of Object.entries(mode)) {
 			if (!flags[k as string] || flags[k as string] == null) {
 				flags[k as string] = v;
@@ -381,7 +383,7 @@ window.setMode = (width: number, height: number, flags?: AnyTable) => {
 		C.glfwSetWindowOpacity(W, flags.opacity);
 
 		if (flags.fullscreen) {
-			window.setFullscreen(flags.fullscreen, flags.fullscreentype, flags.display);
+			setFullscreen(flags.fullscreen, flags.fullscreentype, flags.display);
 		} else {
 			C.glfwSetWindowSize(W, width, height);
 		}
@@ -412,7 +414,7 @@ C.glfwSetWindowPosCallback(W, (target: any, x: number, y: number) => {
 });
 
 C.glfwSetDropCallback(W, (target: any, count: number, c_paths: any) => {
-	if (lovr.dragdrop) {
+	if (lovr.dragdrop_) {
 		let paths: any = {};
 		for (let i = 0; i < count; i++) {
 			table.insert(paths, Cstr(c_paths[i]));
