@@ -9,7 +9,6 @@
     "types": [
       "lua-types/jit",
       "./lovr-api",
-      "./luajit-ffi"
     ],
     "strict": true,
     "rootDir": "src/",
@@ -17,6 +16,7 @@
   },
   "tstl": {
     "luaTarget": "JIT",
-    "luaPlugins": []
+    "luaPlugins": [],
+    "noImplicitGlobalVariables": true
   }
 }
