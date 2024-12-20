@@ -4,10 +4,13 @@ import * as jit from "jit";
 let C: AnyTable;
 
 if (ffi.os == "Windows") {
-  C = ffi.load("glfw3");
+	C = ffi.load("glfw3");
 } else {
-  C = ffi.C;
+	C = ffi.C;
 }
+
+//!! remove me!!
+export function blah(): void { print("blah"); }
 
 ffi.cdef(`
 	enum {
@@ -99,22 +102,30 @@ let window: LuaTable;
 let __monitors;
 
 let __params = { // default parameters list;
-  title: 'LÖVR',
-  icon: null,
-  fullscreen: false,
-  fullscreentype: "desktop",
-  width: 1080,
-  height: 600,
-  minwidth: 320,
-  minheight: 240,
-  x: null,
-  y: null,
-  display: 1,
-  centered: false,
-  topmost: false,
-  borderless: false,
-  resizable: false,
-  opacity: 1,
-  vsync: 1,
-  msaa: 0
+	title: 'LÖVR',
+	icon: null,
+	fullscreen: false,
+	fullscreentype: "desktop",
+	width: 1080,
+	height: 600,
+	minwidth: 320,
+	minheight: 240,
+	x: null,
+	y: null,
+	display: 1,
+	centered: false,
+	topmost: false,
+	borderless: false,
+	resizable: false,
+	opacity: 1,
+	vsync: 1,
+	msaa: 0
 };
+
+if (conf != null) {
+
+	for (const [k, v] of Object.entries(conf)) {
+		print(k, v);
+	}
+
+}
