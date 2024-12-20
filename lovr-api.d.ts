@@ -1595,6 +1595,40 @@ declare interface World {
   newTerrainCollider(scale: number): Collider;
   newTerrainCollider(scale: number, heightmap: Image, stretch: number): Collider;
   newTerrainCollider(scale: number, callback: (x: number, z: number) => number, samples: number): Collider;
+
+  destroy(): void;
+  queryBox(x: number, y: number, z: number, w: number, h: number, d: number, callback: (shape: Shape) => boolean | void): boolean;
+  queryBox(position: Vec3, size: Vec3, callback: (shape: Shape) => boolean | void): boolean;
+  querySphere(x: number, y: number, z: number, radius: number, callback: (shape: Shape) => boolean | void): boolean;
+  querySphere(position: Vec3, radius: number, callback: (shape: Shape) => boolean | void): boolean;
+  raycast(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, callback: (shape: Shape, x: number, y: number, z: number, nx: number, ny: number, nz: number) => boolean | null): void;
+  raycast(start: Vec3, end: Vec3, callback: (shape: Shape, x: number, y: number, z: number, nx: number, ny: number, nz: number) => boolean | null): void;
+  update(dt: number, resolver?: (world: World) => void): void;
+  getColliders(): LuaTable;
+  getColliders(t: LuaTable): LuaTable;
+  getAngularDamping(): LuaMultiReturn<[damping: number, threshold: number]>;
+  getGravity(): LuaMultiReturn<[xg: number, yg: number, zg: number]>;
+  getLinearDamping(): LuaMultiReturn<[damping: number, threshold: number]>;
+  getResponseTime(): number;
+  getStepCount(): number;
+  getTightness(): number;
+  isSleepingAllowed(): boolean;
+  setAngularDamping(damping: number, threshold?: number): void;
+  setGravity(xg: number, yg: number, zg: number): void;
+  setGravity(gravity: Vec3): void;
+  setLinearDamping(damping: number, threshold?: number): void;
+  setResponseTime(responseTime: number): void;
+  setSleepingAllowed(allowed: boolean): void;
+  setStepCount(steps: number): void;
+  setTightness(tightness: number): void;
+  collide(shapeA: Shape, shapeB: Shape, friction: number | null, restitution: number | null): boolean;
+  computeOverlaps(): void;
+  disableCollisionBetween(tag1: string, tag2: string): void;
+  enableCollisionBetween(tag1: string, tag2: string): void;
+  getContacts(shapeA: Shape, shapeB: Shape): LuaTable;
+  getTags(): Array<string>;
+  isCollisionEnabledBetween(tag1: string, tag2: string): boolean;
+  overlaps(): LuaIterator<Shape, Shape>;
 }
 
 declare interface newSourceOptions {
