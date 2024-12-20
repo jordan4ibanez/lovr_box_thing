@@ -1777,6 +1777,9 @@ declare interface LovrConfig {
   window: LovrConfigWindow;
 }
 
+// Sneak this ambient variable in.
+declare let conf: LovrConfig | null;
+
 declare type LogLevel = "debug" | "info" | "warn" | "error";
 
 /** @noSelf **/
