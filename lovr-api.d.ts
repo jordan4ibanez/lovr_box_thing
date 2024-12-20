@@ -1711,7 +1711,6 @@ declare interface DeviceLimits {
   pointSize: number;
 }
 
-
 declare interface DeviceModelOptions {
   animated: boolean;
 }
