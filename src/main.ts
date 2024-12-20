@@ -17,8 +17,8 @@ lovr.load = () => {
   // print(window.getOpacity());
   // print(window.getPosition()[0]);
   // print(window.getTitle());
-  // window.setFullscreen(true, "desktop", 1);
-  // window.setFullscreen(false, "desktop", 1);
+  window.setFullscreen(true, "desktop", 1);
+  window.setFullscreen(false, "desktop", 1);
   print("STARTING");
   window.setIcon("textures/club_zero.png");
   window.setMode(1024, 768);
