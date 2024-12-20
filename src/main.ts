@@ -5,9 +5,15 @@ lovr.load = () => {
   jit.on();
   jit.off();
 
-  window.blah();
+  print(window.focus());
+  print(window.getDisplayCount());
+  print(window.getDisplayDimensions(1)[0]);
+  print(window.getDisplayName(1));
+  print(window.getIcon());
+  print(window.getMode()[0]);
 
-  lovr.event.quit();
+
+  // lovr.event.quit();
 };
 
 // lovr.draw = (pass: Pass) => {
@@ -18,8 +24,17 @@ lovr.load = () => {
 //   lovr.event.quit();
 // };
 
-// lovr.keypressed = (key: KeyCode) => {
-//   if (key == "escape") {
-//     lovr.event.quit();
-//   }
-// };
+lovr.keypressed = (key: KeyCode) => {
+  if (key == "escape") {
+    lovr.event.quit();
+  }
+};
+
+lovr.errhand = (message: string): (() => string | null) => {
+  return () => {
+    print("error test:");
+    print(message);
+
+    return "hi";
+  };
+};
