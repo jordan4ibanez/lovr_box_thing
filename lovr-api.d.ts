@@ -1481,9 +1481,7 @@ declare interface SliderJoint extends Joint {
   setUpperLimit(limit: number): void;
 }
 
-declare interface Permission extends Object {
-  // todo: 1
-}
+declare type Permission = "audiocapture";
 
 //* Doc Note: numpad keys are missing right now.
 declare type KeyCode = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "0" |
