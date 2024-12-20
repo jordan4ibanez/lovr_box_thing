@@ -29,11 +29,11 @@ declare module "ffi" {
   // I made C a generic table. Go nuts. :D
   const C: AnyTable;
   function load(name: string, global?: boolean): CLib;
-  // Can't use the "new" function.
-  // But you can do: const ffi_new = (ffi as unknown as AnyTable).new;
+  /** @customName new */
+  function new_(data: ct, nelem?: number, ...init: any): cdata;
   function ctype(nelem: number, ...init: any): ctype;
-  // Can't use the "typeof" function.
-  // But you can do: const ffi_typeof = (ffi as unknown as AnyTable).typeof;
+  /** @customName typeof */
+  function typeof_(data: ct): ctype;
   function cast(data: ct, ...init: any): cdata;
   function metatype(data: ct): ctype;
   function gc(data: cdata, finalizer: any): cdata;
