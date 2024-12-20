@@ -303,8 +303,7 @@ export function setFullscreen(state: boolean, fstype: FSType, index: number): vo
 		if (__params.x == null || __params.y == null) {
 			__params.x = math.random(0, screenmode.width * 0.3);
 			__params.y = math.random(0, screenmode.height * 0.3);
-			// todo: figure out where this variable comes from.
-			// centered = false;
+			__params.centered = false;
 		}
 
 		C.glfwSetWindowAttrib(W, C.GLFW_DECORATED, __params.borderless && 0 || 1);
