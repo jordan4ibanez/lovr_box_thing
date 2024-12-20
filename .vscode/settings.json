@@ -5,6 +5,6 @@
     // "out/": true,
     "node_modules/": true,
     // Comment this out to add binaries for different OS.
-    "bin/": true
+    // "bin/": true
   },
 }
