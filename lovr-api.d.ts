@@ -1781,6 +1781,8 @@ declare interface LovrConfig {
   window: LovrConfigWindow | null;
 }
 
+declare type LogLevel = "debug" | "info" | "warn" | "error";
+
 /** @noSelf **/
 declare namespace lovr {
   function conf(t: LovrConfig): void;
