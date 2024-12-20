@@ -235,7 +235,6 @@ declare const addVec2: LuaAddition<Vec2, Vec2 | number, Vec2> & ((x: number, y: 
 declare const subVec2: LuaSubtraction<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
 declare const mulVec2: LuaMultiplication<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
 declare const divVec2: LuaDivision<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
-declare const powVec2: LuaPower<Vec2, Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
 declare interface Vec2 extends Object {
   x: number;
   y: number;
@@ -250,7 +249,6 @@ declare interface Vec2 extends Object {
   sub: LuaSubtractionMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
   mul: LuaMultiplicationMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
   div: LuaDivisionMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
-  pow: LuaPowerMethod<Vec2 | number, Vec2> & ((x: number, y: number) => Vec2);
 
   angle(u: Vec2): number;
   angle(x: number, y: number): number;
@@ -272,7 +270,6 @@ declare const addVec3: LuaAddition<Vec3, Vec3 | number, Vec3> & ((x: number, y: 
 declare const subVec3: LuaSubtraction<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
 declare const mulVec3: LuaMultiplication<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
 declare const divVec3: LuaDivision<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
-declare const powVec3: LuaPower<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
 declare interface Vec3 extends Object {
   // todo: 1
 
@@ -292,7 +289,6 @@ declare interface Vec3 extends Object {
   sub: LuaSubtractionMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
   mul: LuaMultiplicationMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
   div: LuaDivisionMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
-  pow: LuaPowerMethod<Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
 
   angle(u: Vec3): number;
   angle(x: number, y: number, z: number): number;
@@ -324,7 +320,6 @@ declare const addVec4: LuaAddition<Vec4, Vec4 | number, Vec4> & ((x: number, y: 
 declare const subVec4: LuaSubtraction<Vec4, Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
 declare const mulVec4: LuaMultiplication<Vec4, Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
 declare const divVec4: LuaDivision<Vec4, Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
-declare const powVec4: LuaPower<Vec4, Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
 declare interface Vec4 extends Object {
   // todo: 1
 
@@ -347,7 +342,6 @@ declare interface Vec4 extends Object {
   sub: LuaSubtractionMethod<Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
   mul: LuaMultiplicationMethod<Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
   div: LuaDivisionMethod<Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
-  pow: LuaPowerMethod<Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
 
   angle(u: Vec4): number;
   angle(x: number, y: number, z: number, w: number): number;
@@ -373,7 +367,6 @@ declare const addQuat: LuaAddition<Quat, Quat | number, Quat>;
 declare const subQuat: LuaSubtraction<Quat, Quat | number, Quat>;
 declare const mulQuat: LuaMultiplication<Quat, Quat | number, Quat>;
 declare const divQuat: LuaDivision<Quat, Quat | number, Quat>;
-declare const powQuat: LuaPower<Quat, Quat | number, Quat>;
 declare interface Quat extends Object {
   // todo: 1
 
@@ -386,7 +379,6 @@ declare interface Quat extends Object {
   sub: LuaSubtractionMethod<Quat | number, Quat>;
   mul: LuaMultiplicationMethod<Quat | number, Quat>;
   div: LuaDivisionMethod<Quat | number, Quat>;
-  pow: LuaPowerMethod<Quat | number, Quat>;
 
   conjugate(): Quat;
   direction(): Vec3;
@@ -407,7 +399,6 @@ declare const addMat4: LuaAddition<Mat4, Mat4 | number, Mat4>;
 declare const subMat4: LuaSubtraction<Mat4, Mat4 | number, Mat4>;
 declare const mulMat4: LuaMultiplication<Mat4, Mat4 | number, Mat4>;
 declare const divMat4: LuaDivision<Mat4, Mat4 | number, Mat4>;
-declare const powMat4: LuaPower<Mat4, Mat4 | number, Mat4>;
 declare interface Mat4 extends Object {
   // todo: 1
   // note: this is a flat array.  
@@ -432,7 +423,6 @@ declare interface Mat4 extends Object {
   sub: LuaSubtractionMethod<Mat4 | Vec3 | Vec4, Mat4>;
   mul: LuaMultiplicationMethod<Mat4 | Vec3 | Vec4, Mat4>;
   div: LuaDivisionMethod<Mat4 | Vec3 | Vec4, Mat4>;
-  pow: LuaPowerMethod<Mat4 | Vec3 | Vec4, Mat4>;
 
   equals(n: Mat4): boolean;
   fov(left: number, right: number, up: number, down: number, near: number, far: number): Mat4;
