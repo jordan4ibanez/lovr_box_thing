@@ -1797,12 +1797,15 @@ declare type LogLevel = "debug" | "info" | "warn" | "error";
 
 /** @noSelf **/
 declare namespace lovr {
-  
-  // These are secret variables.
+
+  // These are secret variables and functions.
   /** @customName windowmoved */
-  const windowmoved_: number;
+  const windowmoved_: boolean;
   function windowmoved(x: number, y: number): void;
-  const dragdrop: boolean;
+  /** @customName dragdrop */
+  const dragdrop_: boolean;
+  function dragdrop(any: any): void;
+
 
   function conf(t: LovrConfig): void;
   function draw(pass: Pass): boolean | void;

@@ -398,3 +398,25 @@ window.setMode = (width: number, height: number, flags?: AnyTable) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+C.glfwSetWindowMaximizeCallback(W, (target: any, maximized: number) => {
+	const width: AnyTable = ffi.new_('int[1]');
+	const height: AnyTable = ffi.new_('int[1]');
+	C.glfwGetWindowSize(W, width, height);
+	lovr.event.push('maximized', maximized == 1, width[0], height[0]);
+});
+
+C.glfwSetWindowPosCallback(W, (target: any, x: number, y: number) => {
+	if (lovr.windowmoved_) {
+		lovr.windowmoved(x, y);
+	}
+});
+
+C.glfwSetDropCallback(W, (target: any, count: number, c_paths: any) => {
+	if (lovr.dragdrop) {
+		let paths: any = {};
+		for (let i = 0; i < count; i++) {
+			table.insert(paths, Cstr(c_paths[i]));
+		}
+		lovr.dragdrop(paths);
+	}
+});
