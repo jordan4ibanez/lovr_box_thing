@@ -1,5 +1,12 @@
 import * as ffi from "ffi";
 import * as jit from "jit";
+let C;
+
+if (ffi.os == "Windows") {
+  C = ffi.load("glfw3");
+} else {
+  C = ffi.C
+}
 
 lovr.load = () => {
 
