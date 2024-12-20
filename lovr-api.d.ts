@@ -1846,6 +1846,24 @@ declare namespace lovr {
     function stop(type: AudioType): boolean;
   }
 
+  namespace data {
+    function newBlob(size: number, name: string): Blob;
+    function newBlob(contents: string, name: string): Blob;
+    function newBlob(source: Blob, name: string): Blob;
+    function newImage(filename: string): Image;
+    function newImage(width: number, height: number, format: TextureFormat, data: Blob): Image;
+    function newImage(source: Image): Image;
+    function newImage(blob: Blob): Image;
+    function newModelData(filename: string): ModelData;
+    function newModelData(blob: Blob): ModelData;
+    function newRasterizer(size: number): Rasterizer;
+    function newRasterizer(filename: string, size: number): Rasterizer;
+    function newRasterizer(blob: Blob, size: number): Rasterizer;
+    function newSound(frames: number, format: SampleFormat, channels: ChannelLayout, contents: Blob): Sound;
+    function newSound(filename: string, decode: boolean): Sound;
+    function newSound(blob: Blob, decode: boolean): Sound;
+  }
+
   namespace event {
     function clear(): void;
     function poll(): LuaIterator<string, [...any]>;
