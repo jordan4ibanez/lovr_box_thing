@@ -9,7 +9,7 @@
     "types": [
       "lua-types/jit",
       "luajit-ffi/luajit-ffi",
-      "./lovr-api",
+      "lovr-api/lovr-api",
     ],
     "strict": true,
     "rootDir": "src/",
