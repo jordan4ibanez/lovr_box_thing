@@ -48,7 +48,7 @@ declare module "ffi" {
   function tonumber(data: cdata): number;
   function tostring(data: cdata): string;
   namespace string {
-
+    // todo: If you could help me figure this out, I'd greatly appreciate it. :)
   }
 }
 

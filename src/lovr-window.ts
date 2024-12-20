@@ -9,6 +9,8 @@ if (ffi.os == "Windows") {
 	C = ffi.C;
 }
 
+const Cstr = ffi.string;
+
 //!! remove me!!
 export function blah(): void { print("blah"); }
 
@@ -98,7 +100,7 @@ ffi.cdef(`
 `);
 
 const W = ffi.C.os_get_glfw_window();
-let window: LuaTable;
+let window: AnyTable = {};
 let __monitors;
 
 let __params: AnyTable = { // default parameters list;
@@ -122,12 +124,49 @@ let __params: AnyTable = { // default parameters list;
 	msaa: 0
 };
 
-if (conf != null) {
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+if (conf != null) {
 	for (const [k, v] of Object.entries(conf)) {
 		__params[k] = v;
 	}
 	if (type(__params.icon) == "string") {
 		__params.icon = lovr.data.newImage(__params.icon);
 	}
+	conf = null;
 }
+
+function check_monitor(index: number, throwerr: boolean) {
+	if (type(index) != 'number') {
+		if (throwerr) {
+			error('Bad argument #1: number expected got ' + type(index), 3);
+		} else {
+			return false;
+		}
+	}
+
+	const dcnt = window.getDisplayCount();
+	if (index < 1 || index > dcnt) {
+		if (throwerr) {
+			error('Invalid display index: ' + tostring(index), 3);
+		} else {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
+// window.getDisplayName = ( index: number ) => {
+// 	check_monitor( index, true )
+// 	return C_str(C.glfwGetMonitorName( __monitors[index] ))
+// }
+
+// function window.getDisplayDimensions( index: number ) {
+// 	check_monitor( index, true )
+// 	const screenmode = C.glfwGetVideoMode( __monitors[index] )
+// 	return screenmode.width, screenmode.height
+// }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
