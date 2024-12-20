@@ -1833,7 +1833,7 @@ declare namespace lovr {
     function clear(): void;
     function poll(): LuaIterator<string, [...any]>;
     function push(name: string, ...anything: any): void;
-    function quit(code: number): void;
+    function quit(code?: number): void;
     function restart(): void;
   }
 
