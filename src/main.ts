@@ -27,6 +27,7 @@ lovr.load = () => {
   window.setTitle("cool");
 
 
+
   // lovr.event.quit();
 };
 
@@ -40,12 +41,14 @@ lovr.update = (delta: number) => {
 
   print(timer);
 
-  if (timer > 1.0) {
+  if (timer > 0.3) {
     if (smolify) {
-      window.minimize();
-    } else {
-      window.focus();
+      // window.minimize();
       window.maximize();
+    } else {
+      // window.focus();
+      // window.maximize();
+      window.restore()
     }
     smolify = !smolify;
     timer = 0;
