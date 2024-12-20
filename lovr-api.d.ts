@@ -1773,7 +1773,8 @@ declare interface LovrConfig {
   graphics: LovrConfigGraphics;
   headset: LovrConfigHeadset;
   math: LovrConfigMath;
-  window: LovrConfigWindow | null;
+  // I didn't make this nullable because of ease of use.
+  window: LovrConfigWindow;
 }
 
 declare type LogLevel = "debug" | "info" | "warn" | "error";
