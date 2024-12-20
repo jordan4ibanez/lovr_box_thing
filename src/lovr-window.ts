@@ -325,7 +325,9 @@ export function getMode(): [number, number, AnyTable] {
 	flags.x = ffi.new_('int[1]');
 	flags.y = ffi.new_('int[1]');
 	C.glfwGetWindowPos(W, flags.x, flags.y);
-	flags.x, flags.y = flags.x[0], flags.y[0];
+
+	flags.x = flags.x[0];
+	flags.y = flags.y[0];
 
 	let width: AnyTable = ffi.new_('int[1]');
 	let height: AnyTable = ffi.new_('int[1]');
