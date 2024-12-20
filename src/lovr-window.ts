@@ -101,7 +101,7 @@ const W = ffi.C.os_get_glfw_window();
 let window: LuaTable;
 let __monitors;
 
-let __params = { // default parameters list;
+let __params: AnyTable = { // default parameters list;
 	title: 'LÖVR',
 	icon: null,
 	fullscreen: false,
@@ -125,7 +125,9 @@ let __params = { // default parameters list;
 if (conf != null) {
 
 	for (const [k, v] of Object.entries(conf)) {
-		print(k, v);
+		__params[k] = v;
 	}
-
+	if (type(__params.icon) == "string") {
+		__params.icon = lovr.data.newImage()
+	}
 }
