@@ -19,13 +19,13 @@ declare interface lovrConfigModules {
 
 declare type lovrConfigSpatializer = "simple" | "oculus" | "phonon";
 
-declare interface lovrConfigAudio {
+declare interface LovrConfigAudio {
   spatializer?: lovrConfigSpatializer;
   samplerate: number;
   start: boolean;
 }
 
-declare interface lovrConfigGraphics {
+declare interface LovrConfigGraphics {
   debug: boolean;
   vsync: boolean;
   stencil: boolean;
@@ -33,7 +33,7 @@ declare interface lovrConfigGraphics {
   shadercache: boolean;
 }
 
-declare interface lovrConfigHeadset {
+declare interface LovrConfigHeadset {
   drivers: Array<string>;
   supersample: number;
   seated: boolean;
@@ -43,11 +43,11 @@ declare interface lovrConfigHeadset {
   overlay: boolean;
 }
 
-declare interface lovrConfigMath {
+declare interface LovrConfigMath {
   globals: boolean;
 }
 
-declare interface lovrConfigWindow {
+declare interface LovrConfigWindow {
   width: number;
   height: number;
   fullscreen: boolean;
@@ -56,16 +56,16 @@ declare interface lovrConfigWindow {
   icon: string;
 }
 
-declare interface lovrConfig {
+declare interface LovrConfig {
   version: string;
   identity: string;
   saveprecedence: boolean;
   modules: lovrConfigModules;
-  audio: lovrConfigAudio;
-  graphics: lovrConfigGraphics;
-  headset: lovrConfigHeadset;
-  math: lovrConfigMath;
-  window: lovrConfigWindow | null;
+  audio: LovrConfigAudio;
+  graphics: LovrConfigGraphics;
+  headset: LovrConfigHeadset;
+  math: LovrConfigMath;
+  window: LovrConfigWindow | null;
 }
 
 declare type TimeUnit = "seconds" | "frames";
@@ -1780,10 +1780,9 @@ declare interface DeviceModelOptions {
   animated: boolean;
 }
 
-
 /** @noSelf **/
 declare namespace lovr {
-  function conf(t: lovrConfig): void;
+  function conf(t: LovrConfig): void;
 
   namespace audio {
     function newSource(data: string | Blob | Sound, options: newSourceOptions): Source;
