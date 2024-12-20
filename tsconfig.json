@@ -8,8 +8,8 @@
     "moduleResolution": "Node",
     "types": [
       "lua-types/jit",
+      "luajit-ffi/luajit-ffi",
       "./lovr-api",
-      "./luajit-ffi"
     ],
     "strict": true,
     "rootDir": "src/",
