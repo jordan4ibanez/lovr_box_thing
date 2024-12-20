@@ -5,6 +5,8 @@ lovr.load = () => {
   jit.on();
   jit.off();
 
+  window.blah();
+
   lovr.event.quit();
 };
 
