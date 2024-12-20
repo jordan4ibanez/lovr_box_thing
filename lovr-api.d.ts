@@ -1797,6 +1797,13 @@ declare type LogLevel = "debug" | "info" | "warn" | "error";
 
 /** @noSelf **/
 declare namespace lovr {
+  
+  // These are secret variables.
+  /** @customName windowmoved */
+  const windowmoved_: number;
+  function windowmoved(x: number, y: number): void;
+  const dragdrop: boolean;
+
   function conf(t: LovrConfig): void;
   function draw(pass: Pass): boolean | void;
   function errhand(message: string): (s: string) => string;
@@ -1820,11 +1827,6 @@ declare namespace lovr {
   function update(dt: number): void;
   function visible(visible: boolean): void;
   function wheelmoved(deltaX: number, deltaY: number): void;
-
-  // This is a secret variable.
-  /** @customName windowmoved */
-  const windowmoved_: number;
-  function windowmoved(x: number, y: number): void;
 
   namespace audio {
     function newSource(data: string | Blob | Sound, options: NewSourceOptions): Source;
