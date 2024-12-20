@@ -893,8 +893,8 @@ declare interface Pass extends Object {
   sphere(x: number, y: number, z: number, radius: number, angle: number, ax: number, ay: number, az: number, longitudes: number, latitudes: number): void;
   sphere(position: Vec3, radius: number, orientation: Quat, longitudes: number, latitudes: number): void;
   sphere(transform: Mat4, longitudes: number, latitudes: number): void;
-  text(text: string, x: number, y: number, z: number, scale?: number, angle?: number, ax?: number, ay?: number, az?: number, wrap?: number, halign?: HorizontalAlign, valign?: VerticalAlign): void;
-  text(text: string, position: Vec3, scale?: number, orientation?: Quat, wrap?: number, halign?: HorizontalAlign, valign?: VerticalAlign): void;
+  text(text: string, x: number, y: number, z: number, scale: number, angle?: number, ax?: number, ay?: number, az?: number, wrap?: number, halign?: HorizontalAlign, valign?: VerticalAlign): void;
+  text(text: string, position: Vec3, scale: number, orientation?: Quat, wrap?: number, halign?: HorizontalAlign, valign?: VerticalAlign): void;
   text(text: string, transform: Mat4, wrap?: number, halign?: HorizontalAlign, valign?: VerticalAlign): void;
   text(colortext: LuaTable, x: number, y: number, z: number, scale: number, angle: number, ax: number, ay: number, az: number, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): void;
   text(colortext: LuaTable, position: Vec3, scale: number, orientation: Quat, wrap: number, halign: HorizontalAlign, valign: VerticalAlign): void;
