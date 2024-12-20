@@ -1563,7 +1563,7 @@ declare interface World {
   overlaps(): LuaIterator<Shape, Shape>;
 }
 
-declare interface newSourceOptions {
+declare interface NewSourceOptions {
   decode: boolean;
   pitchable: boolean;
   spatial: boolean;
@@ -1804,7 +1804,7 @@ declare namespace lovr {
   function wheelmoved(deltaX: number, deltaY: number): void;
 
   namespace audio {
-    function newSource(data: string | Blob | Sound, options: newSourceOptions): Source;
+    function newSource(data: string | Blob | Sound, options: NewSourceOptions): Source;
     function getOrientation(): LuaMultiReturn<[angle: number, ax: number, ay: number, az: number]>;
     function getPose(): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
     function getPosition(): LuaMultiReturn<[x: number, y: number, z: number]>;
