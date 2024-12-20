@@ -1,12 +1,9 @@
-function main(): void {
-  print("hi");
+lovr.draw = (pass: Pass) => {
 
-  let thing: Vec2 = lovr.math.vec2(0);
-  print(addVec2(thing, thing));
+};
 
-  print(thing.add(thing));
-  print(thing.xy = thing.yx);
-
-
-}
-
+lovr.keypressed = (key: KeyCode) => {
+  if (key == "escape") {
+    lovr.event.quit();
+  }
+};
