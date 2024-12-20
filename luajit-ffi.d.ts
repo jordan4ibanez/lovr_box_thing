@@ -1,4 +1,3 @@
-
 declare type OSType = "Windows" | "Linux" | "OSX" | "BSD" | "POSIX" | "Other";
 declare type SystemArch = "x86" | "x64" | "arm" | "arm64" | "arm64be" | "ppc" | "mips" | "mipsel" | "mips64" | "mips64el" | "mips64r6" | "mips64r6el";
 
@@ -17,7 +16,6 @@ declare type cdata = CTypeObject | AnyTable;
 declare type ct = cdecl | ctype | cdata;
 declare type VLA = Array<any>;
 declare type VLSL = CStruct;
-
 
 /** 
  * This is the main LuaJIT FFI module.
