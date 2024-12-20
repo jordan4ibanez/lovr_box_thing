@@ -1,11 +1,11 @@
 import * as ffi from "ffi";
 import * as jit from "jit";
-let C;
+let C: LuaTable;
 
 if (ffi.os == "Windows") {
   C = ffi.load("glfw3");
 } else {
-  C = ffi.C
+  C = ffi.C;
 }
 
 lovr.load = () => {
