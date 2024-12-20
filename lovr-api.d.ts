@@ -1809,7 +1809,7 @@ declare namespace lovr {
 
   function conf(t: LovrConfig): void;
   function draw(pass: Pass): boolean | void;
-  function errhand(message: string): (s: string) => string;
+  function errhand(message: string): () => string | null;
   function focus(focused: boolean): void;
   function keypressed(key: KeyCode, scancode: number, repeating: boolean): void;
   function keyreleased(key: KeyCode, scancode: number): void;
