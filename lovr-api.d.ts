@@ -1715,7 +1715,7 @@ declare interface DeviceModelOptions {
   animated: boolean;
 }
 
-declare interface lovrConfigModules {
+declare interface LovrConfigModules {
   audio: boolean;
   data: boolean;
   event: boolean;
@@ -1771,7 +1771,7 @@ declare interface LovrConfig {
   version: string;
   identity: string;
   saveprecedence: boolean;
-  modules: lovrConfigModules;
+  modules: LovrConfigModules;
   audio: LovrConfigAudio;
   graphics: LovrConfigGraphics;
   headset: LovrConfigHeadset;
