@@ -42,8 +42,8 @@ declare module "ffi" {
   function copy(dst: any, src: any, len?: number): void;
   function fill(dst: any, len: number, c?: boolean): void;
   function abi(param: string): boolean;
-  function os(): OSType;
-  function arch(): SystemArch;
+  const os: OSType;
+  const arch: SystemArch;
   function tonumber(data: cdata): number;
   function tostring(data: cdata): string;
 }
@@ -62,9 +62,9 @@ declare module "jit" {
   function flush(): void;
   function flush(trace: number): void;
   function status(): LuaMultiReturn<[status: boolean, ...anything: [string]]>;
-  function version(): string;
-  function os(): OSType;
-  function arch(): SystemArch;
+  const version: string;
+  const os: OSType;
+  const arch: SystemArch;
   namespace opt {
     function start(level: number): void;
     function start(...input: [string]): void;
