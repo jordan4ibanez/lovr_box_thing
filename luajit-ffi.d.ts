@@ -9,7 +9,7 @@ declare interface CTypeObject {
 
 declare interface CStruct { }
 
-declare interface CLib { }
+declare interface CLib extends LuaTable { }
 
 declare type cdecl = string;
 declare type ctype = CTypeObject;
@@ -25,7 +25,8 @@ declare type VLSL = CStruct;
  */
 declare module "ffi" {
   function cdef(input: string): void;
-  // ffi.C, I'm not sure what it's telling me.
+  // I made C a generic table. Go nuts. :D
+  const C: LuaTable;
   function load(name: string, global?: boolean): CLib;
   // Can't use the "new" function.
   function ctype(nelem: number, ...init: any): ctype;
@@ -46,6 +47,9 @@ declare module "ffi" {
   const arch: SystemArch;
   function tonumber(data: cdata): number;
   function tostring(data: cdata): string;
+  namespace string {
+
+  }
 }
 
 
