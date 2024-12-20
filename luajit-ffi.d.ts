@@ -26,7 +26,7 @@ declare type VLSL = CStruct;
 declare module "ffi" {
   function cdef(input: string): void;
   // I made C a generic table. Go nuts. :D
-  const C: LuaTable;
+  const C: AnyTable;
   function load(name: string, global?: boolean): CLib;
   // Can't use the "new" function.
   function ctype(nelem: number, ...init: any): ctype;
