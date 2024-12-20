@@ -17,6 +17,8 @@
   "tstl": {
     "luaTarget": "JIT",
     "luaPlugins": [],
+    // If you're reading this:
+    // I highly recommend you do this so you don't get globals all over the place!
     "noImplicitGlobalVariables": true
   }
 }
