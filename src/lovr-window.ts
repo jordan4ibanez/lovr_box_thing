@@ -273,7 +273,9 @@ export function isVisible(): boolean {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function setFullscreen(state: boolean, fstype: string, index: number): void {
+export type FSType = "desktop" | "exclusive";
+
+export function setFullscreen(state: boolean, fstype: FSType, index: number): void {
 	index = index || 1;
 	index = check_monitor(index) && index - 1 || 0;
 	const screenmode = C.glfwGetVideoMode(__monitors[index]);
@@ -298,15 +300,16 @@ export function setFullscreen(state: boolean, fstype: string, index: number): vo
 		__params.fullscreen = false;
 		__params.fullscreentype = null;
 
-		if (__params.x == null || __params.y == null) { }
-		__params.x = math.random(0, screenmode.width * 0.3);
-		__params.y = math.random(0, screenmode.height * 0.3);
-		// todo: figure out where this variable comes from.
-		// centered = false;
-	}
+		if (__params.x == null || __params.y == null) {
+			__params.x = math.random(0, screenmode.width * 0.3);
+			__params.y = math.random(0, screenmode.height * 0.3);
+			// todo: figure out where this variable comes from.
+			// centered = false;
+		}
 
-	C.glfwSetWindowAttrib(W, C.GLFW_DECORATED, __params.borderless && 0 || 1);
-	C.glfwSetWindowMonitor(W, null, __params.x, __params.y, __params.width, __params.height, 0);
+		C.glfwSetWindowAttrib(W, C.GLFW_DECORATED, __params.borderless && 0 || 1);
+		C.glfwSetWindowMonitor(W, null, __params.x, __params.y, __params.width, __params.height, 0);
+	}
 };
 
 export function getFullscreen(): [boolean, FullScreenType] {
