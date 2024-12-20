@@ -128,6 +128,6 @@ if (conf != null) {
 		__params[k] = v;
 	}
 	if (type(__params.icon) == "string") {
-		__params.icon = lovr.data.newImage()
+		__params.icon = lovr.data.newImage(__params.icon);
 	}
 }
