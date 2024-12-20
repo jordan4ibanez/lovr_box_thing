@@ -20,6 +20,10 @@
     "luaPlugins": [],
     // If you're reading this:
     // I highly recommend you do this so you don't get globals all over the place!
-    "noImplicitGlobalVariables": true
+    "noImplicitGlobalVariables": true,
+    // This allows you to actually detect where your source code blows up in typescript.
+    "sourceMapTraceback": true,
+    // This prevents A LOT of annoying things.
+    "noImplicitSelf": true
   }
 }
