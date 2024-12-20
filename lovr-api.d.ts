@@ -1567,8 +1567,9 @@ declare interface NewSourceOptions {
   decode: boolean;
   pitchable: boolean;
   spatial: boolean;
-  // todo: 1: touch this up
-  effects: LuaTable;
+  // note: I did not think it was a very productive idea to mix the two.
+  // If you think this is a bad idea, let me know.
+  effects: Map<string, boolean> | Array<number | string>;
 }
 
 declare type VolumeUnit = "linear" | "db";
