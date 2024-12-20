@@ -11,9 +11,6 @@ if (ffi.os == "Windows") {
 
 const Cstr = ffi.string;
 
-// I love typescript lol.
-const ffi_new = (ffi as unknown as AnyTable).new;
-
 //!! remove me!!
 export function blah(): void { print("blah"); }
 
@@ -163,55 +160,50 @@ function check_monitor(index: number, throwerr: boolean) {
 
 window.getDisplayName = (index: number): any => {
 	check_monitor(index, true);
-	return Cstr(C.glfwGetMonitorName(__monitors[index]));
+	return Cstr(C.glfwGetMonitorName(__monitors[index - 1]));
 };
 
 window.getDisplayDimensions = (index: number): any => {
 	check_monitor(index, true);
-	const screenmode = C.glfwGetVideoMode(__monitors[index]);
+	const screenmode = C.glfwGetVideoMode(__monitors[index - 1]);
 	return screenmode.width, screenmode.height;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+window.setIcon = (source: any) => {
+	if (!source) {
+		C.glfwSetWindowIcon(W, 0, null);
+		__params.icon = null;
+		return;
+	}
 
-// window.getDisplayCount = (): any => {
-// 	const count = ffi.new('int[1]')
-// 	__monitors = C.glfwGetMonitors(count)
-// 	return count[0]
-// end
+	if (type(source) == 'string') {
+		source = lovr.data.newImage(source);
+	} else if (tostring(source) != 'Image') {
+		error('Bad argument #1 to setIcon (Image expected)', 2);
+	}
+	__params.icon = source;
 
-// local function check_monitor( index, throwerr )
-// 	if type(index) ~= 'number' then
-// 		if throwerr then
-// 			error('Bad argument #1: number expected got ' .. type(index), 3)
-// 		else
-// 			return false
-// 		end
-// 	end
+	source = source as Texture;
 
-// 	local dcnt = window.getDisplayCount()
-// 	if index < 1 or index > dcnt then
-// 		if throwerr then
-// 			error('Invalid display index: ' .. tostring(index), 3)
-// 		else
-// 			return false
-// 		end
-// 	end
+	const icon = ffi.new_('GLFWimage', source.getWidth(), source.getHeight(), source.getBlob().getPointer());
+	C.glfwSetWindowIcon(W, 1, icon);
+};
 
-// 	return true
-// }
+window.getIcon = (): any => {
+	return tostring(__params.icon) == 'Image' && __params.icon || null;
+};
 
-// function window.getDisplayName( index )
-// 	check_monitor( index, true )
-// 	return C_str(C.glfwGetMonitorName( __monitors[index-1] ))
-// end
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// function window.getDisplayDimensions( index )
-// 	check_monitor( index, true )
-// 	local screenmode = C.glfwGetVideoMode( __monitors[index-1] )
-// 	return screenmode.width, screenmode.height
-// end
+window.setOpacity = (value: number) => {
+	value = math.max(0, math.min(value, 1));
+	C.glfwSetWindowOpacity(W, value);
+};
 
+window.getOpacity = (): number => {
+	return C.glfwGetWindowOpacity(W);
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
