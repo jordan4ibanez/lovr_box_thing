@@ -1115,9 +1115,7 @@ declare interface Mesh extends Object {
   setVertices(blob: Blob, index: number, count: number | null): void;
 }
 
-declare interface MeshStorage extends Object {
-  // todo: 1
-}
+declare type MeshStorage = "cpu" | "gpu";
 
 declare type AnimationProperty = "translation" | "rotation" | "scale" | "weights";
 
@@ -1237,25 +1235,15 @@ declare type DefaultShader = "unlit" | "normal" | "font" | "cubemap" | "equirect
 
 declare type TextureType = "2d" | "3d" | "cube" | "array";
 
-declare interface TextureFeature extends Object {
-  // todo: 1
-}
+declare type TextureFeature = "sample" | "filter" | "render" | "blend" | "storage" | "atomic" | "blitsrc" | "blitdst";
 
-declare interface DeviceAxis extends Object {
-  // todo: 1
-}
+declare type DeviceAxis = "trigger" | "thumbstick" | "touchpad" | "grip";
 
-declare interface DeviceButton extends Object {
-  // todo: 1
-}
+declare type DeviceButton = "trigger" | "thumbstick" | "touchpad" | "grip" | "menu" | "a" | "b" | "x" | "y" | "proximity";
 
-declare interface PassthroughMode extends Object {
-  // todo: 1
-}
+declare type PassthroughMode = "opaque" | "blend" | "add";
 
-declare interface HeadsetDriver extends Object {
-  // todo: 1
-}
+declare type HeadsetDriver = "desktop" | "openxr";
 
 declare interface RandomGenerator extends Object {
   getSeed(): LuaMultiReturn<[low: number, high: number]>;
