@@ -48,7 +48,7 @@ lovr.update = (delta: number) => {
     } else {
       // window.focus();
       // window.maximize();
-      window.restore()
+      window.restore();
     }
     smolify = !smolify;
     timer = 0;
