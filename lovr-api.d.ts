@@ -2,6 +2,7 @@
 //* Version: 0.17.0.
 //* If something is marked as deprecated I'm skipping it.
 // todo: 1: anything that says LuaTable needs to be revisited.
+// todo: 2: anything that says any needs to be revisited.
 
 declare interface lovrConfigModules {
   audio: boolean;
