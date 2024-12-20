@@ -5,7 +5,7 @@ function main(): void {
   print(addVec2(thing, thing));
 
   print(thing.add(thing));
-  print(thing.pow(thing));
+  print(thing.xy = thing.yx);
 
 
 }
