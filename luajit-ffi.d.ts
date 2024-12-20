@@ -3,12 +3,13 @@ declare type OSType = "Windows" | "Linux" | "OSX" | "BSD" | "POSIX" | "Other";
 declare type SystemArch = "x86" | "x64" | "arm" | "arm64" | "arm64be" | "ppc" | "mips" | "mipsel" | "mips64" | "mips64el" | "mips64r6" | "mips64r6el";
 
 declare interface CTypeObject {
-  // todo:?
+  free(): void;
+  set(func: (...any: []) => any): void;
 }
 
-declare interface CStruct {
-  // todo:?
-}
+declare interface CStruct { }
+
+declare interface CLib { }
 
 declare type cdecl = string;
 declare type ctype = CTypeObject;
@@ -24,6 +25,27 @@ declare type VLSL = CStruct;
  */
 declare module "ffi" {
   function cdef(input: string): void;
+  // ffi.C, I'm not sure what it's telling me.
+  function load(name: string, global?: boolean): CLib;
+  // Can't use the "new" function.
+  function ctype(nelem: number, ...init: any): ctype;
+  // Can't use the "typeof" function.
+  function cast(data: ct, ...init: any): cdata;
+  function metatype(data: ct): ctype;
+  function gc(data: cdata, finalizer: any): cdata;
+  function sizeof(data: ct, nelem: number): number;
+  function alignof(data: ct): number;
+  function offsetof(data: ct, field: number): LuaMultiReturn<[number, number, number]>;
+  function istype(data: ct, obj: any): boolean;
+  function errno(newerr?: boolean): number;
+  function string(ptr: any, len?: number): string;
+  function copy(dst: any, src: any, len?: number): void;
+  function fill(dst: any, len: number, c?: boolean): void;
+  function abi(param: string): boolean;
+  function os(): OSType;
+  function arch(): SystemArch;
+  function tonumber(data: cdata): number;
+  function tostring(data: cdata): string;
 }
 
 
