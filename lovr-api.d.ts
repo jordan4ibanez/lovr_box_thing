@@ -277,7 +277,6 @@ declare const subVec3: LuaSubtraction<Vec3, Vec3 | number, Vec3> & ((x: number, 
 declare const mulVec3: LuaMultiplication<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
 declare const divVec3: LuaDivision<Vec3, Vec3 | number, Vec3> & ((x: number, y: number, z?: number) => Vec3);
 declare interface Vec3 extends Object {
-  // todo: 1
 
   x: number;
   y: number;
@@ -365,7 +364,6 @@ declare const subVec4: LuaSubtraction<Vec4, Vec4 | number, Vec4> & ((x: number, 
 declare const mulVec4: LuaMultiplication<Vec4, Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
 declare const divVec4: LuaDivision<Vec4, Vec4 | number, Vec4> & ((x: number, y: number, z?: number, w?: number) => Vec4);
 declare interface Vec4 extends Object {
-  // todo: 1
 
   x: number;
   y: number;
@@ -786,7 +784,7 @@ declare const subMat4: LuaSubtraction<Mat4, Mat4 | number, Mat4>;
 declare const mulMat4: LuaMultiplication<Mat4, Mat4 | number, Mat4>;
 declare const divMat4: LuaDivision<Mat4, Mat4 | number, Mat4>;
 declare interface Mat4 extends Object {
-  // todo: 1
+
   // note: this is a flat array.  
   1: number;
   2: number;
@@ -842,8 +840,6 @@ declare interface Mat4 extends Object {
   // todo: fix this lol.
   unpack(raw: boolean): any;
 }
-
-
 
 declare type ShaderStage = "vertex" | "fragment" | "compute";
 
