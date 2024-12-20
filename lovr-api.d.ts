@@ -750,12 +750,16 @@ declare const subQuat: LuaSubtraction<Quat, Quat | number, Quat>;
 declare const mulQuat: LuaMultiplication<Quat, Quat | number, Quat>;
 declare const divQuat: LuaDivision<Quat, Quat | number, Quat>;
 declare interface Quat extends Object {
-  // todo: 1
 
   x: number;
   y: number;
   z: number;
   w: number;
+
+  1: number;
+  2: number;
+  3: number;
+  4: number;
 
   add: LuaAdditionMethod<Quat | number, Quat>;
   sub: LuaSubtractionMethod<Quat | number, Quat>;
