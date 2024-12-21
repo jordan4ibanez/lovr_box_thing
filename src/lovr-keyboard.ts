@@ -16,6 +16,11 @@ ffi.cdef(`
 
 const window = C.glfwGetCurrentContext();
 
+type KeyboardKey = "space" | "'" | "," | "-" | "." | "/" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | ";" | "=" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r"
+  | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "[" | "\\" | "]" | "`" | "escape" | "return" | "enter" | "tab" | "backspace" | "insert" | "delete" | "right" | "left" | "down" | "up" | "pageup" | "pagedown" | "home" | "end" |
+  "capslock" | "scrolllock" | "numlock" | "printscreen" | "pause" | "f1" | "f2" | "f3" | "f4" | "f5" | "f6" | "f7" | "f8" | "f9" | "f10" | "f11" | "f12" | "kp0" | "kp1" | "kp2" | "kp3" | "kp4" | "kp5" | "kp6" | "kp7" | "kp8" |
+  "kp9" | "kp." | "kp/" | "kp*" | "kp-" | "kp+" | "kpenter" | "kp=" | "lshift" | "lctrl" | "lalt" | "lgui" | "rshift" | "rctrl" | "ralt" | "rgui" | "menu";
+
 const keymap: AnyTable = {
   ['space']: [32, 0, 0],
   ['\'']: [39, 0, 0],
@@ -133,23 +138,25 @@ const keymap: AnyTable = {
   ['menu']: [348, 0, 0]
 };
 
-// local reverse = {}
-// for k, v in pairs(keymap) do
-//   local keycode = v[1]
-//   reverse[keycode] = k
-// end
-// for k, v in pairs(reverse) do
-//   keymap[k] = v
-// end
+let reverse: AnyTable = {};
 
-// local keyboard = {}
+for (const [k, v] of Object.entries(keymap)) {
+  let keycode = v[1];
+  reverse[keycode] = k;
+}
 
-// function keyboard.isDown(key, ...)
-//   if not key then return false end
-//   local keycode = keymap[key][1]
-//   assert(keycode and type(keycode) == 'number', 'Unknown key: ' .. key)
-//   return C.glfwGetKey(window, keycode) == 1 or keyboard.isDown(...)
-// end
+for (const [k, v] of Object.entries(reverse)) {
+  keymap[k] = v;
+}
+
+let keyboard: AnyTable = {};
+
+export function isDown(key, ...): boolean {
+  if not key then return false end
+  local keycode = keymap[key][1];
+  assert(keycode and type(keycode) == 'number', 'Unknown key: '..key);
+  return C.glfwGetKey(window, keycode) == 1 or keyboard.isDown(...);
+}
 
 // function keyboard.wasPressed(key, ...)
 //   if not key then return false end
