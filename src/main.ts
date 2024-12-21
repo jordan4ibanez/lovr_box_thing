@@ -18,20 +18,28 @@ lovr.load = () => {
   // print(window.getOpacity());
   // print(window.getPosition()[0]);
   // print(window.getTitle());
-  window.setFullscreen(true, "desktop", 1);
-  window.setFullscreen(false, "desktop", 1);
-  print("STARTING");
+  // window.setFullscreen(true, "desktop", 1);
+  // window.setFullscreen(false, "desktop", 1);
+  // print("STARTING");
   window.setIcon("textures/club_zero.png");
-  window.setMode(1024, 768);
+  // window.setMode(1024, 768);
   // window.setOpacity(0.5)
   // window.setPosition(100, 100);
-  window.setTitle("cool");
+  // window.setTitle("cool");
 
-
-
-
+  const cursor = mouse.newCursor("textures/club_zero.png", 0, 0);
+  mouse.setCursor(cursor);
 
   // lovr.event.quit();
+};
+
+
+lovr.mousepressed = (x: number, y: number, button: number) => {
+  print('press', x, y, button);
+};
+
+lovr.mousereleased = (x: number, y: number, button: number) => {
+  print('release', x, y, button);
 };
 
 // lovr.draw = (pass: Pass) => {
