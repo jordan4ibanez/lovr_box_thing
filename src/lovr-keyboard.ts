@@ -1,7 +1,7 @@
-local ffi = assert(type(jit) == 'table' and               -- Only run if we have LuaJIT
-  lovr.system.getOS() ~= 'Android' and lovr.system.getOS() ~= 'Web' and -- and also GLFW
-  require 'ffi', "lovr-keyboard cannot run on this platform")
-local C = ffi.os == 'Windows' and ffi.load('glfw3') or ffi.C
+// Only run if we have LuaJIT and GLFW.
+assert(type(jit) == 'table' && lovr.system.getOS() != 'Android' && lovr.system.getOS() != 'Web', "lovr-keyboard cannot run on this platform");
+import * as ffi from "ffi";
+const C = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C;
 
 // ffi.cdef [[
 //   typedef struct GLFWwindow GLFWwindow;
