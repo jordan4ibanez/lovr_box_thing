@@ -8,13 +8,13 @@ ffi.cdef(`
   typedef void(*GLFWkeyfun)(GLFWwindow*, int, int, int, int);
   typedef void(*GLFWcharfun)(GLFWwindow*, unsigned int);
 
-  GLFWwindow* glfwGetCurrentContext(void);
+  GLFWwindow* os_get_glfw_window(void);
   int glfwGetKey(GLFWwindow* window, int key);
   GLFWkeyfun glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback);
   GLFWcharfun glfwSetCharCallback(GLFWwindow* window, GLFWcharfun callback);
 `);
 
-const window = C.glfwGetCurrentContext();
+const window = C.os_get_glfw_window();
 
 type KeyboardKey = "space" | "'" | "," | "-" | "." | "/" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | ";" | "=" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r"
   | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "[" | "\\" | "]" | "`" | "escape" | "return" | "enter" | "tab" | "backspace" | "insert" | "delete" | "right" | "left" | "down" | "up" | "pageup" | "pagedown" | "home" | "end" |
