@@ -9,7 +9,6 @@ local C = ffi.os == 'Windows' and ffi.load('glfw3') or ffi.C
  * Things may look kind of weird in here.
  */
 
-
 ffi.cdef [[
   enum {
     GLFW_CURSOR = 0x00033001,
