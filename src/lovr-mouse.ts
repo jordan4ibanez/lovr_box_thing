@@ -96,6 +96,14 @@ export function setPosition(x: number, y: number): void {
   C.glfwSetCursorPos(window, x / scale, y / scale);
 }
 
+export function isDown(...button: number[]): boolean {
+  for (const k of Object.values(button)) {
+    if (C.glfwGetMouseButton(window, k - 1) > 0) {
+      return true;
+    }
+  }
+  return false;
+}
 
 // function mouse.getRelativeMode()
 //   return C.glfwGetInputMode(window, C.GLFW_CURSOR) == C.GLFW_CURSOR_DISABLED
