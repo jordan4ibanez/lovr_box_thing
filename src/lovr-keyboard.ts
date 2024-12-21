@@ -190,14 +190,12 @@ export function wasReleased(...key: KeyboardKey[]): boolean {
   return released;
 }
 
-// C.glfwSetKeyCallback(window, function(window, key, scancode, action, mods)
-//   if action ~= 2 and keymap[key] then
-//     lovr.event.push(action > 0 and 'keypressed' or 'keyreleased', keymap[key])
-//   end
-// end)
+C.glfwSetKeyCallback(window, (window: any, key: KeyboardKey, scancode: any, action: number, mods: any) => {
+  if (action != 2 && keymap[key]) {
+    lovr.event.push(action > 0 && 'keypressed' || 'keyreleased', keymap[key]);
+  }
+});
 
-// C.glfwSetCharCallback(window, function(window, char)
-//     lovr.event.push('textinput', string.char(char))
-//   end)
-
-// return keyboard
+C.glfwSetCharCallback(window, (window: any, char: number) => {
+  lovr.event.push('textinput', string.char(char));
+});
