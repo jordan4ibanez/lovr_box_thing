@@ -28,12 +28,11 @@ lovr.load = () => {
   // window.setTitle("cool");
 
   // const cursor = mouse.newCursor("textures/club_zero.png", 0, 0);
-  const cursor = mouse.getSystemCursor("crosshair");
+  const cursor = mouse.getSystemCursor("sizens");
   mouse.setCursor(cursor);
   for (let i = 1; i < 1000000; i++) {
     print(i);
   }
-  // mouse.destroyCursor(cursor);
 
   // lovr.event.quit();
 };
