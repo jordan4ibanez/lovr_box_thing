@@ -176,20 +176,19 @@ export function wasPressed(...key: KeyboardKey[]): boolean {
   return pressed;
 }
 
-// function keyboard.wasReleased(key, ...)
-//   if not key then return false end
-//   local keycode = keymap[key][1]
-//   assert(keycode and type(keycode) == 'number', 'Unknown key: ' .. key)
-//   local released = false
-//   keymap[key][3] = C.glfwGetKey(window, keycode)
-//   if keymap[key][2] == 1 and keymap[key][3] == 0 then
-//     released = true 
-//   else
-//     released = false
-//   end
-//   keymap[key][2] = keymap[key][3]
-//   return released
-// end
+export function wasReleased(...key: KeyboardKey[]): boolean {
+  let released = false;
+  for (const k of Object.values(key)) {
+    const keycode = keymap[k][1];
+    assert(keycode && type(keycode) == 'number', 'Unknown key: ' + key);
+    keymap[k][3] = C.glfwGetKey(window, keycode);
+    if (keymap[k][2] == 1 && keymap[k][3] == 0) {
+      released = true;
+    }
+    keymap[k][2] = keymap[k][3];
+  }
+  return released;
+}
 
 // C.glfwSetKeyCallback(window, function(window, key, scancode, action, mods)
 //   if action ~= 2 and keymap[key] then
