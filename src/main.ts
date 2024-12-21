@@ -1,5 +1,6 @@
 import * as window from "./lovr-window";
 import * as mouse from "./lovr-mouse";
+import * as keyboard from "./lovr-keyboard";
 
 lovr.load = () => {
 
