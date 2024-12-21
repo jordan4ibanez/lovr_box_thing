@@ -132,7 +132,9 @@ export function newCursor(source: string | Blob | Image, hotx: number, hoty: num
   return ffi.gc(C.glfwCreateCursor(image, hotx || 0, hoty || 0), C.glfwDestroyCursor) as Cursor;
 }
 
-export function getSystemCursor(kind: string): Cursor {
+declare type SystemCursorKind = "arrow" | "ibeam" | "crosshair" | "hand" | "sizewe" | "sizens";
+
+export function getSystemCursor(kind: SystemCursorKind): Cursor {
   const kinds: AnyTable = {
     arrow: C.GLFW_ARROW_CURSOR,
     ibeam: C.GLFW_IBEAM_CURSOR,
