@@ -131,46 +131,45 @@ export function newCursor(source: string | Blob | Image, hotx: number, hoty: num
   return C.glfwCreateCursor(image, hotx || 0, hoty || 0);
 }
 
-// function mouse.getSystemCursor(kind)
-//   local kinds = {
-//     arrow = C.GLFW_ARROW_CURSOR,
-//     ibeam = C.GLFW_IBEAM_CURSOR,
-//     crosshair = C.GLFW_CROSSHAIR_CURSOR,
-//     hand = C.GLFW_HAND_CURSOR,
-//     sizewe = C.GLFW_HRESIZE_CURSOR,
-//     sizens = C.GLFW_VRESIZE_CURSOR
-//   }
-//   assert(kinds[kind], string.format('Unknown cursor %q', tostring(kind)))
-//   return C.glfwCreateStandardCursor(kinds[kind])
-// end
+export function getSystemCursor(kind: string): Cursor {
+  const kinds: AnyTable = {
+    arrow: C.GLFW_ARROW_CURSOR,
+    ibeam: C.GLFW_IBEAM_CURSOR,
+    crosshair: C.GLFW_CROSSHAIR_CURSOR,
+    hand: C.GLFW_HAND_CURSOR,
+    sizewe: C.GLFW_HRESIZE_CURSOR,
+    sizens: C.GLFW_VRESIZE_CURSOR
+  };
+  assert(kinds[kind], string.format('Unknown cursor %q', tostring(kind)));
+  return C.glfwCreateStandardCursor(kinds[kind]);
+}
 
-// function mouse.setCursor(cursor)
-//   C.glfwSetCursor(window, cursor)
-// end
+export function setCursor(cursor: Cursor): void {
+  C.glfwSetCursor(window, cursor);
+}
 
-// C.glfwSetMouseButtonCallback(window, function(target, button, action, mods)
-//   if target == window then
-//     local x, y = mouse.getPosition()
-//     lovr.event.push(action > 0 and 'mousepressed' or 'mousereleased', x, y, button + 1, false)
-//   end
-// end)
+C.glfwSetMouseButtonCallback(window, (target: any, button: number, action: number, mods: any) => {
+  if (target == window) {
+    const [x, y] = getPosition();
+    lovr.event.push(action > 0 && 'mousepressed' || 'mousereleased', x, y, button + 1, false);
+  }
+});
 
-// local px, py = mouse.getPosition()
-// C.glfwSetCursorPosCallback(window, function(target, x, y)
-//   if target == window then
-//     local scale = mouse.getScale()
-//     x = x * scale
-//     y = y * scale
-//     lovr.event.push('mousemoved', x, y, x - px, y - py, false)
-//     px, py = x, y
-//   end
-// end)
+let [px, py] = getPosition();
+C.glfwSetCursorPosCallback(window, (target: any, x: number, y: number) => {
+  if (target == window) {
+    const scale = getScale();
+    x = x * scale;
+    y = y * scale;
+    lovr.event.push('mousemoved', x, y, x - px, y - py, false);
+    px = x;
+    py = y;
+  }
+});
 
-// C.glfwSetScrollCallback(window, function(target, x, y)
-//   if target == window then
-//     local scale = mouse.getScale()
-//     lovr.event.push('wheelmoved', x * scale, y * scale)
-//   end
-// end)
-
-// return mouse
+C.glfwSetScrollCallback(window, (target: any, x: number, y: number) => {
+  if (target == window) {
+    const scale = getScale();
+    lovr.event.push('wheelmoved', x * scale, y * scale);
+  }
+});
