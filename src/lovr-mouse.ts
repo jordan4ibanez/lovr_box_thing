@@ -7,7 +7,7 @@ const C = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C
  * Things may look kind of weird in here.
  */
 
-ffi.cdef [[
+ffi.cdef(`
   enum {
     GLFW_CURSOR = 0x00033001,
     GLFW_CURSOR_NORMAL = 0x00034001,
@@ -46,7 +46,7 @@ ffi.cdef [[
   GLFWmousebuttonfun glfwSetMouseButtonCallback(GLFWwindow* window, GLFWmousebuttonfun callback);
   GLFWcursorposfun glfwSetCursorPosCallback(GLFWwindow* window, GLFWcursorposfun callback);
   GLFWcursorposfun glfwSetScrollCallback(GLFWwindow* window, GLFWscrollfun callback);
-]]
+`);
 
 local window = ffi.C.os_get_glfw_window()
 
