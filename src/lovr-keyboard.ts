@@ -163,8 +163,6 @@ export function isDown(...key: KeyboardKey[]): boolean {
 export function wasPressed(...key: KeyboardKey[]): boolean {
   let pressed = false;
   for (const k of Object.values(key)) {
-    //todo: removeme! debug print!!
-    print(k);
     const keycode = keymap[k][1];
     assert(keycode && type(keycode) == 'number', 'Unknown key: ' + key);
     keymap[k][3] = C.glfwGetKey(window, keycode);
