@@ -3,16 +3,16 @@ assert(type(jit) == 'table' && lovr.system.getOS() != 'Android' && lovr.system.g
 import * as ffi from "ffi";
 const C = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C;
 
-// ffi.cdef [[
-//   typedef struct GLFWwindow GLFWwindow;
-//   typedef void(*GLFWkeyfun)(GLFWwindow*, int, int, int, int);
-//   typedef void(*GLFWcharfun)(GLFWwindow*, unsigned int);
+ffi.cdef(`
+  typedef struct GLFWwindow GLFWwindow;
+  typedef void(*GLFWkeyfun)(GLFWwindow*, int, int, int, int);
+  typedef void(*GLFWcharfun)(GLFWwindow*, unsigned int);
 
-//   GLFWwindow* glfwGetCurrentContext(void);
-//   int glfwGetKey(GLFWwindow* window, int key);
-//   GLFWkeyfun glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback);
-//   GLFWcharfun glfwSetCharCallback(GLFWwindow* window, GLFWcharfun callback);
-// ]]
+  GLFWwindow* glfwGetCurrentContext(void);
+  int glfwGetKey(GLFWwindow* window, int key);
+  GLFWkeyfun glfwSetKeyCallback(GLFWwindow* window, GLFWkeyfun callback);
+  GLFWcharfun glfwSetCharCallback(GLFWwindow* window, GLFWcharfun callback);
+`);
 
 // local window = C.glfwGetCurrentContext()
 
