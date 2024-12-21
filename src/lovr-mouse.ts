@@ -1,8 +1,6 @@
-import * as ffi from "ffi";
-
 assert(type(jit) == 'table' && lovr.system.getOS() != 'Android', 'lovr-mouse cannot run on this platform')
-local ffi = require 'ffi'
-local C = ffi.os == 'Windows' and ffi.load('glfw3') or ffi.C
+import * as ffi from "ffi";
+const C = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C
 
 /**
  * Note: This was half hazardly translated to make sure it compiles.
