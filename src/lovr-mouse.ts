@@ -74,12 +74,12 @@ export function getY(): number {
   return y[0] * getScale();
 }
 
-export function getPosition(): number {
+export function getPosition(): [number, number] {
   const x: AnyTable = ffi.new_('double[1]');
   const y: AnyTable = ffi.new_('double[1]');
   const scale = getScale();
   C.glfwGetCursorPos(window, x, y);
-  return x[0] * scale, y[0] * scale;
+  return [x[0] * scale, y[0] * scale];
 }
 
 export function setX(x: number): void {
