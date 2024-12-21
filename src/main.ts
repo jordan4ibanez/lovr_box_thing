@@ -28,7 +28,7 @@ lovr.load = () => {
   // window.setTitle("cool");
 
   // const cursor = mouse.newCursor("textures/club_zero.png", 0, 0);
-  // mouse.setCursor(cursor);
+  mouse.setCursor("hi");
 
   // lovr.event.quit();
 };

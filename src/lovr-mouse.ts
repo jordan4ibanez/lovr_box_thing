@@ -8,7 +8,7 @@ const C: AnyTable = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C;
  */
 
 // A blank cursor type.
-export interface Cursor { }
+export type Cursor = LuaUserdata;
 
 ffi.cdef(`
   enum {
