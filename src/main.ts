@@ -1,4 +1,5 @@
 import * as window from "./lovr-window";
+import * as mouse from "./lovr-mouse";
 
 let timer = 0;
 let smolify = true;
@@ -28,6 +29,8 @@ lovr.load = () => {
 
 
 
+
+
   // lovr.event.quit();
 };
 
@@ -39,20 +42,24 @@ lovr.update = (delta: number) => {
 
   timer = timer + delta;
 
-  print(timer);
+  // print(timer);
 
-  if (timer > 0.3) {
-    if (smolify) {
-      // window.minimize();
-      window.maximize();
-    } else {
-      // window.focus();
-      // window.maximize();
-      window.restore();
-    }
-    smolify = !smolify;
-    timer = 0;
-  }
+  // print(mouse.isDown(2));
+
+
+
+  // if (timer > 0.3) {
+  //   if (smolify) {
+  //     // window.minimize();
+  //     window.maximize();
+  //   } else {
+  //     // window.focus();
+  //     // window.maximize();
+  //     window.restore();
+  //   }
+  //   smolify = !smolify;
+  //   timer = 0;
+  // }
 };
 
 lovr.keypressed = (key: KeyCode) => {
