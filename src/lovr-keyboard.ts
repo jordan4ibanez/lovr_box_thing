@@ -160,20 +160,21 @@ export function isDown(...key: KeyboardKey[]): boolean {
   return false;
 }
 
-// function keyboard.wasPressed(key, ...)
-//   if not key then return false end
-//   local keycode = keymap[key][1]
-//   assert(keycode and type(keycode) == 'number', 'Unknown key: ' .. key)
-//   local pressed = false
-//   keymap[key][3] = C.glfwGetKey(window, keycode)
-//   if keymap[key][2] == 0 and keymap[key][3] == 1 then
-//     pressed = true 
-//   else
-//     pressed = false
-//   end
-//   keymap[key][2] = keymap[key][3]
-//   return pressed
-// end
+export function wasPressed(...key: KeyboardKey[]): boolean {
+  let pressed = false;
+  for (const k of Object.values(key)) {
+    //todo: removeme! debug print!!
+    print(k);
+    const keycode = keymap[k][1];
+    assert(keycode && type(keycode) == 'number', 'Unknown key: ' + key);
+    keymap[k][3] = C.glfwGetKey(window, keycode);
+    if (keymap[k][2] == 0 && keymap[k][3] == 1) {
+      pressed = true;
+    }
+    keymap[k][2] = keymap[k][3];
+  }
+  return pressed;
+}
 
 // function keyboard.wasReleased(key, ...)
 //   if not key then return false end
