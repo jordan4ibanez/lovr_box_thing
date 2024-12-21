@@ -149,13 +149,15 @@ for (const [k, v] of Object.entries(reverse)) {
   keymap[k] = v;
 }
 
-let keyboard: AnyTable = {};
-
-export function isDown(key, ...): boolean {
-  if not key then return false end
-  local keycode = keymap[key][1];
-  assert(keycode and type(keycode) == 'number', 'Unknown key: '..key);
-  return C.glfwGetKey(window, keycode) == 1 or keyboard.isDown(...);
+export function isDown(...key: KeyboardKey[]): boolean {
+  for (const k of Object.values(key)) {
+    const keycode = keymap[k][1];
+    assert(keycode && type(keycode) == 'number', 'Unknown key: ' + key);
+    if (C.glfwGetKey(window, keycode) == 1) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // function keyboard.wasPressed(key, ...)
