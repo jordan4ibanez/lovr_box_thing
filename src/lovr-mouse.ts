@@ -142,15 +142,11 @@ export function getSystemCursor(kind: string): Cursor {
     sizens: C.GLFW_VRESIZE_CURSOR
   };
   assert(kinds[kind], string.format('Unknown cursor %q', tostring(kind)));
-  return C.glfwCreateStandardCursor(kinds[kind]);
+  return ffi.gc(C.glfwCreateStandardCursor(kinds[kind]), C.glfwDestroyCursor) as Cursor;
 }
 
 export function setCursor(cursor: Cursor): void {
   C.glfwSetCursor(window, cursor);
-}
-
-export function destroyCursor(cursor: Cursor): void {
-  C.glfwDestroyCursor(cursor);
 }
 
 C.glfwSetMouseButtonCallback(window, (target: any, button: number, action: number, mods: any) => {
