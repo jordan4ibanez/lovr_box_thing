@@ -7,6 +7,9 @@ const C: AnyTable = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C;
  * Things may look kind of weird in here.
  */
 
+// A blank cursor type.
+export interface Cursor { }
+
 ffi.cdef(`
   enum {
     GLFW_CURSOR = 0x00033001,
