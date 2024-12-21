@@ -1,6 +1,6 @@
 assert(type(jit) == 'table' && lovr.system.getOS() != 'Android', 'lovr-mouse cannot run on this platform');
 import * as ffi from "ffi";
-const C = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C;
+const C: AnyTable = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C;
 
 /**
  * Note: This was half hazardly translated to make sure it compiles.
@@ -50,56 +50,52 @@ ffi.cdef(`
 
 const window = ffi.C.os_get_glfw_window();
 
-let mouse: AnyTable = {};
+// LÖVR uses framebuffer scale for everything, but glfw uses window scale for events.
+// It is necessary to convert between the two at all boundaries.
+export function getScale(): number {
+  const x: AnyTable = ffi.new_('int[1]');
+  const y: AnyTable = ffi.new_('int[1]');
+  C.glfwGetWindowSize(window, x, y);
+  return lovr.system.getWindowWidth() / x[0];
+}
 
-// -- LÖVR uses framebuffer scale for everything, but glfw uses window scale for events.
-// -- It is necessary to convert between the two at all boundaries.
-// function mouse.getScale()
-//   local x, _ = ffi.new('int[1]'), ffi.new('int[1]')
-//   C.glfwGetWindowSize(window, x, _)
-//   return lovr.system.getWindowWidth() / x[0]
-// end
+export function getX(): number {
+  const x: AnyTable = ffi.new_('double[1]');
+  C.glfwGetCursorPos(window, x, null);
+  return x[0] * getScale();
+}
 
-// function mouse.getX()
-//   local x = ffi.new('double[1]')
-//   C.glfwGetCursorPos(window, x, nil)
-//   return x[0] * mouse.getScale()
-// end
+export function getY(): number {
+  const y: AnyTable = ffi.new_('double[1]');
+  C.glfwGetCursorPos(window, null, y);
+  return y[0] * getScale();
+}
 
-// function mouse.getY()
-//   local y = ffi.new('double[1]')
-//   C.glfwGetCursorPos(window, nil, y)
-//   return y[0] * mouse.getScale()
-// end
+export function getPosition(): number {
+  const x: AnyTable = ffi.new_('double[1]');
+  const y: AnyTable = ffi.new_('double[1]');
+  const scale = getScale();
+  C.glfwGetCursorPos(window, x, y);
+  return x[0] * scale, y[0] * scale;
+}
 
-// function mouse.getPosition()
-//   local x, y = ffi.new('double[1]'), ffi.new('double[1]')
-//   local scale = mouse.getScale()
-//   C.glfwGetCursorPos(window, x, y)
-//   return x[0] * scale, y[0] * scale
-// end
+export function setX(x: number): void {
+  const y = getY();
+  const scale = getScale();
+  C.glfwSetCursorPos(window, x / scale, y / scale);
+}
 
-// function mouse.setX(x)
-//   local y = mouse.getY()
-//   local scale = mouse.getScale()
-//   C.glfwSetCursorPos(window, x / scale, y / scale)
-// end
+export function setY(y: number): void {
+  const x = getX();
+  const scale = getScale();
+  C.glfwSetCursorPos(window, x / scale, y / scale);
+}
 
-// function mouse.setY(y)
-//   local x = mouse.getX()
-//   local scale = mouse.getScale()
-//   C.glfwSetCursorPos(window, x / scale, y / scale)
-// end
+export function setPosition(x: number, y: number): void {
+  const scale = getScale();
+  C.glfwSetCursorPos(window, x / scale, y / scale);
+}
 
-// function mouse.setPosition(x, y)
-//   local scale = mouse.getScale()
-//   C.glfwSetCursorPos(window, x / scale, y / scale)
-// end
-
-// function mouse.isDown(button, ...)
-//   if not button then return false end
-//   return C.glfwGetMouseButton(window, button - 1) > 0 or mouse.isDown(...)
-// end
 
 // function mouse.getRelativeMode()
 //   return C.glfwGetInputMode(window, C.GLFW_CURSOR) == C.GLFW_CURSOR_DISABLED
