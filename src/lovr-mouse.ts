@@ -1,6 +1,6 @@
-assert(type(jit) == 'table' && lovr.system.getOS() != 'Android', 'lovr-mouse cannot run on this platform')
+assert(type(jit) == 'table' && lovr.system.getOS() != 'Android', 'lovr-mouse cannot run on this platform');
 import * as ffi from "ffi";
-const C = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C
+const C = ffi.os == 'Windows' && ffi.load('glfw3') || ffi.C;
 
 /**
  * Note: This was half hazardly translated to make sure it compiles.
@@ -48,9 +48,9 @@ ffi.cdef(`
   GLFWcursorposfun glfwSetScrollCallback(GLFWwindow* window, GLFWscrollfun callback);
 `);
 
-const window = ffi.C.os_get_glfw_window()
+const window = ffi.C.os_get_glfw_window();
 
-let mouse: AnyTable = {}
+let mouse: AnyTable = {};
 
 // -- LÖVR uses framebuffer scale for everything, but glfw uses window scale for events.
 // -- It is necessary to convert between the two at all boundaries.
