@@ -108,23 +108,28 @@ export function isDown(...button: number[]): boolean {
   return false;
 }
 
-// function mouse.getRelativeMode()
-//   return C.glfwGetInputMode(window, C.GLFW_CURSOR) == C.GLFW_CURSOR_DISABLED
-// end
+export function getRelativeMode(): boolean {
+  return C.glfwGetInputMode(window, C.GLFW_CURSOR) == C.GLFW_CURSOR_DISABLED;
+}
 
-// function mouse.setRelativeMode(enable)
-//   C.glfwSetInputMode(window, C.GLFW_CURSOR, enable and C.GLFW_CURSOR_DISABLED or C.GLFW_CURSOR_NORMAL)
-// end
+export function setRelativeMode(enable: boolean): void {
+  C.glfwSetInputMode(window, C.GLFW_CURSOR, enable && C.GLFW_CURSOR_DISABLED || C.GLFW_CURSOR_NORMAL);
+}
 
-// function mouse.newCursor(source, hotx, hoty)
-//   if type(source) == 'string' or tostring(source) == 'Blob' then
-//     source = lovr.data.newImage(source, false)
-//   else
-//     assert(tostring(source) == 'Image', 'Bad argument #1 to newCursor (Image expected)')
-//   end
-//   local image = ffi.new('GLFWimage', source:getWidth(), source:getHeight(), source:getPointer())
-//   return C.glfwCreateCursor(image, hotx or 0, hoty or 0)
-// end
+export function newCursor(source: string | Blob | Image, hotx: number, hoty: number): Cursor {
+  if (type(source) == 'string') {
+    source = lovr.data.newImage(source as string);
+  } else if (tostring(source) == 'Blob') {
+    source = lovr.data.newImage(source as Blob);
+  } else {
+    assert(tostring(source) == 'Image', 'Bad argument #1 to newCursor (Image expected)');
+  }
+
+  source = source as Image;
+
+  const image = ffi.new_('GLFWimage', source.getWidth(), source.getHeight(), source.getPointer());
+  return C.glfwCreateCursor(image, hotx || 0, hoty || 0);
+}
 
 // function mouse.getSystemCursor(kind)
 //   local kinds = {
