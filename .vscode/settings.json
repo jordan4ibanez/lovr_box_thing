@@ -2,7 +2,7 @@
   "typescript.format.semicolons": "insert",
   "files.exclude": {
     // Comment this out to study lua output.
-    "out/": true,
+    // "out/": true,
     "node_modules/": true,
     // Comment this out to add binaries for different OS.
     "bin/": true
