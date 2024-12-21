@@ -27,8 +27,8 @@ lovr.load = () => {
   // window.setPosition(100, 100);
   // window.setTitle("cool");
 
-  const cursor = mouse.newCursor("textures/club_zero.png", 0, 0);
-  mouse.setCursor(cursor);
+  // const cursor = mouse.newCursor("textures/club_zero.png", 0, 0);
+  // mouse.setCursor(cursor);
 
   // lovr.event.quit();
 };
@@ -40,6 +40,16 @@ lovr.mousepressed = (x: number, y: number, button: number) => {
 
 lovr.mousereleased = (x: number, y: number, button: number) => {
   print('release', x, y, button);
+};
+
+lovr.mousemoved = (x: number, y: number, dx: number, dy: number) => {
+  if (mouse.isDown(1, 2, 3)) {
+    print("move", x, y, dx, dy);
+  }
+};
+
+lovr.wheelmoved = (dx: number, dy: number) => {
+  print("wheel", dx, dy);
 };
 
 // lovr.draw = (pass: Pass) => {
