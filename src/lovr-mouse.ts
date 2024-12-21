@@ -46,6 +46,7 @@ ffi.cdef(`
   void glfwSetCursor(GLFWwindow* window, GLFWcursor* cursor);
   int glfwGetMouseButton(GLFWwindow* window, int button);
   void glfwGetWindowSize(GLFWwindow* window, int* width, int* height);
+  void glfwDestroyCursor(GLFWcursor* cursor);
   GLFWmousebuttonfun glfwSetMouseButtonCallback(GLFWwindow* window, GLFWmousebuttonfun callback);
   GLFWcursorposfun glfwSetCursorPosCallback(GLFWwindow* window, GLFWcursorposfun callback);
   GLFWcursorposfun glfwSetScrollCallback(GLFWwindow* window, GLFWscrollfun callback);
@@ -146,6 +147,10 @@ export function getSystemCursor(kind: string): Cursor {
 
 export function setCursor(cursor: Cursor): void {
   C.glfwSetCursor(window, cursor);
+}
+
+export function destroyCursor(cursor: Cursor): void {
+  C.glfwDestroyCursor(cursor);
 }
 
 C.glfwSetMouseButtonCallback(window, (target: any, button: number, action: number, mods: any) => {
