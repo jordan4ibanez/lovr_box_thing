@@ -52,7 +52,7 @@ ffi.cdef(`
   GLFWcursorposfun glfwSetScrollCallback(GLFWwindow* window, GLFWscrollfun callback);
 `);
 
-const window = ffi.C.os_get_glfw_window();
+const window = C.os_get_glfw_window();
 
 // LÖVR uses framebuffer scale for everything, but glfw uses window scale for events.
 // It is necessary to convert between the two at all boundaries.
