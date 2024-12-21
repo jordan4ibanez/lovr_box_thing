@@ -129,7 +129,7 @@ export function newCursor(source: string | Blob | Image, hotx: number, hoty: num
   source = source as Image;
 
   const image = ffi.new_('GLFWimage', source.getWidth(), source.getHeight(), source.getPointer());
-  return C.glfwCreateCursor(image, hotx || 0, hoty || 0);
+  return ffi.gc(C.glfwCreateCursor(image, hotx || 0, hoty || 0), C.glfwDestroyCursor) as Cursor;
 }
 
 export function getSystemCursor(kind: string): Cursor {
