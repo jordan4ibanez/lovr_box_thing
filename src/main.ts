@@ -60,14 +60,12 @@ lovr.update = (delta: number) => {
   }
 
   if (fps < MIN_FPS) {
-    world.update(MIN_DELTA);
+    world.update(MAX_DELTA);
   } else {
     if (fps > MAX_FPS) {
-      // print(fps);
-      // print(math.abs(MAX_DELTA - delta));
-      lovr.timer.sleep(math.abs(MAX_DELTA));
-      fps = MAX_FPS;
-      world.update(MAX_DELTA);
+      // print(math.abs(MIN_DELTA - delta));
+      lovr.timer.sleep(math.abs(MIN_DELTA));
+      world.update(MIN_DELTA);
     } else {
       world.update(1 / fps);
     }
