@@ -1,15 +1,12 @@
 import * as window from "./lovr-window";
+import * as keyboard from "./keyboard";
 
 lovr.load = () => {
 
 };
 
-lovr.keypressed = (key: KeyCode) => {
-
-};
-
 lovr.update = (delta: number) => {
-  // print(keyboard.isDown("a", "s"));
+  keyboard.blah();
 };
 
 lovr.errhand = (message: string): (() => string | null) => {
