@@ -17,5 +17,11 @@ lovr.load = () => {
 
 lovr.update = (delta: number) => {
   keyboard._internalKeyboardUpdateDoNotUse();
+
 };
+
+lovr.draw = (pass: Pass) => {
+  pass.text("hello world!", 0, 1.7, -5)
+}
+
 

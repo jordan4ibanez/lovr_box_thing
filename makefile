@@ -6,17 +6,17 @@ default:
 	@cp -a ./models/. ./out/models/
 	@./bin/linux/lovr-0.17.1 ./out/
 
-install:
-	@npm install
+# install:
+# 	@npm install
 
-clean:
-	@rm -rf ./out
-	@echo "Clean completed."
+# clean:
+# 	@rm -rf ./out
+# 	@echo "Clean completed."
 
-deep_clean:
-	@rm -rf ./node_modules
-	@rm -rf ./out
-	@echo "Deep clean completed."
+# deep_clean:
+# 	@rm -rf ./node_modules
+# 	@rm -rf ./out
+# 	@echo "Deep clean completed."
 
-update:
-	@npm update
+# update:
+# 	@npm update
