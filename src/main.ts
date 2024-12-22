@@ -23,8 +23,12 @@ lovr.update = (delta: number) => {
 lovr.draw = (pass: Pass) => {
 
   for (const box of Object.values(boxes)) {
-    let [x, y, z] = box.getPosition();
+
     let shape: Shape = box.getShapes()[0];
+
+    let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
+
+    print(x, y, z, angle, angleX, angleY, angleZ);
 
     switch (shape.getType()) {
       case "box":
@@ -44,7 +48,6 @@ lovr.draw = (pass: Pass) => {
         print("sphere");
         break;
     }
-    print(x, y, z);
   }
 };
 
