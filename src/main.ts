@@ -23,6 +23,14 @@ keyboard.setKeyPressedCallback("escape", () => {
   lovr.event.quit();
 });
 
+const lbsToKg = 2.205;
+const kgToInverseNewton = 9.80665;
+const scale = 10;
+function scalePoundsToRc(inputLBS: number): number {
+  const kg = ((inputLBS / lbsToKg) / kgToInverseNewton) / scale;
+  return kg;
+}
+
 lovr.load = () => {
   // const [displayWidth, displayHeight] = window.getDisplayDimensions(1);
   // window.setMode(displayWidth / 2, displayHeight / 2);
