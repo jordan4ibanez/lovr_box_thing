@@ -39,25 +39,33 @@ lovr.load = () => {
 };
 
 let timer = 0;
+
+const MIN_FPS = 30;
+const MIN_DELTA = 1 / 30;
+const MAX_FPS = 200;
+const MAX_DELTA = 1 / 200;
+
 lovr.update = (delta: number) => {
   keyboard._internalKeyboardUpdateDoNotUse();
 
   // If the FPS goes too low, the physics completely freaks out.
-  // If this drops below 30 FPS the game's physics loop will slow down.
+  // If this drops below 30 FPS the game's physics loop will slow down and collisions will fail.
   // If this goes above 200 FPS the same thing happens but in wierder ways.
-  const fps = lovr.timer.getFPS();
+  // My system can run this at several thousand FPS so that's a HUGE problem.
+  let fps = lovr.timer.getFPS();
 
-  if (fps < 30) {
-    // print("lo");
-    world.update(1 / 30);
+  if (fps < MIN_FPS) {
+    world.update(MIN_DELTA);
   } else {
-    // print("hi");
-    print(1 / fps);
-    world.update(1 / fps);
-  }
-  timer++;
-  if (timer > 100) {
-    // lovr.event.quit();
+    if (fps > MAX_FPS) {
+      // print(fps);
+      // print(math.abs(MAX_DELTA - delta));
+      lovr.timer.sleep(math.abs(MAX_DELTA));
+      fps = MAX_FPS;
+      world.update(MAX_DELTA);
+    } else {
+      world.update(1 / fps);
+    }
   }
 };
 
