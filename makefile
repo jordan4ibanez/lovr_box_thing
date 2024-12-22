@@ -4,7 +4,7 @@ default:
 	@cp -a ./textures/. ./out/textures/
 	@cp -a ./sounds/. ./out/sounds/
 	@cp -a ./models/. ./out/models/
-	@./bin/linux/lovr-0.17.1 ./out/
+	@./bin/linux/lovr ./out/
 
 install:
 	@npm install
