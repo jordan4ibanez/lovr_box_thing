@@ -24,6 +24,8 @@ lovr.draw = (pass: Pass) => {
   pass.text("hello world!", 0, 1.7, -5);
 
   pass.cube(0, 1.7, -1, 0.5, lovr.timer.getTime(), 0, 1, 0, "line");
+
+  
 }
 
 
