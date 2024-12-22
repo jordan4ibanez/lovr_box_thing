@@ -25,13 +25,24 @@ lovr.draw = (pass: Pass) => {
   for (const box of Object.values(boxes)) {
     let [x, y, z] = box.getPosition();
     let shape: Shape = box.getShapes()[0];
-    print(shape);
+
     switch (shape.getType()) {
       case "box":
-      case "capsule":
-      case "cylinder":
-      case "sphere":
 
+        const [sizeX, sizeY, sizeZ] = (shape as BoxShape).getDimensions();
+
+        print("size:", sizeX, sizeY, sizeZ);
+
+        break;
+      case "capsule":
+        print("capsule");
+        break;
+      case "cylinder":
+        print("cylinder");
+        break;
+      case "sphere":
+        print("sphere");
+        break;
     }
     print(x, y, z);
   }
