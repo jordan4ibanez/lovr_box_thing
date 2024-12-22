@@ -11,7 +11,7 @@ lovr.conf = (t: LovrConfig) => {
   t.window.icon = "/textures/club_zero_icon/club_zero.png";
   t.window.width = 2000;
   t.window.height = 1000;
-  t.graphics.vsync = false;
+  t.graphics.vsync = true;
 
 
   conf = t.window;

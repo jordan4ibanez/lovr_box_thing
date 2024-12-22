@@ -35,9 +35,11 @@ lovr.load = () => {
   ground.setKinematic(true);
   boxes.push(ground);
 
-  boxes.push(world.newCapsuleCollider(0, 2, -3, 0.5, 1));
-  boxes.push(world.newCylinderCollider(-2, 2, 1, 0.5, 1));
-  boxes.push(world.newSphereCollider(-4, 2, -3, 0.5));
+  // world.newCylinderCollider()
+
+  // boxes.push(world.newCapsuleCollider(0, 2, -3, 0.5, 1));
+  // boxes.push(world.newCylinderCollider(-2, 2, 1, 0.5, 1));
+  // boxes.push(world.newSphereCollider(-4, 2, -3, 0.5));
 
 };
 
@@ -88,34 +90,36 @@ lovr.draw = (pass: Pass) => {
 
     pass.setColor(selectedColor.x, selectedColor.y, selectedColor.z);
 
-    let shape: Shape = box.getShapes()[0];
-    let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
-    switch (shape.getType()) {
-      case "box": {
-        const [sizeX, sizeY, sizeZ] = (shape as BoxShape).getDimensions();
-        pass.box(x, y, z, sizeX, sizeY, sizeZ, angle, angleX, angleY, angleZ, "line");
-        break;
-      }
-      case "capsule": {
-        let radius = (shape as CapsuleShape).getRadius();
-        let length = (shape as CapsuleShape).getLength();
-        pass.capsule(x, y, z, radius, length, angle, angleX, angleY, angleZ, 32);
-        break;
-      }
-      case "cylinder": {
-        let radius = (shape as CylinderShape).getRadius();
-        let length = (shape as CylinderShape).getLength();
-        pass.cylinder(x, y, z, radius, length, angle, angleX, angleY, angleZ, true, 0, 2 * math.pi, 64);
-        break;
-      }
-      case "sphere": {
-        let radius = (shape as SphereShape).getRadius();
-        pass.sphere(x, y, z, radius, angle, angleX, angleY, angleZ, 48, 24);
-        break;
-      }
-    }
+    for (const shape of Object.values(box.getShapes())) {
+      // let shape: Shape = box.getShapes()[0];
 
-    index += 1;
+      let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
+      switch (shape.getType()) {
+        case "box": {
+          const [sizeX, sizeY, sizeZ] = (shape as BoxShape).getDimensions();
+          pass.box(x, y, z, sizeX, sizeY, sizeZ, angle, angleX, angleY, angleZ, "line");
+          break;
+        }
+        case "capsule": {
+          let radius = (shape as CapsuleShape).getRadius();
+          let length = (shape as CapsuleShape).getLength();
+          pass.capsule(x, y, z, radius, length, angle, angleX, angleY, angleZ, 32);
+          break;
+        }
+        case "cylinder": {
+          let radius = (shape as CylinderShape).getRadius();
+          let length = (shape as CylinderShape).getLength();
+          pass.cylinder(x, y, z, radius, length, angle, angleX, angleY, angleZ, false, 0, 2 * math.pi, 64);
+          break;
+        }
+        case "sphere": {
+          let radius = (shape as SphereShape).getRadius();
+          pass.sphere(x, y, z, radius, angle, angleX, angleY, angleZ, 48, 24);
+          break;
+        }
+      }
+      index += 1;
+    }
   }
 
 
