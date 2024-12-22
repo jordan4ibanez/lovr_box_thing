@@ -33,53 +33,92 @@ const scale = 10;
  * @returns The scaled weight so the engine doesn't blow up.
  */
 function scalePoundsToRc(inputLBS: number): number {
-  const kg = ((inputLBS / lbsToKg) / kgToInverseNewton) / scale;
-  return kg;
+  return (inputLBS / lbsToKg) / scale;
+}
+
+const rubberDensity = 1522 / 3;
+function calculateWheelWeight(radius: number, width: number): number {
+  // I just grabbed this from here lol. https://www.vcalc.com/wiki/cylinder-weight
+  // We're using the density of rubber which is 1522kg which I found here: https://www.aqua-calc.com/page/density-table/substance/rubber-coma-and-blank-manufactured
+  // I had to adjust the calculation because jolt physics acts really strangely with different masses.
+  return (math.pi * (radius * radius) * width) * rubberDensity;
 }
 
 lovr.load = () => {
   // const [displayWidth, displayHeight] = window.getDisplayDimensions(1);
   // window.setMode(displayWidth / 2, displayHeight / 2);
-  window.maximize();
+  // window.maximize();
 
+  const crownVicWeight = scalePoundsToRc(4129);
 
   // todo: Make this some kind of physics module or something.
-  world = lovr.physics.newWorld(0, -9.81, 0, false, ["car", "wheel", "wall"]);
+  world = lovr.physics.newWorld(0, -9.81, 0, false, ["car", "wheel", "wall", "ground"]);
 
   world.disableCollisionBetween("car", "wheel");
   world.disableCollisionBetween("wheel", "wall");
 
+  const groundWidth = 10;
   let ground = world.newBoxCollider(0, 0, 0, 10, 1, 10);
   ground.setKinematic(true);
+  ground.setTag("ground");
   boxes.push(ground);
 
+  // -z is forward.
+  // -x is left.
+
   const basePos = lovr.math.newVec3(0, 2, -1);
+  const carWidth = 2;
+  const carHeight = 1;
+  const carLength = 4;
 
-  let car: Collider = world.newBoxCollider(basePos.x, basePos.y, basePos.z, 0.5, 0.4, 1.5);
+  const wheelRadius = 0.4;
+  const wheelWidth = 0.4;
+
+  // todo: this can be turned into an api for making custom cars. :)
+
+  let car: Collider = world.newBoxCollider(basePos.x, basePos.y, basePos.z, carWidth, carHeight, carLength);
   car.setTag("car");
-  car.setKinematic(true);
+  // car.setKinematic(true);
+  print("car weight", crownVicWeight);
+  car.setMass(crownVicWeight);
 
-  let wheel = world.newCylinderCollider(basePos.x, basePos.y, basePos.z, 0.2, 0.2);
-  // wheel.setPosition()
-  wheel.setKinematic(true);
+  const springHeight = 0.3;
+
+  // Back left wheel.
+  let wheel = world.newCylinderCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), wheelRadius, wheelWidth);
+  wheel.setOrientation(math.pi / 2, 0, 1, 0);
+  // wheel.setKinematic(true);
   wheel.setTag("wheel");
+  // print("wheel", wheel.getMass());
+  wheel.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  print(wheel.getMass());
+  wheel.setFriction(0.1);
 
-  let jointTest: SliderJoint = lovr.physics.newSliderJoint(car, wheel, 0, 0, 1);
-  jointTest.setSpring(10.0, 0.0);
-  jointTest.setLimits(-0.001, 0.001);
-  jointTest.setFriction(1000000);
-  
-  print(jointTest.isEnabled());
+  const sprightStrength = 3;
+  const springShock = 80;
+  const springDamping = 40;
+  const springTravel = 0.0001;
+
+  let jointTest: SliderJoint = lovr.physics.newSliderJoint(wheel, car, 0, 1, 0);
+  jointTest.setSpring(5, springShock / 100);
+  jointTest.setLimits(-springTravel, springTravel);
+  jointTest.setFriction(springDamping);
 
 
-
-
-
-  // car.addShape(wheel);
 
   boxes.push(wheel);
   boxes.push(car);
 
+  keyboard.setKeyDownCallback("space", () => {
+    // car.setPosition(math.random(), 3 + math.random(), math.random());
+    // car.setAngularVelocity(0, 1, 0);
+    car.setLinearVelocity(0, 1, 0);
+  });
+
+  keyboard.setKeyDownCallback("f", () => {
+    const k = car.isKinematic();
+    car.setKinematic(!k);
+  });
 };
 
 const MIN_FPS = 30;
@@ -105,32 +144,45 @@ lovr.update = (delta: number) => {
   }
 };
 
-const colors: Array<Vec3> = [
-  lovr.math.newVec3(1.0, 0.0, 0.0),
-  lovr.math.newVec3(0.0, 1.0, 0.0),
-  lovr.math.newVec3(0.0, 0.0, 1.0),
-  lovr.math.newVec3(1.0, 1.0, 0.0),
-  lovr.math.newVec3(1.0, 0.0, 1.0),
-  lovr.math.newVec3(0.0, 1.0, 1.0),
-  lovr.math.newVec3(0.5, 1.0, 0.0),
-  lovr.math.newVec3(1.0, 0.5, 0.0),
-  lovr.math.newVec3(0.5, 0.0, 1.0),
-  lovr.math.newVec3(0.5, 1.0, 0.5)
-];
+// const colors: Array<Vec3> = [
+//   lovr.math.newVec3(1.0, 0.0, 0.0),
+//   lovr.math.newVec3(0.0, 1.0, 0.0),
+//   lovr.math.newVec3(0.0, 0.0, 1.0),
+//   lovr.math.newVec3(1.0, 1.0, 0.0),
+//   lovr.math.newVec3(1.0, 0.0, 1.0),
+//   lovr.math.newVec3(0.0, 1.0, 1.0),
+//   lovr.math.newVec3(0.5, 1.0, 0.0),
+//   lovr.math.newVec3(1.0, 0.5, 0.0),
+//   lovr.math.newVec3(0.5, 0.0, 1.0),
+//   lovr.math.newVec3(0.5, 1.0, 0.5)
+// ];
+
+const colorMap = new Map<string, Vec3>([
+  ["ground", lovr.math.newVec3(1, 1, 1)],
+  ["wheel", lovr.math.newVec3(0.3, 0.3, 0.3)],
+  ["car", lovr.math.newVec3(1.0, 0.0, 0.5)]
+]);
 
 lovr.draw = (pass: Pass) => {
 
-  let index = colors.length - 1;
+  // let index = colors.length - 1;
 
   // Draw the shapes in the world.
   for (const box of Object.values(boxes)) {
 
-    const selectedColor = colors[index % colors.length];
+    // const selectedColor = colors[index % colors.length];
 
-    pass.setColor(selectedColor.x, selectedColor.y, selectedColor.z);
+    // pass.setColor(selectedColor.x, selectedColor.y, selectedColor.z);
 
     for (const shape of Object.values(box.getShapes())) {
       let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
+
+      const tag = shape.getCollider().getTag();
+      const selectedColor = colorMap.get(tag)!!;
+
+      // print(selectedColor);
+      pass.setColor(selectedColor.x, selectedColor.y, selectedColor.z);
+
       switch (shape.getType()) {
         case "box": {
           const [sizeX, sizeY, sizeZ] = (shape as BoxShape).getDimensions();
@@ -155,10 +207,12 @@ lovr.draw = (pass: Pass) => {
           break;
         }
       }
-      index += 1;
+      // index += 1;
     }
   }
 
+
+  pass.setColor(1, 1, 1);
 
   // Just draw the FPS for now.
   const [width, height] = lovr.system.getWindowDimensions();
