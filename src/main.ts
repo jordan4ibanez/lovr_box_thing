@@ -4,6 +4,18 @@ import * as keyboard from "./keyboard";
 let world: World;
 let boxes: Array<Collider> = [];
 
+let maximized = false;
+
+keyboard.setKeyPressedCallback("f11", () => {
+  if (maximized) {
+    window.restore();
+    maximized = false;
+  } else {
+    window.maximize();
+    maximized = true;
+  }
+});
+
 keyboard.setKeyPressedCallback("escape", () => {
   lovr.event.quit();
 });
