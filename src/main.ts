@@ -6,6 +6,9 @@ let boxes: Array<Collider> = [];
 
 let maximized = false;
 
+const font = lovr.graphics.getDefaultFont();
+font.setPixelDensity(1);
+
 keyboard.setKeyPressedCallback("f11", () => {
   if (maximized) {
     window.restore();
@@ -38,8 +41,6 @@ lovr.load = () => {
 
 };
 
-let timer = 0;
-
 const MIN_FPS = 30;
 const MAX_DELTA = 1 / 30;
 const MAX_FPS = 200;
@@ -58,14 +59,13 @@ lovr.update = (delta: number) => {
   if (fps <= 0) {
     return;
   }
-  print(fps);
 
   if (fps < MIN_FPS) {
     world.update(MAX_DELTA);
   } else {
     if (fps > MAX_FPS) {
       // print(math.abs(MIN_DELTA - delta));
-      print((MIN_DELTA / delta));
+      // print((MIN_DELTA / delta));
       lovr.timer.sleep(MIN_DELTA);
       world.update(MIN_DELTA);
     } else {
@@ -127,6 +127,25 @@ lovr.draw = (pass: Pass) => {
 
     index += 1;
   }
+
+
+  // Just draw the FPS for now.
+  const [width, height] = lovr.system.getWindowDimensions();
+  // todo: I didn't even know this was a function.
+  const projection = lovr.math.mat4().orthographic(0, width, 0, height, -10, 10);
+
+  pass.setViewPose(1, lovr.math.mat4().identity());
+  pass.setProjection(1, projection);
+  pass.setDepthTest();
+
+  const scale = 2;
+  const fpsString = "FPS: " + lovr.timer.getFPS();
+  const fontWidth = font.getWidth(fpsString) * scale;
+  const fontHeight = font.getHeight() * scale;
+
+  pass.text(fpsString, fontWidth, fontHeight, 0, 4);
+
+
 };
 
 
