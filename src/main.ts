@@ -26,6 +26,12 @@ keyboard.setKeyPressedCallback("escape", () => {
 const lbsToKg = 2.205;
 const kgToInverseNewton = 9.80665;
 const scale = 10;
+
+/**
+ * This function attempts to scale the car's body as to not destroy the physics engine.
+ * @param inputLBS The weight in pounds.
+ * @returns The scaled weight so the engine doesn't blow up.
+ */
 function scalePoundsToRc(inputLBS: number): number {
   const kg = ((inputLBS / lbsToKg) / kgToInverseNewton) / scale;
   return kg;
