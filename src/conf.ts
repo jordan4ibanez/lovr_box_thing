@@ -8,7 +8,7 @@ lovr.conf = (t: LovrConfig) => {
   t.audio.spatializer = "simple";
   t.window.resizable = true;
   // let blah = lovr.filesystem.getWorkingDirectory() + "/textures/club_zero.png";
-  t.window.icon = "/textures/club_zero.png";
+  t.window.icon = "/textures/club_zero_icon/club_zero.png";
 
   conf = t.window;
 };
