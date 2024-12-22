@@ -10,7 +10,7 @@ keyboard.setKeyPressedCallback("escape", () => {
 
 lovr.load = () => {
   world = lovr.physics.newWorld();
-  let ground = world.newBoxCollider(0, 1, 0, 1, 1, 1);
+  let ground = world.newBoxCollider(0, 0, 0, 10, 1, 10);
   ground.setKinematic(true);
   boxes.push(ground);
 };
@@ -36,6 +36,8 @@ lovr.draw = (pass: Pass) => {
         const [sizeX, sizeY, sizeZ] = (shape as BoxShape).getDimensions();
 
         print("size:", sizeX, sizeY, sizeZ);
+
+        pass.box(x, y, z, sizeX, sizeY, sizeZ, angle, angleX, angleY, angleZ, "line");
 
         break;
       case "capsule":
