@@ -87,26 +87,36 @@ lovr.load = () => {
   // Back left wheel.
   let wheelRearLeft = world.newCylinderCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), wheelRadius, wheelWidth);
   wheelRearLeft.setOrientation(math.pi / 2, 0, 1, 0);
-  // wheel.setKinematic(true);
   wheelRearLeft.setTag("wheel");
-  // print("wheel", wheel.getMass());
   wheelRearLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  print(wheelRearLeft.getMass());
   wheelRearLeft.setFriction(0.1);
+
+  // Back right wheel.
+  let wheelRearRight = world.newCylinderCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), wheelRadius, wheelWidth);
+  wheelRearRight.setOrientation(math.pi / 2, 0, 1, 0);
+  wheelRearRight.setTag("wheel");
+  wheelRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  wheelRearRight.setFriction(0.1);
 
   const springStrength = 4;
   const springShock = 80;
   const springDamping = 40;
   const springTravel = 0.0001;
 
-  let jointTest: SliderJoint = lovr.physics.newSliderJoint(wheelRearLeft, car, 0, 1, 0);
-  jointTest.setSpring(springStrength, springShock / 100);
-  jointTest.setLimits(-springTravel, springTravel);
-  jointTest.setFriction(springDamping);
+  let springRearLeft: SliderJoint = lovr.physics.newSliderJoint(wheelRearLeft, car, 0, 1, 0);
+  springRearLeft.setSpring(springStrength, springShock / 100);
+  springRearLeft.setLimits(-springTravel, springTravel);
+  springRearLeft.setFriction(springDamping);
+
+  let springRerRight: SliderJoint = lovr.physics.newSliderJoint(wheelRearRight, car, 0, 1, 0);
+  springRerRight.setSpring(springStrength, springShock / 100);
+  springRerRight.setLimits(-springTravel, springTravel);
+  springRerRight.setFriction(springDamping);
 
 
 
   boxes.push(wheelRearLeft);
+  boxes.push(wheelRearRight);
   boxes.push(car);
 
   keyboard.setKeyDownCallback("space", () => {
