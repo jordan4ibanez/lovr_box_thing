@@ -1,6 +1,5 @@
 {
   "devDependencies": {
-    "lovr-api": "^1.0.1",
     "lua-types": "^2.13.1",
     "luajit-ffi": "^1.0.0",
     "typescript": "^5.7.2",
