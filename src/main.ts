@@ -91,8 +91,6 @@ lovr.draw = (pass: Pass) => {
     pass.setColor(selectedColor.x, selectedColor.y, selectedColor.z);
 
     for (const shape of Object.values(box.getShapes())) {
-      // let shape: Shape = box.getShapes()[0];
-
       let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
       switch (shape.getType()) {
         case "box": {
