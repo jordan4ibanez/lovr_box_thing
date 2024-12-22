@@ -45,9 +45,19 @@ const MIN_FPS = 30;
 const MAX_DELTA = 1 / 30;
 const MAX_FPS = 200;
 const MIN_DELTA = 1 / 200;
+let warmupTimer = 0;
+let readyToGo = false;
 
 lovr.update = (delta: number) => {
   keyboard._internalKeyboardUpdateDoNotUse();
+
+  if (!readyToGo) {
+    warmupTimer += delta;
+    if (warmupTimer > 2) {
+      readyToGo = true;
+    }
+    return;
+  }
 
   // If the FPS goes too low, the physics completely freaks out.
   // If this drops below 30 FPS the game's physics loop will slow down and collisions will fail.
