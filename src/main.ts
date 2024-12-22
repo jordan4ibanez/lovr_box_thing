@@ -26,7 +26,7 @@ keyboard.setKeyPressedCallback("escape", () => {
 lovr.load = () => {
   // const [displayWidth, displayHeight] = window.getDisplayDimensions(1);
   // window.setMode(displayWidth / 2, displayHeight / 2);
-  // window.maximize();
+  window.maximize();
 
 
   // todo: Make this some kind of physics module or something.
@@ -45,42 +45,18 @@ const MIN_FPS = 30;
 const MAX_DELTA = 1 / 30;
 const MAX_FPS = 200;
 const MIN_DELTA = 1 / 200;
-let warmupTimer = 0;
-let readyToGo = false;
+let deltaTimer = 0;
 
 lovr.update = (delta: number) => {
   keyboard._internalKeyboardUpdateDoNotUse();
 
-  if (!readyToGo) {
-    warmupTimer += delta;
-    if (warmupTimer > 2) {
-      readyToGo = true;
-    }
-    return;
-  }
-
-  // If the FPS goes too low, the physics completely freaks out.
-  // If this drops below 30 FPS the game's physics loop will slow down and collisions will fail.
-  // If this goes above 200 FPS the same thing happens but in wierder ways.
-  // My system can run this at several thousand FPS so that's a HUGE problem.
-  let fps = lovr.timer.getFPS();
-
-  // If the FPS is 0, we can't use it yet.
-  if (fps <= 0) {
-    return;
-  }
-
-  if (fps < MIN_FPS) {
+  if (delta > MAX_DELTA) {
     world.update(MAX_DELTA);
   } else {
-    if (fps > MAX_FPS) {
-      // print(math.abs(MIN_DELTA - delta));
-      // print((MIN_DELTA / delta));
-      lovr.timer.sleep(MIN_DELTA);
-      world.update(MIN_DELTA);
-    } else {
-      world.update(1 / fps);
-    }
+    
+    deltaTimer += delta;
+
+    world.update(delta);
   }
 };
 
