@@ -52,10 +52,13 @@ lovr.load = () => {
   const crownVicWeight = scalePoundsToRc(4129);
 
   // todo: Make this some kind of physics module or something.
-  world = lovr.physics.newWorld(0, -9.81, 0, false, ["car", "wheel", "wall", "ground"]);
+  world = lovr.physics.newWorld(0, -9.81, 0, false, ["car", "wheel", "hub", "steering", "wall", "ground"]);
 
   world.disableCollisionBetween("car", "wheel");
   world.disableCollisionBetween("wheel", "wall");
+  world.disableCollisionBetween("hub", "steering");
+  world.disableCollisionBetween("hub", "wheel");
+  world.disableCollisionBetween("steering", "wheel");
 
   const groundWidth = 10;
   let ground = world.newBoxCollider(0, 0, 0, 10, 1, 10);
@@ -85,28 +88,29 @@ lovr.load = () => {
   const springHeight = 0.3;
 
   // Back left wheel.
-  let wheelRearLeft = world.newCylinderCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), wheelRadius, wheelWidth);
+  // let wheelRearLeft = world.newCylinderCollider();
+  let wheelRearLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), 0.1, 0.1, 0.1);
   wheelRearLeft.setOrientation(math.pi / 2, 0, 1, 0);
   wheelRearLeft.setTag("wheel");
   wheelRearLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   wheelRearLeft.setFriction(0.1);
 
   // Back right wheel.
-  let wheelRearRight = world.newCylinderCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), wheelRadius, wheelWidth);
+  let wheelRearRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), 0.1, 0.1, 0.1);
   wheelRearRight.setOrientation(math.pi / 2, 0, 1, 0);
   wheelRearRight.setTag("wheel");
   wheelRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   wheelRearRight.setFriction(0.1);
 
   // Front left wheel.
-  let wheelFrontLeft = world.newCylinderCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), wheelRadius, wheelWidth);
+  let wheelFrontLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), 0.1, 0.1, 0.1);
   wheelFrontLeft.setOrientation(math.pi / 2, 0, 1, 0);
   wheelFrontLeft.setTag("wheel");
   wheelFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   wheelFrontLeft.setFriction(0.1);
 
   // Front right wheel.
-  let wheelFrontRight = world.newCylinderCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), wheelRadius, wheelWidth);
+  let wheelFrontRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), 0.1, 0.1, 0.1);
   wheelFrontRight.setOrientation(math.pi / 2, 0, 1, 0);
   wheelFrontRight.setTag("wheel");
   wheelFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
@@ -141,8 +145,6 @@ lovr.load = () => {
   springFrontRight.setLimits(-springTravel * travelFix, springTravel * travelFix);
   springFrontRight.setFriction(springDamping * springDampingFix);
 
-
-
   boxes.push(wheelRearLeft);
   boxes.push(wheelRearRight);
   boxes.push(wheelFrontLeft);
@@ -152,7 +154,14 @@ lovr.load = () => {
   keyboard.setKeyDownCallback("space", () => {
     // car.setPosition(math.random(), 3 + math.random(), math.random());
     // car.setAngularVelocity(0, 1, 0);
-    car.setLinearVelocity(0, 1, 0);
+    // car.setLinearVelocity(0, 1, 0);
+
+    // wheelRearLeft.applyTorque(10000, 0, 0);
+    // wheelFrontLeft.applyForce(0, 10000, 0);
+
+    // throw error("Needs a hub shape and a ")
+
+    wheelFrontLeft.setAngularVelocity(100, 0, 0);
   });
 
   keyboard.setKeyDownCallback("f", () => {
