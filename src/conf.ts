@@ -9,6 +9,8 @@ lovr.conf = (t: LovrConfig) => {
   t.window.resizable = true;
   // let blah = lovr.filesystem.getWorkingDirectory() + "/textures/club_zero.png";
   t.window.icon = "/textures/club_zero_icon/club_zero.png";
+  t.window.width = 2000;
+  t.window.height = 1000;
 
   conf = t.window;
 };
