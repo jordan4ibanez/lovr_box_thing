@@ -33,22 +33,32 @@ lovr.load = () => {
   boxes.push(ground);
 
   boxes.push(world.newCapsuleCollider(0, 2, -3, 0.5, 1));
-
-  boxes.push(world.newCylinderCollider(-2, 2, -3, 0.5, 1));
-
+  boxes.push(world.newCylinderCollider(-2, 2, 1, 0.5, 1));
   boxes.push(world.newSphereCollider(-4, 2, -3, 0.5));
 
-  window.togg
 };
 
+let timer = 0;
 lovr.update = (delta: number) => {
   keyboard._internalKeyboardUpdateDoNotUse();
 
   // If the FPS goes too low, the physics completely freaks out.
-  // delta < 0.016 ? 0.016 : delta
+  // If this drops below 30 FPS the game's physics loop will slow down.
+  // If this goes above 200 FPS the same thing happens but in wierder ways.
   const fps = lovr.timer.getFPS();
-  print(fps);
-  world.update(fps < 30 ? 1 / 30 : 1 / fps);
+
+  if (fps < 30) {
+    // print("lo");
+    world.update(1 / 30);
+  } else {
+    // print("hi");
+    print(1 / fps);
+    world.update(1 / fps);
+  }
+  timer++;
+  if (timer > 100) {
+    // lovr.event.quit();
+  }
 };
 
 const colors: Array<Vec3> = [
