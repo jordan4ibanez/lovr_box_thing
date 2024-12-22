@@ -978,7 +978,7 @@ declare interface Pass extends Object {
   setScissor(): void;
   setViewPose(view: number, x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number): void;
   setViewPose(view: number, position: Vec3, orientation: Quat): void;
-  setViewPose(view: number, matrix: Mat4, inverted: boolean): void;
+  setViewPose(view: number, matrix: Mat4, inverted?: boolean): void;
   setViewport(x: number, y: number, w: number, h: number, dmin: number, dmax: number): void;
   setViewport(): void;
   getCanvas(): CanvasData | null;
