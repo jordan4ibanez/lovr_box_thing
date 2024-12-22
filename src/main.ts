@@ -26,25 +26,38 @@ keyboard.setKeyPressedCallback("escape", () => {
 lovr.load = () => {
   // const [displayWidth, displayHeight] = window.getDisplayDimensions(1);
   // window.setMode(displayWidth / 2, displayHeight / 2);
-  // window.maximize();
+  window.maximize();
 
 
   // todo: Make this some kind of physics module or something.
-  world = lovr.physics.newWorld(0, -9.81, 0, true, ["car", "wheel"]);
+  world = lovr.physics.newWorld(0, -9.81, 0, false, ["car", "wheel", "wall"]);
 
   world.disableCollisionBetween("car", "wheel");
+  world.disableCollisionBetween("wheel", "wall");
 
   let ground = world.newBoxCollider(0, 0, 0, 10, 1, 10);
   ground.setKinematic(true);
   boxes.push(ground);
 
-  let car: Collider = world.newBoxCollider(0, 2, -3, 0.5, 0.4, 1.5);
-  car.setTag("car");
+  const basePos = lovr.math.newVec3(0, 2, -1);
 
-  let wheel = world.newCylinderCollider(0, 2, -3, 0.2, 0.2);
+  let car: Collider = world.newBoxCollider(basePos.x, basePos.y, basePos.z, 0.5, 0.4, 1.5);
+  car.setTag("car");
+  car.setKinematic(true);
+
+  let wheel = world.newCylinderCollider(basePos.x, basePos.y, basePos.z, 0.2, 0.2);
+  // wheel.setPosition()
+  wheel.setKinematic(true);
   wheel.setTag("wheel");
 
-  let jointTest = lovr.physics.newBallJoint(car, wheel, 0, 0, 0);
+  let jointTest: SliderJoint = lovr.physics.newSliderJoint(car, wheel, 0, 0, 1);
+  jointTest.setSpring(10.0, 0.0);
+  jointTest.setLimits(-0.001, 0.001);
+  jointTest.setFriction(1000000);
+  
+  print(jointTest.isEnabled());
+
+
 
 
 
