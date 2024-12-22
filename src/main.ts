@@ -6,7 +6,7 @@ lovr.load = () => {
 };
 
 lovr.update = (delta: number) => {
-  keyboard.blah();
+  keyboard._internalKeyboardUpdateDoNotUse();
 };
 
 lovr.errhand = (message: string): (() => string | null) => {
