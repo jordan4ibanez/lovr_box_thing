@@ -1,5 +1,5 @@
 
-//* Version: 0.17.0.
+//* Version: dev
 //* If something is marked as deprecated I'm skipping it.
 // todo: 1: anything that says LuaTable needs to be revisited.
 // todo: 2: anything that says any needs to be revisited.
@@ -1476,6 +1476,8 @@ declare interface SliderJoint extends Joint {
   setLimits(lower: number, upper: number): void;
   setLowerLimit(limit: number): void;
   setUpperLimit(limit: number): void;
+  setSpring(frequency: number, damping: number): void;
+  setFriction(friction: number): void;
 }
 
 declare type Permission = "audiocapture";
