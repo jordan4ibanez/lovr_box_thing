@@ -26,7 +26,7 @@ keyboard.setKeyPressedCallback("escape", () => {
 lovr.load = () => {
   // const [displayWidth, displayHeight] = window.getDisplayDimensions(1);
   // window.setMode(displayWidth / 2, displayHeight / 2);
-  window.maximize();
+  // window.maximize();
 
 
   // todo: Make this some kind of physics module or something.
@@ -52,11 +52,14 @@ lovr.update = (delta: number) => {
 
   if (delta > MAX_DELTA) {
     world.update(MAX_DELTA);
+    deltaTimer = 0;
   } else {
-    
     deltaTimer += delta;
-
-    world.update(delta);
+    if (deltaTimer > MIN_DELTA) {
+      // print(deltaTimer)
+      world.update(deltaTimer);
+      deltaTimer -= MIN_DELTA;
+    }
   }
 };
 
