@@ -54,6 +54,11 @@ lovr.update = (delta: number) => {
   // My system can run this at several thousand FPS so that's a HUGE problem.
   let fps = lovr.timer.getFPS();
 
+  // If the FPS is 0, we can't use it yet.
+  if (fps <= 0) {
+    return;
+  }
+
   if (fps < MIN_FPS) {
     world.update(MIN_DELTA);
   } else {
