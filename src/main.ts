@@ -9,6 +9,7 @@ keyboard.setKeyPressedCallback("escape", () => {
 });
 
 lovr.load = () => {
+  // todo: Make this some kind of physics module or something.
   world = lovr.physics.newWorld();
   let ground = world.newBoxCollider(0, 0, 0, 10, 1, 10);
   ground.setKinematic(true);
@@ -23,22 +24,12 @@ lovr.update = (delta: number) => {
 lovr.draw = (pass: Pass) => {
 
   for (const box of Object.values(boxes)) {
-
     let shape: Shape = box.getShapes()[0];
-
     let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
-
-    print(x, y, z, angle, angleX, angleY, angleZ);
-
     switch (shape.getType()) {
       case "box":
-
         const [sizeX, sizeY, sizeZ] = (shape as BoxShape).getDimensions();
-
-        print("size:", sizeX, sizeY, sizeZ);
-
         pass.box(x, y, z, sizeX, sizeY, sizeZ, angle, angleX, angleY, angleZ, "line");
-
         break;
       case "capsule":
         print("capsule");
