@@ -54,6 +54,10 @@ lovr.load = () => {
   // todo: Make this some kind of physics module or something.
   world = lovr.physics.newWorld(0, -9.81, 0, false, ["car", "wheel", "hub", "steering", "wall", "ground"]);
 
+  throw error("was creating a hub for the rear wheels");
+
+  throw error("was creating a hinge joint with a hub for the front wheels");
+
   world.disableCollisionBetween("car", "wheel");
   world.disableCollisionBetween("wheel", "wall");
   world.disableCollisionBetween("hub", "steering");
