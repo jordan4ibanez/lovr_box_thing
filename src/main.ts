@@ -2,6 +2,9 @@ import * as window from "./lovr-window";
 import * as keyboard from "./keyboard";
 
 lovr.load = () => {
+  keyboard.setKeyPressedCallback("escape", () => {
+    lovr.event.quit();
+  });
 
 };
 

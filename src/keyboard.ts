@@ -48,7 +48,6 @@ export function setKeyPressedCallback(key: KeyCode, callback: KeyCallback): void
   let i = keyPressedCallbacks.get(key) || [];
   i.push(callback);
   keyPressedCallbacks.set(key, i);
-  print(i.length);
 }
 
 /**
