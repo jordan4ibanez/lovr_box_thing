@@ -98,6 +98,20 @@ lovr.load = () => {
   wheelRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   wheelRearRight.setFriction(0.1);
 
+  // Front left wheel.
+  let wheelFrontLeft = world.newCylinderCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), wheelRadius, wheelWidth);
+  wheelFrontLeft.setOrientation(math.pi / 2, 0, 1, 0);
+  wheelFrontLeft.setTag("wheel");
+  wheelFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  wheelFrontLeft.setFriction(0.1);
+
+  // Front right wheel.
+  let wheelFrontRight = world.newCylinderCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), wheelRadius, wheelWidth);
+  wheelFrontRight.setOrientation(math.pi / 2, 0, 1, 0);
+  wheelFrontRight.setTag("wheel");
+  wheelFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  wheelFrontRight.setFriction(0.1);
+
   const springStrength = 4;
   const springShock = 80;
   const springDamping = 40;
@@ -108,15 +122,31 @@ lovr.load = () => {
   springRearLeft.setLimits(-springTravel, springTravel);
   springRearLeft.setFriction(springDamping);
 
-  let springRerRight: SliderJoint = lovr.physics.newSliderJoint(wheelRearRight, car, 0, 1, 0);
-  springRerRight.setSpring(springStrength, springShock / 100);
-  springRerRight.setLimits(-springTravel, springTravel);
-  springRerRight.setFriction(springDamping);
+  let springRearRight: SliderJoint = lovr.physics.newSliderJoint(wheelRearRight, car, 0, 1, 0);
+  springRearRight.setSpring(springStrength, springShock / 100);
+  springRearRight.setLimits(-springTravel, springTravel);
+  springRearRight.setFriction(springDamping);
+
+  const travelFix = 550;
+  const springStrengthFix = 3;
+  const springDampingFix = 4;
+
+  let springFrontLeft: SliderJoint = lovr.physics.newSliderJoint(wheelFrontLeft, car, 0, 1, 0);
+  springFrontLeft.setSpring(springStrength * springStrengthFix, springShock / 100);
+  springFrontLeft.setLimits(-springTravel * travelFix, springTravel * travelFix);
+  springFrontLeft.setFriction(springDamping * springDampingFix);
+
+  let springFrontRight: SliderJoint = lovr.physics.newSliderJoint(wheelFrontRight, car, 0, - 1, 0);
+  springFrontRight.setSpring(springStrength * springStrengthFix, springShock / 100);
+  springFrontRight.setLimits(-springTravel * travelFix, springTravel * travelFix);
+  springFrontRight.setFriction(springDamping * springDampingFix);
 
 
 
   boxes.push(wheelRearLeft);
   boxes.push(wheelRearRight);
+  boxes.push(wheelFrontLeft);
+  boxes.push(wheelFrontRight);
   boxes.push(car);
 
   keyboard.setKeyDownCallback("space", () => {
