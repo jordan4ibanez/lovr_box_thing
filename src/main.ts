@@ -30,16 +30,28 @@ lovr.load = () => {
 
 
   // todo: Make this some kind of physics module or something.
-  world = lovr.physics.newWorld();
+  world = lovr.physics.newWorld(0, -9.81, 0, true, ["car", "wheel"]);
+
+  world.disableCollisionBetween("car", "wheel");
+
   let ground = world.newBoxCollider(0, 0, 0, 10, 1, 10);
   ground.setKinematic(true);
   boxes.push(ground);
 
-  // world.newCylinderCollider()
+  let car: Collider = world.newBoxCollider(0, 2, -3, 0.5, 0.4, 1.5);
+  car.setTag("car");
 
-  // boxes.push(world.newCapsuleCollider(0, 2, -3, 0.5, 1));
-  // boxes.push(world.newCylinderCollider(-2, 2, 1, 0.5, 1));
-  // boxes.push(world.newSphereCollider(-4, 2, -3, 0.5));
+  let wheel = world.newCylinderCollider(0, 2, -3, 0.2, 0.2);
+  wheel.setTag("wheel");
+
+  let jointTest = lovr.physics.newBallJoint(car, wheel, 0, 0, 0);
+
+
+
+  // car.addShape(wheel);
+
+  boxes.push(wheel);
+  boxes.push(car);
 
 };
 
