@@ -52,13 +52,14 @@ lovr.update = (delta: number) => {
 
   if (delta > MAX_DELTA) {
     world.update(MAX_DELTA);
+    // We are no longer within spec, we must reset the timer.
     deltaTimer = 0;
   } else {
     deltaTimer += delta;
     if (deltaTimer > MIN_DELTA) {
-      // print(deltaTimer)
       world.update(deltaTimer);
-      deltaTimer -= MIN_DELTA;
+      // If the FPS is less than 200, we can use it.
+      deltaTimer -= (delta > MIN_DELTA ? delta : MIN_DELTA);
     }
   }
 };
