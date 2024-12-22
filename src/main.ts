@@ -32,16 +32,23 @@ lovr.load = () => {
   ground.setKinematic(true);
   boxes.push(ground);
 
-  boxes.push(world.newCapsuleCollider(0, 1, -3, 0.5, 1));
+  boxes.push(world.newCapsuleCollider(0, 2, -3, 0.5, 1));
 
-  boxes.push(world.newCylinderCollider(-2, 1, -3, 0.5, 1));
+  boxes.push(world.newCylinderCollider(-2, 2, -3, 0.5, 1));
 
-  boxes.push(world.newSphereCollider(-4, 1, -3, 0.5));
+  boxes.push(world.newSphereCollider(-4, 2, -3, 0.5));
+
+  window.togg
 };
 
 lovr.update = (delta: number) => {
   keyboard._internalKeyboardUpdateDoNotUse();
 
+  // If the FPS goes too low, the physics completely freaks out.
+  // delta < 0.016 ? 0.016 : delta
+  const fps = lovr.timer.getFPS();
+  print(fps);
+  world.update(fps < 30 ? 1 / 30 : 1 / fps);
 };
 
 const colors: Array<Vec3> = [
@@ -57,15 +64,12 @@ const colors: Array<Vec3> = [
   lovr.math.newVec3(0.5, 1.0, 0.5)
 ];
 
-
-
 lovr.draw = (pass: Pass) => {
 
   let index = colors.length - 1;
 
   // Draw the shapes in the world.
   for (const box of Object.values(boxes)) {
-    print(colors[0]);
 
     const selectedColor = colors[index % colors.length];
 
