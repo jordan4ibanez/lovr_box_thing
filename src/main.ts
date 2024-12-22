@@ -23,6 +23,8 @@ lovr.load = () => {
   boxes.push(world.newCapsuleCollider(0, 1, -3, 0.5, 1));
 
   boxes.push(world.newCylinderCollider(-2, 1, -3, 0.5, 1));
+
+  boxes.push(world.newSphereCollider(-4, 1, -3, 0.5));
 };
 
 lovr.update = (delta: number) => {
@@ -30,10 +32,33 @@ lovr.update = (delta: number) => {
 
 };
 
+const colors: Array<Vec3> = [
+  lovr.math.newVec3(1.0, 0.0, 0.0),
+  lovr.math.newVec3(0.0, 1.0, 0.0),
+  lovr.math.newVec3(0.0, 0.0, 1.0),
+  lovr.math.newVec3(1.0, 1.0, 0.0),
+  lovr.math.newVec3(1.0, 0.0, 1.0),
+  lovr.math.newVec3(0.0, 1.0, 1.0),
+  lovr.math.newVec3(0.5, 1.0, 0.0),
+  lovr.math.newVec3(1.0, 0.5, 0.0),
+  lovr.math.newVec3(0.5, 0.0, 1.0),
+  lovr.math.newVec3(0.5, 1.0, 0.5)
+];
+
+
+
 lovr.draw = (pass: Pass) => {
+
+  let index = colors.length - 1;
 
   // Draw the shapes in the world.
   for (const box of Object.values(boxes)) {
+    print(colors[0]);
+
+    const selectedColor = colors[index % colors.length];
+
+    pass.setColor(selectedColor.x, selectedColor.y, selectedColor.z);
+
     let shape: Shape = box.getShapes()[0];
     let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
     switch (shape.getType()) {
@@ -55,10 +80,13 @@ lovr.draw = (pass: Pass) => {
         break;
       }
       case "sphere": {
-        print("sphere");
+        let radius = (shape as SphereShape).getRadius();
+        pass.sphere(x, y, z, radius, angle, angleX, angleY, angleZ, 48, 24);
         break;
       }
     }
+
+    index += 1;
   }
 };
 

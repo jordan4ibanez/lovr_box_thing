@@ -919,9 +919,9 @@ declare interface Pass extends Object {
   setBlendMode(): void;
   setBlendMode(index: number, blend: BlendMode, alphaBlend: BlendAlphaMode): void;
   setBlendMode(index: number): void;
-  setColor(r: number, g: number, b: number, a: number): void;
+  setColor(r: number, g: number, b: number, a?: number): void;
   setColor(t: LuaTable): void;
-  setColor(hex: number, a: number): void;
+  setColor(hex: number, a?: number): void;
   setColorWrite(enable: boolean): void;
   setColorWrite(r: boolean, g: boolean, b: boolean, a: boolean): void;
   setColorWrite(index: number, enable: boolean): void;
