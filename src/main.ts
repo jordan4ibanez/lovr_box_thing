@@ -41,9 +41,9 @@ lovr.load = () => {
 let timer = 0;
 
 const MIN_FPS = 30;
-const MIN_DELTA = 1 / 30;
+const MAX_DELTA = 1 / 30;
 const MAX_FPS = 200;
-const MAX_DELTA = 1 / 200;
+const MIN_DELTA = 1 / 200;
 
 lovr.update = (delta: number) => {
   keyboard._internalKeyboardUpdateDoNotUse();
