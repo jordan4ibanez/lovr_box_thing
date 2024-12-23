@@ -99,28 +99,28 @@ lovr.load = () => {
   // let wheelRearLeft = world.newCylinderCollider();
   let hubRearLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), hubSize, hubSize, hubSize);
   hubRearLeft.setOrientation(math.pi / 2, 0, 1, 0);
-  hubRearLeft.setTag("wheel");
+  hubRearLeft.setTag("hub");
   hubRearLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   hubRearLeft.setFriction(0);
 
   // Back right wheel hub.
   let hubRearRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), hubSize, hubSize, hubSize);
   hubRearRight.setOrientation(math.pi / 2, 0, 1, 0);
-  hubRearRight.setTag("wheel");
+  hubRearRight.setTag("hub");
   hubRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   hubRearRight.setFriction(0);
 
   // Front left wheel hub.
   let hubFrontLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), hubSize, hubSize, hubSize);
   hubFrontLeft.setOrientation(math.pi / 2, 0, 1, 0);
-  hubFrontLeft.setTag("wheel");
+  hubFrontLeft.setTag("hub");
   hubFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   hubFrontLeft.setFriction(0);
 
   // Front right wheel hub.
   let hubFrontRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), hubSize, hubSize, hubSize);
   hubFrontRight.setOrientation(math.pi / 2, 0, 1, 0);
-  hubFrontRight.setTag("wheel");
+  hubFrontRight.setTag("hub");
   hubFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   hubFrontRight.setFriction(0);
 
@@ -217,7 +217,8 @@ lovr.update = (delta: number) => {
 const colorMap = new Map<string, Vec3>([
   ["ground", lovr.math.newVec3(1, 1, 1)],
   ["wheel", lovr.math.newVec3(0.3, 0.3, 0.3)],
-  ["car", lovr.math.newVec3(1.0, 0.0, 0.5)]
+  ["car", lovr.math.newVec3(1.0, 0.0, 0.5)],
+  ["hub", lovr.math.newVec3(1.0, 0.0, 0.0)]
 ]);
 
 lovr.draw = (pass: Pass) => {
