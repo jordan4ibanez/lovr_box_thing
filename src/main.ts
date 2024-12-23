@@ -90,35 +90,34 @@ lovr.load = () => {
   car.setMass(crownVicWeight);
   // print(car.getAutomaticMass())
 
-
-
-
   const springHeight = 0.3;
+
+  const hubSize = 0.4;
 
   // Back left wheel.
   // let wheelRearLeft = world.newCylinderCollider();
-  let wheelRearLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), 0.1, 0.1, 0.1);
+  let wheelRearLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), hubSize, hubSize, hubSize);
   wheelRearLeft.setOrientation(math.pi / 2, 0, 1, 0);
   wheelRearLeft.setTag("wheel");
   wheelRearLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   wheelRearLeft.setFriction(0);
 
   // Back right wheel.
-  let wheelRearRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), 0.1, 0.1, 0.1);
+  let wheelRearRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), hubSize, hubSize, hubSize);
   wheelRearRight.setOrientation(math.pi / 2, 0, 1, 0);
   wheelRearRight.setTag("wheel");
   wheelRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   wheelRearRight.setFriction(0);
 
   // Front left wheel.
-  let wheelFrontLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), 0.1, 0.1, 0.1);
+  let wheelFrontLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), hubSize, hubSize, hubSize);
   wheelFrontLeft.setOrientation(math.pi / 2, 0, 1, 0);
   wheelFrontLeft.setTag("wheel");
   wheelFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   wheelFrontLeft.setFriction(0);
 
   // Front right wheel.
-  let wheelFrontRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), 0.1, 0.1, 0.1);
+  let wheelFrontRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), hubSize, hubSize, hubSize);
   wheelFrontRight.setOrientation(math.pi / 2, 0, 1, 0);
   wheelFrontRight.setTag("wheel");
   wheelFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
