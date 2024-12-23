@@ -1348,6 +1348,10 @@ declare interface Collider extends Object {
   setTag(tag: string): void;
   setTag(): void;
   setUserData(data: LuaUserdata): void;
+  getAutomaticMass(): boolean;
+  setAutomaticMass(enable: boolean): void;
+  getCenterOfMass(): LuaMultiReturn<[x: number, y: number, z: number]>;
+  setCenterOfMass(x: number, y: number, z: number): void;
 }
 
 declare interface Image extends Object {
