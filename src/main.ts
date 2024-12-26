@@ -5,13 +5,14 @@ let world: World;
 let boxes: Array<Collider> = [];
 let globalDelta = 0.0;
 let recenterFunc: () => void;
-let steeringJointCount = 30;
-let wheelFriction = 2.9;
+let steeringJointCount = 40;
+let wheelFriction = 6;
 let suspensionMass = 1.5;
 let wheelMass = 0.9;
-let maxSteeringAngle = math.pi / 4;
-let steeringSpeed = 3;
-let engineTorque = 5;
+let maxSteeringAngle = math.pi / 7;
+let steeringSpeed = 3.5;
+let engineTorque = 10;
+let brakeTorque = 30;
 
 let maximized = false;
 
@@ -209,9 +210,9 @@ lovr.load = () => {
 
   keyboard.setKeyDownCallback("p", () => {
     rearLeftWheelAxle.setMaxMotorTorque(engineTorque, engineTorque);
-    rearLeftWheelAxle.setMotorTarget(100);
+    rearLeftWheelAxle.setMotorTarget(400);
     rearRightWheelAxle.setMaxMotorTorque(engineTorque, engineTorque);
-    rearRightWheelAxle.setMotorTarget(100);
+    rearRightWheelAxle.setMotorTarget(400);
   });
 
   keyboard.setKeyReleasedCallback("p", () => {
@@ -222,9 +223,9 @@ lovr.load = () => {
   });
 
   keyboard.setKeyDownCallback(";", () => {
-    rearLeftWheelAxle.setMaxMotorTorque(engineTorque, engineTorque);
+    rearLeftWheelAxle.setMaxMotorTorque(brakeTorque, brakeTorque);
     rearLeftWheelAxle.setMotorTarget(0);
-    rearRightWheelAxle.setMaxMotorTorque(10, 10);
+    rearRightWheelAxle.setMaxMotorTorque(brakeTorque, brakeTorque);
     rearRightWheelAxle.setMotorTarget(0);
   });
 
