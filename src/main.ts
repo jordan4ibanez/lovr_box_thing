@@ -216,7 +216,20 @@ lovr.load = () => {
   keyboard.setKeyReleasedCallback("p", () => {
     rearLeftWheelAxle.setMaxMotorTorque(0, 0);
     rearLeftWheelAxle.setMotorTarget(0);
+    rearRightWheelAxle.setMaxMotorTorque(0, 0);
+    rearRightWheelAxle.setMotorTarget(0);
+  });
 
+  keyboard.setKeyDownCallback(";", () => {
+    rearLeftWheelAxle.setMaxMotorTorque(10, 10);
+    rearLeftWheelAxle.setMotorTarget(0);
+    rearRightWheelAxle.setMaxMotorTorque(10, 10);
+    rearRightWheelAxle.setMotorTarget(0);
+  });
+
+  keyboard.setKeyReleasedCallback(";", () => {
+    rearLeftWheelAxle.setMaxMotorTorque(0, 0);
+    rearLeftWheelAxle.setMotorTarget(0);
     rearRightWheelAxle.setMaxMotorTorque(0, 0);
     rearRightWheelAxle.setMotorTarget(0);
   });
