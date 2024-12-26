@@ -115,6 +115,7 @@ lovr.load = () => {
   rearLeftWheel.setFriction(wheelFriction);
 
   const rearLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1));
+  rearLeftWheelAxle.setMotorMode("velocity");
 
   //* REAR RIGHT WHEEL.
 
@@ -125,6 +126,7 @@ lovr.load = () => {
   rearRightWheel.setFriction(wheelFriction);
 
   const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
+  rearRightWheelAxle.setMotorMode("velocity");
 
   const steeringTorque = 9999999999999;
 
@@ -205,14 +207,8 @@ lovr.load = () => {
   boxes.push(frontRightWheelSteering);
 
   keyboard.setKeyDownCallback("p", () => {
-    // suspension.setAngularVelocity(0, 1, 0);
-    // frontLeftWheel.setLinearVelocity(1, 0, 0);
-    // frontLeftWheelAxle.
-    rearLeftWheelAxle.setMotorMode("velocity");
     rearLeftWheelAxle.setMaxMotorTorque(10, 10);
     rearLeftWheelAxle.setMotorTarget(100);
-
-    rearRightWheelAxle.setMotorMode("velocity");
     rearRightWheelAxle.setMaxMotorTorque(10, 10);
     rearRightWheelAxle.setMotorTarget(100);
   });
