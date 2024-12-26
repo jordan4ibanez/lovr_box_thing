@@ -3,6 +3,8 @@ import * as keyboard from "./keyboard";
 
 let world: World;
 let boxes: Array<Collider> = [];
+let globalDelta = 0.0;
+let recenterFunc: () => void;
 
 let maximized = false;
 
@@ -116,7 +118,7 @@ lovr.load = () => {
 
   const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
 
-  const steeringTorque = 99999999999;
+  const steeringTorque = 9999999999999;
 
   //* FRONT LEFT WHEEL.
 
@@ -142,9 +144,10 @@ lovr.load = () => {
   const frontLeftWheel = world.newCylinderCollider(frontLeftWheelPosition, wheelRadius, wheelWidth);
   frontLeftWheel.setTag("wheel");
   frontLeftWheel.setMass(0.1);
-  frontLeftWheel.setFriction(0.1);
+  frontLeftWheel.setFriction(0.45);
 
   const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
+  frontLeftWheelAxle.setSpring(100, 1);
 
   //* FRONT RIGHT WHEEL.
 
@@ -170,9 +173,10 @@ lovr.load = () => {
   const frontRightWheel = world.newCylinderCollider(frontRightWheelPosition, wheelRadius, wheelWidth);
   frontRightWheel.setTag("wheel");
   frontRightWheel.setMass(0.1);
-  frontRightWheel.setFriction(0.1);
+  frontRightWheel.setFriction(0.45);
 
   const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
+  frontRightWheelAxle.setSpring(100, 1);
 
   //* RENDERING.
 
@@ -188,21 +192,65 @@ lovr.load = () => {
     // suspension.setAngularVelocity(0, 1, 0);
     // frontLeftWheel.setLinearVelocity(1, 0, 0);
     // frontLeftWheelAxle.
-    // frontLeftWheelAxle.setMotorMode("velocity");
-    // frontLeftWheelAxle.setMaxMotorTorque(10000, 10000);
-    // frontLeftWheelAxle.setMotorTarget(10);
+    frontLeftWheelAxle.setMotorMode("velocity");
+    frontLeftWheelAxle.setMaxMotorTorque(0.3, 0.3);
+    frontLeftWheelAxle.setMotorTarget(100);
+
+    frontRightWheelAxle.setMotorMode("velocity");
+    frontRightWheelAxle.setMaxMotorTorque(0.3, 0.3);
+    frontRightWheelAxle.setMotorTarget(100);
   });
 
+  let angle = 0;
+  let steeringSpeed = 1;
+  let gateLeft = false;
+  let gateRight = false;
+
+  recenterFunc = () => {
+    print(angle);
+    if (!gateLeft && !gateRight) {
+      print("recenter!");
+      angle = 0;
+      frontLeftSteeringJoint.setMotorTarget(angle);
+      frontRightSteeringJoint.setMotorTarget(angle);
+    } else {
+      print("nah");
+    }
+  };
 
   keyboard.setKeyDownCallback("l", () => {
+    angle -= globalDelta * steeringSpeed;
+    if (angle > 0) {
+      angle = 0;
+    }
+    if (angle < -math.pi / 8) {
+      angle = -math.pi / 8;
+    }
+    frontLeftSteeringJoint.setMotorTarget(angle);
+    frontRightSteeringJoint.setMotorTarget(angle);
+    gateLeft = true;
+  });
 
-    frontLeftSteeringJoint.setMotorTarget(-math.pi / 8);
-    frontRightSteeringJoint.setMotorTarget(-math.pi / 8);
+  keyboard.setKeyReleasedCallback("l", () => {
+    gateLeft = false;
   });
 
   keyboard.setKeyDownCallback("'", () => {
-    frontLeftSteeringJoint.setMotorTarget(math.pi / 8);
-    frontRightSteeringJoint.setMotorTarget(math.pi / 8);
+    angle += globalDelta * steeringSpeed;
+    if (angle < 0) {
+      angle = 0;
+    }
+    if (angle > math.pi / 8) {
+      angle = math.pi / 8;
+    }
+    frontLeftSteeringJoint.setMotorTarget(angle);
+    frontRightSteeringJoint.setMotorTarget(angle);
+    gateRight = true;
+  });
+
+  keyboard.setKeyReleasedCallback("'", () => {
+    gateRight = false;
+
   });
 };
 
@@ -213,7 +261,10 @@ const MIN_DELTA = 1 / 200;
 let deltaTimer = 0;
 
 lovr.update = (delta: number) => {
+  globalDelta = delta;
   keyboard._internalKeyboardUpdateDoNotUse();
+
+  recenterFunc();
 
   if (delta > MAX_DELTA) {
     world.update(MAX_DELTA);
