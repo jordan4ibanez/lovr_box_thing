@@ -1385,8 +1385,9 @@ declare interface Shape extends Object {
   setOrientation(orientation: Quat): void;
   setPose(x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number): void;
   setPose(position: Vec3, orientation: Quat): void;
-  setPosition(x: number, y: number, z: number): void;
-  setPosition(position: Vec3): void;
+  setOffset(x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number): void;
+  setOffset(position: Vec3, rotation: Quat): void;
+  getOffset(): LuaMultiReturn<[x: number, y: number, z: number, angle: number, ax: number, ay: number, az: number]>;
   setSensor(sensor: boolean): void;
   setUserData(data: LuaUserdata): void;
 }
@@ -1453,6 +1454,8 @@ declare interface DistanceJoint extends Joint {
   setTightness(tightness: number): void;
 }
 
+declare type MotorMode = "position" | "velocity";
+
 declare interface HingeJoint extends Joint {
   getAnchors(): LuaMultiReturn<[x1: number, y1: number, z1: number, x2: number, y2: number, z2: number]>;
   getAngle(): number;
@@ -1468,6 +1471,10 @@ declare interface HingeJoint extends Joint {
   setLowerLimit(limit: number): void;
   setUpperLimit(limit: number): void;
   getFriction(): number;
+  setMotorTarget(target: number): void;
+  setMaxMotorTorque(positive: number, negative: number): void;
+  getMotorMode(): MotorMode | null;
+  setMotorMode(mode: MotorMode): void;
 }
 
 declare interface SliderJoint extends Joint {
