@@ -6,7 +6,8 @@ let boxes: Array<Collider> = [];
 let globalDelta = 0.0;
 let recenterFunc: () => void;
 let steeringJointCount = 30;
-let wheelFriction = 1;
+let wheelFriction = 1.9;
+let suspensionMass = 1.5;
 let wheelMass = 0.9;
 let maxSteeringAngle = math.pi / 4;
 
@@ -102,7 +103,7 @@ lovr.load = () => {
 
   const suspension: Collider = world.newBoxCollider(basePos.x, basePos.y, basePos.z, carLength, 0.3, carWidth);
   suspension.setTag("suspension");
-  suspension.setMass(wheelMass);
+  suspension.setMass(suspensionMass);
 
   //* REAR LEFT WHEEL.
 
