@@ -228,15 +228,21 @@ lovr.load = () => {
   recenterFunc = () => {
     print(angle);
     if (!gateLeft && !gateRight) {
-      print("recenter!");
-      angle = 0;
+
+      if (angle > 0) {
+        angle -= globalDelta * steeringSpeed;
+      } else if (angle < 0) {
+        angle += globalDelta * steeringSpeed;
+      }
+      if (math.abs(angle) <= globalDelta * steeringSpeed) {
+        angle = 0;
+        // print("absolute 0");
+      }
 
       for (let i = 0; i < steeringJointCount; i++) {
         frontLeftSteeringJoints[i].setMotorTarget(angle);
         frontRightSteeringJoints[i].setMotorTarget(angle);
       }
-    } else {
-      print("nah");
     }
   };
 
