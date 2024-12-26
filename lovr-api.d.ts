@@ -1312,7 +1312,7 @@ declare interface Collider extends Object {
   getPosition(): LuaMultiReturn<[x: number, y: number, z: number]>;
   getRestitution(): number;
   getShapes(): Array<Shape>;
-  getTag(): string;
+  getTag(): string | null;
   getUserData(): LuaUserdata;
   getWorld(): World;
   getWorldPoint(x: number, y: number, z: number): LuaMultiReturn<[wx: number, wy: number, wz: number]>;
