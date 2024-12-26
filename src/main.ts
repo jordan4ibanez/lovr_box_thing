@@ -70,6 +70,7 @@ lovr.load = () => {
 
   const groundWidth = 10;
   let ground = world.newBoxCollider(0, 0, 0, 10, 1, 10);
+  ground.setPosition(0, -1, 0);
   ground.setKinematic(true);
   ground.setTag("ground");
   boxes.push(ground);
@@ -77,7 +78,7 @@ lovr.load = () => {
   // -z is right.
   // -x is forward.
 
-  const basePos = lovr.math.newVec3(0, 2, -1);
+  const basePos = lovr.math.newVec3(0, 0, 0);
   const carWidth = 2;
   const carHeight = 1;
   const carLength = 4;
