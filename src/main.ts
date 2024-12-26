@@ -36,7 +36,7 @@ function scalePoundsToRc(inputLBS: number): number {
   return (inputLBS / lbsToKg) / scale;
 }
 
-const rubberDensity = 1522 / 3;
+const rubberDensity = 1522 / 6;
 function calculateWheelWeight(radius: number, width: number): number {
   // I just grabbed this from here lol. https://www.vcalc.com/wiki/cylinder-weight
   // We're using the density of rubber which is 1522kg which I found here: https://www.aqua-calc.com/page/density-table/substance/rubber-coma-and-blank-manufactured
@@ -52,7 +52,7 @@ lovr.load = () => {
   const crownVicWeight = scalePoundsToRc(4129);
 
   // todo: Make this some kind of physics module or something.
-  world = lovr.physics.newWorld(0, -9.81, 0, false, ["car", "wheel", "hub", "steering", "wall", "ground"]);
+  world = lovr.physics.newWorld(0, -20, 0, false, ["car", "wheel", "hub", "steering", "wall", "ground", "struttower"]);
 
   // throw error("was creating a hub for the rear wheels");
 
@@ -64,6 +64,10 @@ lovr.load = () => {
   world.disableCollisionBetween("hub", "wheel");
   world.disableCollisionBetween("hub", "car");
   world.disableCollisionBetween("steering", "wheel");
+  world.disableCollisionBetween("struttower", "hub");
+  world.disableCollisionBetween("struttower", "wheel");
+  world.disableCollisionBetween("struttower", "car");
+  world.disableCollisionBetween("struttower", "wall");
 
 
   // world.disableCollisionBetween("hub", "ground");
@@ -100,60 +104,81 @@ lovr.load = () => {
   const hubSize = 0.4;
 
   // Back left wheel hub.
-  let hubRearLeft = world.newBoxCollider(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), hubSize, hubSize, hubSize);
+  const hubRearLeftPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2));
+  let hubRearLeft = world.newBoxCollider(hubRearLeftPosition, lovr.math.vec3(hubSize, hubSize, hubSize));
   hubRearLeft.setTag("hub");
   hubRearLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
   hubRearLeft.setFriction(0);
 
-  // Back right wheel hub.
-  let hubRearRight = world.newBoxCollider(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), hubSize, hubSize, hubSize);
-  hubRearRight.setTag("hub");
-  hubRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  hubRearLeft.setFriction(0);
+  // const wheelRearLeft = world.newCylinderCollider(hubRearLeftPosition, wheelRadius, wheelWidth);
+  // wheelRearLeft.setTag("wheel");
+  // wheelRearLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
 
 
-  // Back left wheel hub.
-  let hubFrontLeft = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), hubSize, hubSize, hubSize);
-  hubFrontLeft.setTag("hub");
-  hubFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  hubRearLeft.setFriction(0);
-
-  // Back right wheel hub.
-  let hubFrontRight = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), hubSize, hubSize, hubSize);
-  hubFrontRight.setTag("hub");
-  hubFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  hubRearLeft.setFriction(0);
-
-  const springStrength = 8;
-  const springShock = 80;
-  const springDamping = 40;
-  const springTravel = 0.000001;
-
-  let springRearLeft: SliderJoint = lovr.physics.newSliderJoint(hubRearLeft, car, 0, 1, 0);
-  springRearLeft.setSpring(springStrength, springShock / 100);
-  springRearLeft.setLimits(-springTravel, springTravel);
-  springRearLeft.setFriction(springDamping);
-
-  let springRearRight: SliderJoint = lovr.physics.newSliderJoint(hubRearRight, car, 0, 1, 0);
-  springRearRight.setSpring(springStrength, springShock / 100);
-  springRearRight.setLimits(-springTravel, springTravel);
-  springRearRight.setFriction(springDamping);
+  // // Back right wheel hub.
+  // let hubRearRight = world.newBoxCollider(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), hubSize, hubSize, hubSize);
+  // hubRearRight.setTag("hub");
+  // hubRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  // hubRearLeft.setFriction(0);
 
 
-  let springFrontLeft: SliderJoint = lovr.physics.newSliderJoint(hubFrontLeft, car, 0, 1, 0);
-  springFrontLeft.setSpring(springStrength, springShock / 100);
-  springFrontLeft.setLimits(-springTravel, springTravel);
-  springFrontLeft.setFriction(springDamping);
+  // // Back left wheel hub.
+  // let hubFrontLeft = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), hubSize, hubSize, hubSize);
+  // hubFrontLeft.setTag("hub");
+  // hubFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  // hubRearLeft.setFriction(0);
 
-  let springFrontRight: SliderJoint = lovr.physics.newSliderJoint(hubFrontRight, car, 0, 1, 0);
-  springFrontRight.setSpring(springStrength, springShock / 100);
-  springFrontRight.setLimits(-springTravel, springTravel);
-  springFrontRight.setFriction(springDamping);
+  // // Back right wheel hub.
+  // let hubFrontRight = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), hubSize, hubSize, hubSize);
+  // hubFrontRight.setTag("hub");
+  // hubFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  // hubRearLeft.setFriction(0);
+
+  // // Attempt to stabilize the geometry of the suspension.
+  // let axleRear = lovr.physics.newWeldJoint(hubRearLeft, hubRearRight);
+  // let axleFront = lovr.physics.newWeldJoint(hubFrontLeft, hubFrontRight);
+
+
+
+
+  // const springStrength = 20;
+  // const springShock = 90;
+  // const springDamping = 80;
+  // const springTravel = 0.1;
+
+  // let springRearLeft: SliderJoint = lovr.physics.newSliderJoint(hubRearLeft, car, 0, 1, 0);
+  // springRearLeft.setSpring(springStrength, springShock / 100);
+  // springRearLeft.setLimits(-springTravel, springTravel);
+  // springRearLeft.setFriction(springDamping);
+
+  // let axleRearLeft: HingeJoint = lovr.physics.newHingeJoint(hubRearLeft, wheelRearLeft, hubRearLeftPosition, lovr.math.vec3(0, 0, 1));
+  // print(axleRearLeft.getFriction());
+
+  // let springRearRight: SliderJoint = lovr.physics.newSliderJoint(hubRearRight, car, 0, 1, 0);
+  // springRearRight.setSpring(springStrength, springShock / 100);
+  // springRearRight.setLimits(-springTravel, springTravel);
+  // springRearRight.setFriction(springDamping);
+
+
+  // let springFrontLeft: SliderJoint = lovr.physics.newSliderJoint(hubFrontLeft, car, 0, 1, 0);
+  // springFrontLeft.setSpring(springStrength, springShock / 100);
+  // springFrontLeft.setLimits(-springTravel, springTravel);
+  // springFrontLeft.setFriction(springDamping);
+
+
+
+
+  // let springFrontRight: SliderJoint = lovr.physics.newSliderJoint(hubFrontRight, car, 0, 1, 0);
+  // springFrontRight.setSpring(springStrength, springShock / 100);
+  // springFrontRight.setLimits(-springTravel, springTravel);
+  // springFrontRight.setFriction(springDamping);
 
   boxes.push(hubRearLeft);
-  boxes.push(hubRearRight);
-  boxes.push(hubFrontLeft);
-  boxes.push(hubFrontRight);
+  // boxes.push(wheelRearLeft);
+
+  // boxes.push(hubRearRight);
+  // boxes.push(hubFrontLeft);
+  // boxes.push(hubFrontRight);
   boxes.push(car);
 
   keyboard.setKeyDownCallback("space", () => {
@@ -232,7 +257,13 @@ lovr.draw = (pass: Pass) => {
       let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
 
       const tag = shape.getCollider().getTag();
-      const selectedColor = colorMap.get(tag)!!;
+      if (tag == null) {
+        throw new Error("Need to add in this tag!");
+      }
+      const selectedColor = colorMap.get(tag);
+      if (selectedColor == null) {
+        throw new Error("No color for " + tag);
+      }
 
       // print(selectedColor);
       pass.setColor(selectedColor.x, selectedColor.y, selectedColor.z);
@@ -252,7 +283,7 @@ lovr.draw = (pass: Pass) => {
         case "cylinder": {
           let radius = (shape as CylinderShape).getRadius();
           let length = (shape as CylinderShape).getLength();
-          pass.cylinder(x, y, z, radius, length, angle, angleX, angleY, angleZ, false, 0, 2 * math.pi, 64);
+          pass.cylinder(x, y, z, radius, length, angle, angleX, angleY, angleZ, false, 0, 2 * math.pi, 12);
           break;
         }
         case "sphere": {

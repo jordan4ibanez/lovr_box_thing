@@ -1467,6 +1467,7 @@ declare interface HingeJoint extends Joint {
   setLimits(lower: number, upper: number): void;
   setLowerLimit(limit: number): void;
   setUpperLimit(limit: number): void;
+  getFriction(): number;
 }
 
 declare interface SliderJoint extends Joint {
@@ -1483,6 +1484,8 @@ declare interface SliderJoint extends Joint {
   setSpring(frequency: number, damping: number): void;
   setFriction(friction: number): void;
 }
+
+declare interface WeldJoint extends Joint { }
 
 declare type Permission = "audiocapture";
 
@@ -2123,6 +2126,7 @@ declare namespace lovr {
     function newHingeJoint(colliderA: Collider, colliderB: Collider, anchor: Vec3, axis: Vec3): HingeJoint;
     function newSliderJoint(colliderA: Collider, colliderB: Collider, ax: number, ay: number, az: number): SliderJoint;
     function newSliderJoint(colliderA: Collider, colliderB: Collider, axis: Vec3): SliderJoint;
+    function newWeldJoint(colliderA: Collider, colliderB: Collider): WeldJoint;
   }
 
   namespace system {
