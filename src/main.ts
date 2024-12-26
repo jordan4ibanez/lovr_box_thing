@@ -52,7 +52,7 @@ lovr.load = () => {
   const crownVicWeight = scalePoundsToRc(4129);
 
   // todo: Make this some kind of physics module or something.
-  world = lovr.physics.newWorld(0, -9.81, 0, false, ["body", "wheel", "suspension", "wall", "ground"]);
+  world = lovr.physics.newWorld(0, -9.81, 0, false, ["body", "wheel", "suspension", "steering", "wall", "ground"]);
 
   // throw error("was creating a hub for the rear wheels");
 
@@ -63,6 +63,12 @@ lovr.load = () => {
   world.disableCollisionBetween("wheel", "wall");
   world.disableCollisionBetween("wheel", "suspension");
   world.disableCollisionBetween("suspension", "wall");
+  world.disableCollisionBetween("steering", "wheel");
+  world.disableCollisionBetween("steering", "wall");
+  world.disableCollisionBetween("steering", "ground");
+  world.disableCollisionBetween("steering", "suspension");
+  world.disableCollisionBetween("steering", "body");
+
   // world.disableCollisionBetween("suspension", "ground");
 
 
@@ -90,44 +96,113 @@ lovr.load = () => {
 
   const suspension: Collider = world.newBoxCollider(basePos.x, basePos.y, basePos.z, carLength, 0.3, carWidth);
   suspension.setTag("suspension");
-  suspension.setMass(0.01);
+  suspension.setMass(0.1);
 
   //* REAR LEFT WHEEL.
 
   const rearLeftWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2));
   const rearLeftWheel = world.newCylinderCollider(rearLeftWheelPosition, wheelRadius, wheelWidth);
   rearLeftWheel.setTag("wheel");
-  rearLeftWheel.setMass(0.01);
+  rearLeftWheel.setMass(0.1);
 
   const rearLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1));
 
+  //* REAR RIGHT WHEEL.
+
+  const rearRightWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2));
+  const rearRightWheel = world.newCylinderCollider(rearRightWheelPosition, wheelRadius, wheelWidth);
+  rearRightWheel.setTag("wheel");
+  rearRightWheel.setMass(0.1);
+
+  const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
+
+  const steeringTorque = 99999999999;
+
   //* FRONT LEFT WHEEL.
 
+  //? Steering.
+
   const frontLeftWheelPosition = lovr.math.vec3(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2));
+
+  const frontLeftWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2), 0.4, 0.4, 0.4);
+  frontLeftWheelSteering.setTag("steering");
+  frontLeftWheelSteering.setMass(0.1);
+
+  const frontLeftSteeringBasePosition = lovr.math.vec3(frontLeftWheelPosition.x, frontLeftWheelPosition.y, frontLeftWheelPosition.z - 0.2);
+  const frontLeftSteeringJoint: HingeJoint = lovr.physics.newHingeJoint(suspension, frontLeftWheelSteering, frontLeftSteeringBasePosition, lovr.math.vec3(0, -1, 0));
+
+  frontLeftSteeringJoint.setMotorMode("position");
+  frontLeftSteeringJoint.setLimits(-math.pi / 8, math.pi / 8);
+  frontLeftSteeringJoint.setMaxMotorTorque(steeringTorque, steeringTorque);
+  frontLeftSteeringJoint.setMotorTarget(0);
+  frontLeftSteeringJoint.setSpring(1000000, 1);
+
+  //? Actual wheel.
+
   const frontLeftWheel = world.newCylinderCollider(frontLeftWheelPosition, wheelRadius, wheelWidth);
   frontLeftWheel.setTag("wheel");
-  frontLeftWheel.setMass(0.01);
-  frontLeftWheel.setFriction(100);
+  frontLeftWheel.setMass(0.1);
+  frontLeftWheel.setFriction(0.1);
 
-  // todo: Make this pivot on the point where the wheel attached. subtract wheel width
-  const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
+  const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
 
+  //* FRONT RIGHT WHEEL.
+
+  //? Steering.
+
+  const frontRightWheelPosition = lovr.math.vec3(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2));
+
+  const frontRightWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2), 0.4, 0.4, 0.4);
+  frontRightWheelSteering.setTag("steering");
+  frontRightWheelSteering.setMass(0.1);
+
+  const frontRightSteeringBasePosition = lovr.math.vec3(frontRightWheelPosition.x, frontRightWheelPosition.y, frontRightWheelPosition.z - 0.2);
+  const frontRightSteeringJoint: HingeJoint = lovr.physics.newHingeJoint(suspension, frontRightWheelSteering, frontRightSteeringBasePosition, lovr.math.vec3(0, -1, 0));
+
+  frontRightSteeringJoint.setMotorMode("position");
+  frontRightSteeringJoint.setLimits(-math.pi / 8, math.pi / 8);
+  frontRightSteeringJoint.setMaxMotorTorque(steeringTorque, steeringTorque);
+  frontRightSteeringJoint.setMotorTarget(0);
+  frontRightSteeringJoint.setSpring(1000000, 1);
+
+  //? Actual wheel.
+
+  const frontRightWheel = world.newCylinderCollider(frontRightWheelPosition, wheelRadius, wheelWidth);
+  frontRightWheel.setTag("wheel");
+  frontRightWheel.setMass(0.1);
+  frontRightWheel.setFriction(0.1);
+
+  const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
+
+  //* RENDERING.
 
   boxes.push(suspension);
   boxes.push(rearLeftWheel);
+  boxes.push(rearRightWheel);
   boxes.push(frontLeftWheel);
+  boxes.push(frontLeftWheelSteering);
+  boxes.push(frontRightWheel);
+  boxes.push(frontRightWheelSteering);
 
   keyboard.setKeyDownCallback("space", () => {
     // suspension.setAngularVelocity(0, 1, 0);
     // frontLeftWheel.setLinearVelocity(1, 0, 0);
     // frontLeftWheelAxle.
-    frontLeftWheelAxle.setMotorMode("velocity");
-    frontLeftWheelAxle.setMaxMotorTorque(10000, 10000);
-    frontLeftWheelAxle.setMotorTarget(10);
+    // frontLeftWheelAxle.setMotorMode("velocity");
+    // frontLeftWheelAxle.setMaxMotorTorque(10000, 10000);
+    // frontLeftWheelAxle.setMotorTarget(10);
   });
 
-  keyboard.setKeyDownCallback("f", () => {
 
+  keyboard.setKeyDownCallback("l", () => {
+
+    frontLeftSteeringJoint.setMotorTarget(-math.pi / 8);
+    frontRightSteeringJoint.setMotorTarget(-math.pi / 8);
+  });
+
+  keyboard.setKeyDownCallback("'", () => {
+    frontLeftSteeringJoint.setMotorTarget(math.pi / 8);
+    frontRightSteeringJoint.setMotorTarget(math.pi / 8);
   });
 };
 
@@ -172,6 +247,7 @@ const colorMap = new Map<string, Vec3>([
   ["wheel", lovr.math.newVec3(0.3, 0.3, 0.3)],
   ["suspension", lovr.math.newVec3(1.0, 0.0, 1.0)],
   ["body", lovr.math.newVec3(1.0, 1.0, 0.0)],
+  ["steering", lovr.math.newVec3(0.0, 1.0, 1.0)],
 ]);
 
 lovr.draw = (pass: Pass) => {

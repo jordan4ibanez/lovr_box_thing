@@ -1475,6 +1475,10 @@ declare interface HingeJoint extends Joint {
   setMaxMotorTorque(positive: number, negative: number): void;
   getMotorMode(): MotorMode | null;
   setMotorMode(mode: MotorMode): void;
+  setSpring(frequency: number, damping: number): void;
+  getSpring(): LuaMultiReturn<[frequency: number, damping: number]>;
+  setMotorSpring(frequency: number, damping: number): void;
+  getMotorSpring(): LuaMultiReturn<[frequency: number, damping: number]>;
 }
 
 declare interface SliderJoint extends Joint {
