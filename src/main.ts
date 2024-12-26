@@ -11,6 +11,7 @@ let suspensionMass = 1.5;
 let wheelMass = 0.9;
 let maxSteeringAngle = math.pi / 4;
 let steeringSpeed = 3;
+let engineTorque = 5;
 
 let maximized = false;
 
@@ -207,9 +208,9 @@ lovr.load = () => {
   boxes.push(frontRightWheelSteering);
 
   keyboard.setKeyDownCallback("p", () => {
-    rearLeftWheelAxle.setMaxMotorTorque(10, 10);
+    rearLeftWheelAxle.setMaxMotorTorque(engineTorque, engineTorque);
     rearLeftWheelAxle.setMotorTarget(100);
-    rearRightWheelAxle.setMaxMotorTorque(10, 10);
+    rearRightWheelAxle.setMaxMotorTorque(engineTorque, engineTorque);
     rearRightWheelAxle.setMotorTarget(100);
   });
 
@@ -221,7 +222,7 @@ lovr.load = () => {
   });
 
   keyboard.setKeyDownCallback(";", () => {
-    rearLeftWheelAxle.setMaxMotorTorque(10, 10);
+    rearLeftWheelAxle.setMaxMotorTorque(engineTorque, engineTorque);
     rearLeftWheelAxle.setMotorTarget(0);
     rearRightWheelAxle.setMaxMotorTorque(10, 10);
     rearRightWheelAxle.setMotorTarget(0);
