@@ -9,7 +9,7 @@ let steeringJointCount = 40;
 let wheelFriction = 6;
 let suspensionMass = 1.5;
 let wheelMass = 0.9;
-let maxSteeringAngle = math.pi / 7;
+let maxSteeringAngle = math.pi / 5;
 let steeringSpeed = 3.5;
 let engineTorque = 10;
 let brakeTorque = 30;
@@ -97,7 +97,7 @@ lovr.load = () => {
   const basePos = lovr.math.newVec3(0, 0, 0);
   const carWidth = 2;
   const carHeight = 1;
-  const carLength = 4;
+  const carLength = 6;
 
   const wheelRadius = 0.4;
   const wheelWidth = 0.4;
