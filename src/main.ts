@@ -204,7 +204,7 @@ lovr.load = () => {
   boxes.push(frontRightWheel);
   boxes.push(frontRightWheelSteering);
 
-  keyboard.setKeyDownCallback("space", () => {
+  keyboard.setKeyDownCallback("p", () => {
     // suspension.setAngularVelocity(0, 1, 0);
     // frontLeftWheel.setLinearVelocity(1, 0, 0);
     // frontLeftWheelAxle.
@@ -217,18 +217,20 @@ lovr.load = () => {
     rearRightWheelAxle.setMotorTarget(100);
   });
 
-  keyboard.setKeyReleasedCallback("space", () => {
+  keyboard.setKeyReleasedCallback("p", () => {
+    rearLeftWheelAxle.setMaxMotorTorque(0, 0);
     rearLeftWheelAxle.setMotorTarget(0);
+
+    rearRightWheelAxle.setMaxMotorTorque(0, 0);
     rearRightWheelAxle.setMotorTarget(0);
   });
 
   let angle = 0;
-  let steeringSpeed = 1.5;
   let gateLeft = false;
   let gateRight = false;
 
   recenterFunc = () => {
-    print(angle);
+    // print(angle);
     if (!gateLeft && !gateRight) {
 
       if (angle > 0) {
