@@ -6,10 +6,11 @@ let boxes: Array<Collider> = [];
 let globalDelta = 0.0;
 let recenterFunc: () => void;
 let steeringJointCount = 30;
-let wheelFriction = 1.9;
+let wheelFriction = 2.9;
 let suspensionMass = 1.5;
 let wheelMass = 0.9;
 let maxSteeringAngle = math.pi / 4;
+let steeringSpeed = 3;
 
 let maximized = false;
 
