@@ -63,7 +63,7 @@ lovr.load = () => {
   world.disableCollisionBetween("hub", "steering");
   world.disableCollisionBetween("hub", "wheel");
   world.disableCollisionBetween("steering", "wheel");
-  world.disableCollisionBetween("hub", "ground");
+  // world.disableCollisionBetween("hub", "ground");
 
   const groundWidth = 10;
   let ground = world.newBoxCollider(0, 0, 0, 10, 1, 10);
@@ -101,62 +101,62 @@ lovr.load = () => {
   hubRearLeft.setOrientation(math.pi / 2, 0, 1, 0);
   hubRearLeft.setTag("hub");
   hubRearLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  hubRearLeft.setFriction(0);
+  // hubRearLeft.setFriction(0);
 
-  // Back right wheel hub.
-  let hubRearRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), hubSize, hubSize, hubSize);
-  hubRearRight.setOrientation(math.pi / 2, 0, 1, 0);
-  hubRearRight.setTag("hub");
-  hubRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  hubRearRight.setFriction(0);
+  // // Back right wheel hub.
+  // let hubRearRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carLength / 2) - (wheelRadius * 2), hubSize, hubSize, hubSize);
+  // hubRearRight.setOrientation(math.pi / 2, 0, 1, 0);
+  // hubRearRight.setTag("hub");
+  // hubRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  // hubRearRight.setFriction(0);
 
-  // Front left wheel hub.
-  let hubFrontLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), hubSize, hubSize, hubSize);
-  hubFrontLeft.setOrientation(math.pi / 2, 0, 1, 0);
-  hubFrontLeft.setTag("hub");
-  hubFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  hubFrontLeft.setFriction(0);
+  // // Front left wheel hub.
+  // let hubFrontLeft = world.newBoxCollider(basePos.x - (carWidth / 2) + (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), hubSize, hubSize, hubSize);
+  // hubFrontLeft.setOrientation(math.pi / 2, 0, 1, 0);
+  // hubFrontLeft.setTag("hub");
+  // hubFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  // hubFrontLeft.setFriction(0);
 
-  // Front right wheel hub.
-  let hubFrontRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), hubSize, hubSize, hubSize);
-  hubFrontRight.setOrientation(math.pi / 2, 0, 1, 0);
-  hubFrontRight.setTag("hub");
-  hubFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  hubFrontRight.setFriction(0);
+  // // Front right wheel hub.
+  // let hubFrontRight = world.newBoxCollider(basePos.x + (carWidth / 2) - (wheelWidth / 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carLength / 2) + (wheelRadius * 2), hubSize, hubSize, hubSize);
+  // hubFrontRight.setOrientation(math.pi / 2, 0, 1, 0);
+  // hubFrontRight.setTag("hub");
+  // hubFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
+  // hubFrontRight.setFriction(0);
 
-  const springStrength = 4;
-  const springShock = 80;
-  const springDamping = 40;
-  const springTravel = 0.0001;
+  // const springStrength = 4;
+  // const springShock = 80;
+  // const springDamping = 40;
+  // const springTravel = 0.0001;
 
-  let springRearLeft: SliderJoint = lovr.physics.newSliderJoint(hubRearLeft, car, 0, 1, 0);
-  springRearLeft.setSpring(springStrength, springShock / 100);
-  springRearLeft.setLimits(-springTravel, springTravel);
-  springRearLeft.setFriction(springDamping);
+  // let springRearLeft: SliderJoint = lovr.physics.newSliderJoint(hubRearLeft, car, 0, 1, 0);
+  // springRearLeft.setSpring(springStrength, springShock / 100);
+  // springRearLeft.setLimits(-springTravel, springTravel);
+  // springRearLeft.setFriction(springDamping);
 
-  let springRearRight: SliderJoint = lovr.physics.newSliderJoint(hubRearRight, car, 0, 1, 0);
-  springRearRight.setSpring(springStrength, springShock / 100);
-  springRearRight.setLimits(-springTravel, springTravel);
-  springRearRight.setFriction(springDamping);
+  // let springRearRight: SliderJoint = lovr.physics.newSliderJoint(hubRearRight, car, 0, 1, 0);
+  // springRearRight.setSpring(springStrength, springShock / 100);
+  // springRearRight.setLimits(-springTravel, springTravel);
+  // springRearRight.setFriction(springDamping);
 
-  const travelFix = 550;
-  const springStrengthFix = 3;
-  const springDampingFix = 4;
+  // const travelFix = 550;
+  // const springStrengthFix = 3;
+  // const springDampingFix = 4;
 
-  let springFrontLeft: SliderJoint = lovr.physics.newSliderJoint(hubFrontLeft, car, 0, 1, 0);
-  springFrontLeft.setSpring(springStrength * springStrengthFix, springShock / 100);
-  springFrontLeft.setLimits(-springTravel * travelFix, springTravel * travelFix);
-  springFrontLeft.setFriction(springDamping * springDampingFix);
+  // let springFrontLeft: SliderJoint = lovr.physics.newSliderJoint(hubFrontLeft, car, 0, 1, 0);
+  // springFrontLeft.setSpring(springStrength * springStrengthFix, springShock / 100);
+  // springFrontLeft.setLimits(-springTravel * travelFix, springTravel * travelFix);
+  // springFrontLeft.setFriction(springDamping * springDampingFix);
 
-  let springFrontRight: SliderJoint = lovr.physics.newSliderJoint(hubFrontRight, car, 0, - 1, 0);
-  springFrontRight.setSpring(springStrength * springStrengthFix, springShock / 100);
-  springFrontRight.setLimits(-springTravel * travelFix, springTravel * travelFix);
-  springFrontRight.setFriction(springDamping * springDampingFix);
+  // let springFrontRight: SliderJoint = lovr.physics.newSliderJoint(hubFrontRight, car, 0, - 1, 0);
+  // springFrontRight.setSpring(springStrength * springStrengthFix, springShock / 100);
+  // springFrontRight.setLimits(-springTravel * travelFix, springTravel * travelFix);
+  // springFrontRight.setFriction(springDamping * springDampingFix);
 
   boxes.push(hubRearLeft);
-  boxes.push(hubRearRight);
-  boxes.push(hubFrontLeft);
-  boxes.push(hubFrontRight);
+  // boxes.push(hubRearRight);
+  // boxes.push(hubFrontLeft);
+  // boxes.push(hubFrontRight);
   boxes.push(car);
 
   keyboard.setKeyDownCallback("space", () => {
