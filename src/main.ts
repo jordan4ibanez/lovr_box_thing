@@ -100,34 +100,34 @@ lovr.load = () => {
   const hubSize = 0.4;
 
   // Back left wheel hub.
-  let hubRearLeft = world.newCylinderCollider(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), hubSize, hubSize);
+  let hubRearLeft = world.newBoxCollider(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), hubSize, hubSize, hubSize);
   hubRearLeft.setTag("hub");
   hubRearLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  // hubRearLeft.setFriction(0);
+  hubRearLeft.setFriction(0);
 
   // Back right wheel hub.
-  let hubRearRight = world.newCylinderCollider(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), hubSize, hubSize);
+  let hubRearRight = world.newBoxCollider(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), hubSize, hubSize, hubSize);
   hubRearRight.setTag("hub");
   hubRearRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  // hubRearLeft.setFriction(0);
+  hubRearLeft.setFriction(0);
 
 
   // Back left wheel hub.
-  let hubFrontLeft = world.newCylinderCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), hubSize, hubSize);
+  let hubFrontLeft = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), hubSize, hubSize, hubSize);
   hubFrontLeft.setTag("hub");
   hubFrontLeft.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  // hubRearLeft.setFriction(0);
+  hubRearLeft.setFriction(0);
 
   // Back right wheel hub.
-  let hubFrontRight = world.newCylinderCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), hubSize, hubSize);
+  let hubFrontRight = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - (carHeight / 2.0) - springHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), hubSize, hubSize, hubSize);
   hubFrontRight.setTag("hub");
   hubFrontRight.setMass(calculateWheelWeight(wheelRadius, wheelWidth));
-  // hubRearLeft.setFriction(0);
+  hubRearLeft.setFriction(0);
 
-  const springStrength = 4;
+  const springStrength = 8;
   const springShock = 80;
   const springDamping = 40;
-  const springTravel = 0.0001;
+  const springTravel = 0.000001;
 
   let springRearLeft: SliderJoint = lovr.physics.newSliderJoint(hubRearLeft, car, 0, 1, 0);
   springRearLeft.setSpring(springStrength, springShock / 100);
@@ -159,7 +159,7 @@ lovr.load = () => {
   keyboard.setKeyDownCallback("space", () => {
     // car.setPosition(math.random(), 3 + math.random(), math.random());
     // car.setAngularVelocity(0, 1, 0);
-    car.setLinearVelocity(0, 1, 0);
+    car.setLinearVelocity(0, 3, 0);
 
     // wheelRearLeft.applyTorque(10000, 0, 0);
     // wheelFrontLeft.applyForce(0, 10000, 0);
@@ -170,8 +170,7 @@ lovr.load = () => {
   });
 
   keyboard.setKeyDownCallback("f", () => {
-    const k = car.isKinematic();
-    car.setKinematic(!k);
+    car.setAngularVelocity(0, 3, 0);
   });
 };
 
