@@ -5,8 +5,9 @@ let world: World;
 let boxes: Array<Collider> = [];
 let globalDelta = 0.0;
 let recenterFunc: () => void;
-let steeringJointCount = 20;
-let wheelFriction = 15;
+let steeringJointCount = 30;
+let wheelFriction = 1;
+let wheelMass = 0.9;
 
 let maximized = false;
 
@@ -100,14 +101,14 @@ lovr.load = () => {
 
   const suspension: Collider = world.newBoxCollider(basePos.x, basePos.y, basePos.z, carLength, 0.3, carWidth);
   suspension.setTag("suspension");
-  suspension.setMass(0.1);
+  suspension.setMass(wheelMass);
 
   //* REAR LEFT WHEEL.
 
   const rearLeftWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2));
   const rearLeftWheel = world.newCylinderCollider(rearLeftWheelPosition, wheelRadius, wheelWidth);
   rearLeftWheel.setTag("wheel");
-  rearLeftWheel.setMass(0.1);
+  rearLeftWheel.setMass(wheelMass);
   rearLeftWheel.setFriction(wheelFriction);
 
   const rearLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1));
@@ -117,7 +118,7 @@ lovr.load = () => {
   const rearRightWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2));
   const rearRightWheel = world.newCylinderCollider(rearRightWheelPosition, wheelRadius, wheelWidth);
   rearRightWheel.setTag("wheel");
-  rearRightWheel.setMass(0.1);
+  rearRightWheel.setMass(wheelMass);
   rearRightWheel.setFriction(wheelFriction);
 
   const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
@@ -132,7 +133,7 @@ lovr.load = () => {
 
   const frontLeftWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2), 0.4, 0.4, 0.4);
   frontLeftWheelSteering.setTag("steering");
-  frontLeftWheelSteering.setMass(0.1);
+  frontLeftWheelSteering.setMass(wheelMass);
 
   const frontLeftSteeringBasePosition = lovr.math.vec3(frontLeftWheelPosition.x, frontLeftWheelPosition.y, frontLeftWheelPosition.z - 0.2);
 
@@ -151,7 +152,7 @@ lovr.load = () => {
 
   const frontLeftWheel = world.newCylinderCollider(frontLeftWheelPosition, wheelRadius, wheelWidth);
   frontLeftWheel.setTag("wheel");
-  frontLeftWheel.setMass(0.1);
+  frontLeftWheel.setMass(wheelMass);
   frontLeftWheel.setFriction(wheelFriction);
 
   const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
@@ -165,7 +166,7 @@ lovr.load = () => {
 
   const frontRightWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2), 0.4, 0.4, 0.4);
   frontRightWheelSteering.setTag("steering");
-  frontRightWheelSteering.setMass(0.1);
+  frontRightWheelSteering.setMass(wheelMass);
 
   const frontRightSteeringBasePosition = lovr.math.vec3(frontRightWheelPosition.x, frontRightWheelPosition.y, frontRightWheelPosition.z - 0.2);
 
@@ -183,7 +184,7 @@ lovr.load = () => {
 
   const frontRightWheel = world.newCylinderCollider(frontRightWheelPosition, wheelRadius, wheelWidth);
   frontRightWheel.setTag("wheel");
-  frontRightWheel.setMass(0.1);
+  frontRightWheel.setMass(wheelMass);
   frontRightWheel.setFriction(wheelFriction);
 
   const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
@@ -204,11 +205,11 @@ lovr.load = () => {
     // frontLeftWheel.setLinearVelocity(1, 0, 0);
     // frontLeftWheelAxle.
     rearLeftWheelAxle.setMotorMode("velocity");
-    rearLeftWheelAxle.setMaxMotorTorque(0.3, 0.3);
+    rearLeftWheelAxle.setMaxMotorTorque(10, 10);
     rearLeftWheelAxle.setMotorTarget(100);
 
     rearRightWheelAxle.setMotorMode("velocity");
-    rearRightWheelAxle.setMaxMotorTorque(0.3, 0.3);
+    rearRightWheelAxle.setMaxMotorTorque(10, 10);
     rearRightWheelAxle.setMotorTarget(100);
   });
 
