@@ -135,9 +135,9 @@ lovr.load = () => {
 
   const frontLeftWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2), 0.4, 0.4, 0.4);
   frontLeftWheelSteering.setTag("steering");
-  frontLeftWheelSteering.setMass(wheelMass);
+  frontLeftWheelSteering.setMass(wheelMass / 2);
 
-  const frontLeftSteeringBasePosition = lovr.math.vec3(frontLeftWheelPosition.x, frontLeftWheelPosition.y, frontLeftWheelPosition.z); //- 0.2);
+  const frontLeftSteeringBasePosition = lovr.math.vec3(frontLeftWheelPosition.x, frontLeftWheelPosition.y, frontLeftWheelPosition.z - 0.2);
 
   //! This is an entire roll of duct tape to fix weirdness with lovr physics lol.
   let frontLeftSteeringJoints: Array<HingeJoint> = [];
@@ -154,7 +154,7 @@ lovr.load = () => {
 
   const frontLeftWheel = world.newCylinderCollider(frontLeftWheelPosition, wheelRadius, wheelWidth);
   frontLeftWheel.setTag("wheel");
-  frontLeftWheel.setMass(wheelMass);
+  frontLeftWheel.setMass(wheelMass / 2);
   frontLeftWheel.setFriction(wheelFriction);
 
   const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
@@ -168,10 +168,10 @@ lovr.load = () => {
 
   const frontRightWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2), 0.4, 0.4, 0.4);
   frontRightWheelSteering.setTag("steering");
-  frontRightWheelSteering.setMass(wheelMass);
+  frontRightWheelSteering.setMass(wheelMass / 2);
 
   // todo: half the hub size width
-  const frontRightSteeringBasePosition = lovr.math.vec3(frontRightWheelPosition.x, frontRightWheelPosition.y, frontRightWheelPosition.z);// + 0.2);
+  const frontRightSteeringBasePosition = lovr.math.vec3(frontRightWheelPosition.x, frontRightWheelPosition.y, frontRightWheelPosition.z + 0.2);
 
   let frontRightSteeringJoints: Array<HingeJoint> = [];
   for (let i = 0; i < steeringJointCount; i++) {
@@ -187,7 +187,7 @@ lovr.load = () => {
 
   const frontRightWheel = world.newCylinderCollider(frontRightWheelPosition, wheelRadius, wheelWidth);
   frontRightWheel.setTag("wheel");
-  frontRightWheel.setMass(wheelMass);
+  frontRightWheel.setMass(wheelMass / 2);
   frontRightWheel.setFriction(wheelFriction);
 
   const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
