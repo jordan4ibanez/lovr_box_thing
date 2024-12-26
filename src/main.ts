@@ -5,7 +5,8 @@ let world: World;
 let boxes: Array<Collider> = [];
 let globalDelta = 0.0;
 let recenterFunc: () => void;
-let steeringJointCount = 5;
+let steeringJointCount = 20;
+let wheelFriction = 15;
 
 let maximized = false;
 
@@ -107,7 +108,7 @@ lovr.load = () => {
   const rearLeftWheel = world.newCylinderCollider(rearLeftWheelPosition, wheelRadius, wheelWidth);
   rearLeftWheel.setTag("wheel");
   rearLeftWheel.setMass(0.1);
-  rearLeftWheel.setFriction(1);
+  rearLeftWheel.setFriction(wheelFriction);
 
   const rearLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1));
 
@@ -117,7 +118,7 @@ lovr.load = () => {
   const rearRightWheel = world.newCylinderCollider(rearRightWheelPosition, wheelRadius, wheelWidth);
   rearRightWheel.setTag("wheel");
   rearRightWheel.setMass(0.1);
-  rearRightWheel.setFriction(1);
+  rearRightWheel.setFriction(wheelFriction);
 
   const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
 
@@ -151,7 +152,7 @@ lovr.load = () => {
   const frontLeftWheel = world.newCylinderCollider(frontLeftWheelPosition, wheelRadius, wheelWidth);
   frontLeftWheel.setTag("wheel");
   frontLeftWheel.setMass(0.1);
-  frontLeftWheel.setFriction(1);
+  frontLeftWheel.setFriction(wheelFriction);
 
   const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
   frontLeftWheelAxle.setSpring(100, 1);
@@ -183,7 +184,7 @@ lovr.load = () => {
   const frontRightWheel = world.newCylinderCollider(frontRightWheelPosition, wheelRadius, wheelWidth);
   frontRightWheel.setTag("wheel");
   frontRightWheel.setMass(0.1);
-  frontRightWheel.setFriction(1);
+  frontRightWheel.setFriction(wheelFriction);
 
   const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
   frontRightWheelAxle.setSpring(100, 1);
