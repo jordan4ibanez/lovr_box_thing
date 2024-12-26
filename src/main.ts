@@ -5,6 +5,7 @@ let world: World;
 let boxes: Array<Collider> = [];
 let globalDelta = 0.0;
 let recenterFunc: () => void;
+let steeringJointCount = 5;
 
 let maximized = false;
 
@@ -76,7 +77,7 @@ lovr.load = () => {
 
   // world.disableCollisionBetween("hub", "ground");
 
-  const groundWidth = 10;
+  const groundWidth = 1000;
   let ground = world.newBoxCollider(0, 0, 0, groundWidth, 1, groundWidth);
   ground.setPosition(0, -1, 0);
   ground.setKinematic(true);
@@ -106,6 +107,7 @@ lovr.load = () => {
   const rearLeftWheel = world.newCylinderCollider(rearLeftWheelPosition, wheelRadius, wheelWidth);
   rearLeftWheel.setTag("wheel");
   rearLeftWheel.setMass(0.1);
+  rearLeftWheel.setFriction(1);
 
   const rearLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1));
 
@@ -115,6 +117,7 @@ lovr.load = () => {
   const rearRightWheel = world.newCylinderCollider(rearRightWheelPosition, wheelRadius, wheelWidth);
   rearRightWheel.setTag("wheel");
   rearRightWheel.setMass(0.1);
+  rearRightWheel.setFriction(1);
 
   const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
 
@@ -131,20 +134,24 @@ lovr.load = () => {
   frontLeftWheelSteering.setMass(0.1);
 
   const frontLeftSteeringBasePosition = lovr.math.vec3(frontLeftWheelPosition.x, frontLeftWheelPosition.y, frontLeftWheelPosition.z - 0.2);
-  const frontLeftSteeringJoint: HingeJoint = lovr.physics.newHingeJoint(suspension, frontLeftWheelSteering, frontLeftSteeringBasePosition, lovr.math.vec3(0, -1, 0));
 
-  frontLeftSteeringJoint.setMotorMode("position");
-  frontLeftSteeringJoint.setLimits(-math.pi / 8, math.pi / 8);
-  frontLeftSteeringJoint.setMaxMotorTorque(steeringTorque, steeringTorque);
-  frontLeftSteeringJoint.setMotorTarget(0);
-  frontLeftSteeringJoint.setSpring(1000000, 1);
+  //! This is an entire roll of duct tape to fix weirdness with lovr physics lol.
+  let frontLeftSteeringJoints: Array<HingeJoint> = [];
+  for (let i = 0; i < steeringJointCount; i++) {
+    frontLeftSteeringJoints.push(lovr.physics.newHingeJoint(suspension, frontLeftWheelSteering, frontLeftSteeringBasePosition, lovr.math.vec3(0, -1, 0)));
+    frontLeftSteeringJoints[i].setMotorMode("position");
+    frontLeftSteeringJoints[i].setLimits(-math.pi / 8, math.pi / 8);
+    frontLeftSteeringJoints[i].setMaxMotorTorque(steeringTorque, steeringTorque);
+    frontLeftSteeringJoints[i].setMotorTarget(0);
+    frontLeftSteeringJoints[i].setSpring(1000000, 1);
+  }
 
   //? Actual wheel.
 
   const frontLeftWheel = world.newCylinderCollider(frontLeftWheelPosition, wheelRadius, wheelWidth);
   frontLeftWheel.setTag("wheel");
   frontLeftWheel.setMass(0.1);
-  frontLeftWheel.setFriction(0.45);
+  frontLeftWheel.setFriction(1);
 
   const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
   frontLeftWheelAxle.setSpring(100, 1);
@@ -160,20 +167,23 @@ lovr.load = () => {
   frontRightWheelSteering.setMass(0.1);
 
   const frontRightSteeringBasePosition = lovr.math.vec3(frontRightWheelPosition.x, frontRightWheelPosition.y, frontRightWheelPosition.z - 0.2);
-  const frontRightSteeringJoint: HingeJoint = lovr.physics.newHingeJoint(suspension, frontRightWheelSteering, frontRightSteeringBasePosition, lovr.math.vec3(0, -1, 0));
 
-  frontRightSteeringJoint.setMotorMode("position");
-  frontRightSteeringJoint.setLimits(-math.pi / 8, math.pi / 8);
-  frontRightSteeringJoint.setMaxMotorTorque(steeringTorque, steeringTorque);
-  frontRightSteeringJoint.setMotorTarget(0);
-  frontRightSteeringJoint.setSpring(1000000, 1);
+  let frontRightSteeringJoints: Array<HingeJoint> = [];
+  for (let i = 0; i < steeringJointCount; i++) {
+    frontRightSteeringJoints.push(lovr.physics.newHingeJoint(suspension, frontRightWheelSteering, frontRightSteeringBasePosition, lovr.math.vec3(0, -1, 0)));
+    frontRightSteeringJoints[i].setMotorMode("position");
+    frontRightSteeringJoints[i].setLimits(-math.pi / 8, math.pi / 8);
+    frontRightSteeringJoints[i].setMaxMotorTorque(steeringTorque, steeringTorque);
+    frontRightSteeringJoints[i].setMotorTarget(0);
+    frontRightSteeringJoints[i].setSpring(1000000, 1);
+  }
 
   //? Actual wheel.
 
   const frontRightWheel = world.newCylinderCollider(frontRightWheelPosition, wheelRadius, wheelWidth);
   frontRightWheel.setTag("wheel");
   frontRightWheel.setMass(0.1);
-  frontRightWheel.setFriction(0.45);
+  frontRightWheel.setFriction(1);
 
   const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
   frontRightWheelAxle.setSpring(100, 1);
@@ -192,13 +202,18 @@ lovr.load = () => {
     // suspension.setAngularVelocity(0, 1, 0);
     // frontLeftWheel.setLinearVelocity(1, 0, 0);
     // frontLeftWheelAxle.
-    frontLeftWheelAxle.setMotorMode("velocity");
-    frontLeftWheelAxle.setMaxMotorTorque(0.3, 0.3);
-    frontLeftWheelAxle.setMotorTarget(100);
+    rearLeftWheelAxle.setMotorMode("velocity");
+    rearLeftWheelAxle.setMaxMotorTorque(0.3, 0.3);
+    rearLeftWheelAxle.setMotorTarget(100);
 
-    frontRightWheelAxle.setMotorMode("velocity");
-    frontRightWheelAxle.setMaxMotorTorque(0.3, 0.3);
-    frontRightWheelAxle.setMotorTarget(100);
+    rearRightWheelAxle.setMotorMode("velocity");
+    rearRightWheelAxle.setMaxMotorTorque(0.3, 0.3);
+    rearRightWheelAxle.setMotorTarget(100);
+  });
+
+  keyboard.setKeyReleasedCallback("space", () => {
+    rearLeftWheelAxle.setMotorTarget(0);
+    rearRightWheelAxle.setMotorTarget(0);
   });
 
   let angle = 0;
@@ -211,8 +226,11 @@ lovr.load = () => {
     if (!gateLeft && !gateRight) {
       print("recenter!");
       angle = 0;
-      frontLeftSteeringJoint.setMotorTarget(angle);
-      frontRightSteeringJoint.setMotorTarget(angle);
+
+      for (let i = 0; i < steeringJointCount; i++) {
+        frontLeftSteeringJoints[i].setMotorTarget(angle);
+        frontRightSteeringJoints[i].setMotorTarget(angle);
+      }
     } else {
       print("nah");
     }
@@ -226,8 +244,10 @@ lovr.load = () => {
     if (angle < -math.pi / 8) {
       angle = -math.pi / 8;
     }
-    frontLeftSteeringJoint.setMotorTarget(angle);
-    frontRightSteeringJoint.setMotorTarget(angle);
+    for (let i = 0; i < steeringJointCount; i++) {
+      frontLeftSteeringJoints[i].setMotorTarget(angle);
+      frontRightSteeringJoints[i].setMotorTarget(angle);
+    }
     gateLeft = true;
   });
 
@@ -243,8 +263,10 @@ lovr.load = () => {
     if (angle > math.pi / 8) {
       angle = math.pi / 8;
     }
-    frontLeftSteeringJoint.setMotorTarget(angle);
-    frontRightSteeringJoint.setMotorTarget(angle);
+    for (let i = 0; i < steeringJointCount; i++) {
+      frontLeftSteeringJoints[i].setMotorTarget(angle);
+      frontRightSteeringJoints[i].setMotorTarget(angle);
+    }
     gateRight = true;
   });
 
