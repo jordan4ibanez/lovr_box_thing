@@ -15,9 +15,13 @@ let steeringSpeed = 3.5;
 let engineTorque = 10;
 let brakeTorque = 30;
 let suspensionTravel = 0.05;
-let suspensionStrength = 10;
-let suspensionDamping = 0.8;
-let suspensionFriction = 0.3;
+let suspensionStrength = 12;
+let suspensionDamping = 0.89;
+let suspensionFriction = 0.4;
+// let axleStrength =
+
+const frontAxleStrength = 100000;
+const frontAxleDamping = 2;
 
 const suspensionHeight = 0.6;
 
@@ -227,7 +231,7 @@ lovr.load = () => {
     frontLeftSteeringJoints[i].setLimits(-maxSteeringAngle, maxSteeringAngle);
     frontLeftSteeringJoints[i].setMaxMotorTorque(steeringTorque, steeringTorque);
     frontLeftSteeringJoints[i].setMotorTarget(0);
-    frontLeftSteeringJoints[i].setSpring(1000000, 1);
+    frontLeftSteeringJoints[i].setSpring(1000000, 2);
   }
 
   //? Actual wheel.
@@ -238,7 +242,7 @@ lovr.load = () => {
   frontLeftWheel.setFriction(wheelFriction);
 
   const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
-  frontLeftWheelAxle.setSpring(100, 1);
+  frontLeftWheelAxle.setSpring(frontAxleStrength, frontAxleDamping);
 
   //* FRONT RIGHT WHEEL.
 
@@ -280,7 +284,7 @@ lovr.load = () => {
     frontRightSteeringJoints[i].setLimits(-maxSteeringAngle, maxSteeringAngle);
     frontRightSteeringJoints[i].setMaxMotorTorque(steeringTorque, steeringTorque);
     frontRightSteeringJoints[i].setMotorTarget(0);
-    frontRightSteeringJoints[i].setSpring(1000000, 1);
+    frontRightSteeringJoints[i].setSpring(1000000, 2);
   }
 
   //? Actual wheel.
@@ -291,7 +295,7 @@ lovr.load = () => {
   frontRightWheel.setFriction(wheelFriction);
 
   const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
-  frontRightWheelAxle.setSpring(100, 1);
+  frontRightWheelAxle.setSpring(frontAxleStrength, frontAxleDamping);
 
   //* RENDERING.
 
