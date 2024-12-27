@@ -1494,6 +1494,7 @@ declare interface SliderJoint extends Joint {
   setUpperLimit(limit: number): void;
   setSpring(frequency: number, damping: number): void;
   setFriction(friction: number): void;
+  getSpring(): LuaMultiReturn<[frequency: number, damping: number]>;
 }
 
 declare interface WeldJoint extends Joint { }
