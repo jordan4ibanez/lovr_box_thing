@@ -117,12 +117,11 @@ lovr.load = () => {
   const rearLeftWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2));
   const rearLeftWheel = world.newCylinderCollider(rearLeftWheelPosition, wheelRadius, wheelWidth);
   rearLeftWheel.setTag("wheel");
-  // todo: remember to divide the masses by 2
-  rearLeftWheel.setMass(wheelMass);
+  rearLeftWheel.setMass(wheelMass / 2);
   rearLeftWheel.setFriction(wheelFriction);
 
   const rearLeftSuspension = world.newBoxCollider(rearLeftWheelPosition, lovr.math.vec3(suspensionSize));
-  rearLeftSuspension.setMass(wheelMass);
+  rearLeftSuspension.setMass(wheelMass / 2);
   rearLeftSuspension.setTag("suspension");
 
   // Wheel connects to the suspension body to make the axle.
@@ -141,12 +140,11 @@ lovr.load = () => {
   const rearRightWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2));
   const rearRightWheel = world.newCylinderCollider(rearRightWheelPosition, wheelRadius, wheelWidth);
   rearRightWheel.setTag("wheel");
-  // todo: remember to divide the masses by 2
-  rearRightWheel.setMass(wheelMass);
+  rearRightWheel.setMass(wheelMass / 2);
   rearRightWheel.setFriction(wheelFriction);
 
   const rearRightSuspension = world.newBoxCollider(rearRightWheelPosition, lovr.math.vec3(suspensionSize));
-  rearRightSuspension.setMass(wheelMass);
+  rearRightSuspension.setMass(wheelMass / 2);
   rearRightSuspension.setTag("suspension");
 
   // Wheel connects to the suspension body to make the axle.
@@ -170,10 +168,10 @@ lovr.load = () => {
 
   const frontLeftWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), 0.4, 0.4, 0.4);
   frontLeftWheelSteering.setTag("steering");
-  frontLeftWheelSteering.setMass(wheelMass / 2);
+  frontLeftWheelSteering.setMass(wheelMass / 3);
 
   const frontLeftSuspension = world.newBoxCollider(frontLeftWheelPosition, lovr.math.vec3(suspensionSize));
-  frontLeftSuspension.setMass(wheelMass);
+  frontLeftSuspension.setMass(wheelMass / 3);
   frontLeftSuspension.setTag("suspension");
 
   // Suspension connects to the body to make the shock.
@@ -202,7 +200,7 @@ lovr.load = () => {
 
   const frontLeftWheel = world.newCylinderCollider(frontLeftWheelPosition, wheelRadius, wheelWidth);
   frontLeftWheel.setTag("wheel");
-  frontLeftWheel.setMass(wheelMass / 2);
+  frontLeftWheel.setMass(wheelMass / 3);
   frontLeftWheel.setFriction(wheelFriction);
 
   const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
@@ -216,10 +214,10 @@ lovr.load = () => {
 
   const frontRightWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2), 0.4, 0.4, 0.4);
   frontRightWheelSteering.setTag("steering");
-  frontRightWheelSteering.setMass(wheelMass / 2);
+  frontRightWheelSteering.setMass(wheelMass / 3);
 
   const frontRightSuspension = world.newBoxCollider(frontRightWheelPosition, lovr.math.vec3(suspensionSize));
-  frontRightSuspension.setMass(wheelMass);
+  frontRightSuspension.setMass(wheelMass / 3);
   frontRightSuspension.setTag("suspension");
 
   // Suspension connects to the body to make the shock.
@@ -246,7 +244,7 @@ lovr.load = () => {
 
   const frontRightWheel = world.newCylinderCollider(frontRightWheelPosition, wheelRadius, wheelWidth);
   frontRightWheel.setTag("wheel");
-  frontRightWheel.setMass(wheelMass / 2);
+  frontRightWheel.setMass(wheelMass / 3);
   frontRightWheel.setFriction(wheelFriction);
 
   const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
