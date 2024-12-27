@@ -6,6 +6,7 @@ let boxes: Array<Collider> = [];
 let globalDelta = 0.0;
 let recenterFunc: () => void;
 let steeringJointCount = 40;
+let suspensionJointCount = 20;
 let wheelFriction = 6;
 let suspensionMass = 1.5;
 let wheelMass = 0.9;
@@ -97,37 +98,54 @@ lovr.load = () => {
   const basePos = lovr.math.newVec3(0, 0, 0);
   const carWidth = 2;
   const carHeight = 1;
-  const carLength = 6;
+  const carLength = 4.5;
 
   const wheelRadius = 0.4;
   const wheelWidth = 0.4;
 
+  const suspensionSize = 0.4;
+  const suspensionHeight = 0.3;
+
   // todo: this can be turned into an api for making custom cars. :)
 
-  const suspension: Collider = world.newBoxCollider(basePos.x, basePos.y, basePos.z, carLength, 0.3, carWidth);
-  suspension.setTag("suspension");
-  suspension.setMass(suspensionMass);
+  const body: Collider = world.newBoxCollider(basePos.x, basePos.y, basePos.z, carLength, carHeight, carWidth);
+  body.setTag("body");
+  body.setMass(suspensionMass);
 
   //* REAR LEFT WHEEL.
 
-  const rearLeftWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2));
+  const rearLeftWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2));
   const rearLeftWheel = world.newCylinderCollider(rearLeftWheelPosition, wheelRadius, wheelWidth);
   rearLeftWheel.setTag("wheel");
   rearLeftWheel.setMass(wheelMass);
   rearLeftWheel.setFriction(wheelFriction);
 
-  const rearLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1));
+  const rearLeftSuspension = world.newBoxCollider(rearLeftWheelPosition, lovr.math.vec3(suspensionSize));
+  rearLeftSuspension.setMass(wheelMass);
+  rearLeftSuspension.setTag("suspension");
+
+  // Wheel connects to the suspension body to make the axle.
+  const rearLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(rearLeftSuspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1));
   rearLeftWheelAxle.setMotorMode("velocity");
+
+  // Suspension connects to the body to make the shock.
+  let rearLeftShocks: Array<SliderJoint> = [];
+  for (let i = 0; i < suspensionJointCount; i++) {
+    rearLeftShocks[i] = lovr.physics.newSliderJoint(body, rearLeftSuspension, 0, 1, 0);
+    // todo: Suspension tuning.
+  }
 
   //* REAR RIGHT WHEEL.
 
-  const rearRightWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2));
+  const rearRightWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2));
   const rearRightWheel = world.newCylinderCollider(rearRightWheelPosition, wheelRadius, wheelWidth);
   rearRightWheel.setTag("wheel");
   rearRightWheel.setMass(wheelMass);
   rearRightWheel.setFriction(wheelFriction);
 
-  const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(suspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
+  
+
+  const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(body, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
   rearRightWheelAxle.setMotorMode("velocity");
 
   const steeringTorque = 9999999999999;
@@ -147,7 +165,7 @@ lovr.load = () => {
   //! This is an entire roll of duct tape to fix weirdness with lovr physics lol.
   let frontLeftSteeringJoints: Array<HingeJoint> = [];
   for (let i = 0; i < steeringJointCount; i++) {
-    frontLeftSteeringJoints.push(lovr.physics.newHingeJoint(suspension, frontLeftWheelSteering, frontLeftSteeringBasePosition, lovr.math.vec3(0, -1, 0)));
+    frontLeftSteeringJoints.push(lovr.physics.newHingeJoint(body, frontLeftWheelSteering, frontLeftSteeringBasePosition, lovr.math.vec3(0, -1, 0)));
     frontLeftSteeringJoints[i].setMotorMode("position");
     frontLeftSteeringJoints[i].setLimits(-maxSteeringAngle, maxSteeringAngle);
     frontLeftSteeringJoints[i].setMaxMotorTorque(steeringTorque, steeringTorque);
@@ -180,7 +198,7 @@ lovr.load = () => {
 
   let frontRightSteeringJoints: Array<HingeJoint> = [];
   for (let i = 0; i < steeringJointCount; i++) {
-    frontRightSteeringJoints.push(lovr.physics.newHingeJoint(suspension, frontRightWheelSteering, frontRightSteeringBasePosition, lovr.math.vec3(0, -1, 0)));
+    frontRightSteeringJoints.push(lovr.physics.newHingeJoint(body, frontRightWheelSteering, frontRightSteeringBasePosition, lovr.math.vec3(0, -1, 0)));
     frontRightSteeringJoints[i].setMotorMode("position");
     frontRightSteeringJoints[i].setLimits(-maxSteeringAngle, maxSteeringAngle);
     frontRightSteeringJoints[i].setMaxMotorTorque(steeringTorque, steeringTorque);
@@ -200,11 +218,16 @@ lovr.load = () => {
 
   //* RENDERING.
 
-  boxes.push(suspension);
+  boxes.push(body);
+
   boxes.push(rearLeftWheel);
+  boxes.push(rearLeftSuspension);
+
   boxes.push(rearRightWheel);
+
   boxes.push(frontLeftWheel);
   boxes.push(frontLeftWheelSteering);
+
   boxes.push(frontRightWheel);
   boxes.push(frontRightWheelSteering);
 
@@ -260,6 +283,10 @@ lovr.load = () => {
       }
     }
   };
+
+  keyboard.setKeyDownCallback("f", () => {
+    body.setLinearVelocity(0, 3, 0);
+  });
 
   keyboard.setKeyDownCallback("l", () => {
     angle -= globalDelta * steeringSpeed;
