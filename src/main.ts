@@ -140,6 +140,7 @@ lovr.load = () => {
   const rearRightWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2));
   const rearRightWheel = world.newCylinderCollider(rearRightWheelPosition, wheelRadius, wheelWidth);
   rearRightWheel.setTag("wheel");
+  // todo: remember to divide the masses by 3
   rearRightWheel.setMass(wheelMass);
   rearRightWheel.setFriction(wheelFriction);
 
