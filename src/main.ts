@@ -15,9 +15,9 @@ let steeringSpeed = 3.5;
 let engineTorque = 10;
 let brakeTorque = 30;
 let suspensionTravel = 0.1;
-let suspensionStrength = 0;
+let suspensionStrength = 10;
 let suspensionDamping = 1.0;
-let suspensionFriction = 0.1;
+let suspensionFriction = 0.7;
 
 const suspensionHeight = 0.6;
 
@@ -187,13 +187,20 @@ lovr.load = () => {
 
   // Suspension connects to the body to make the shock.
   let frontLeftShocks: Array<SliderJoint> = [];
-  for (let i = 0; i < suspensionJointCount; i++) {
+  for (let i = 0; i < suspensionJointCount * 2; i++) {
     frontLeftShocks[i] = lovr.physics.newSliderJoint(body, frontLeftSuspension, 0, 1, 0);
     // todo: Suspension tuning.
     frontLeftShocks[i].setLimits(-suspensionTravel, suspensionTravel);
-    frontLeftShocks[i].setSpring(suspensionStrength, suspensionDamping);
-    frontLeftShocks[i].setFriction(suspensionFriction);
-  }
+    // Suspension needs to be half direct slider joints and half springs.
+    if (i < suspensionJointCount) {
+      frontLeftShocks[i].setSpring(suspensionStrength, suspensionDamping);
+      frontLeftShocks[i].setFriction(suspensionFriction);
+    } else {
+      frontLeftShocks[i].setSpring(0, 0);
+      frontLeftShocks[i].setFriction(0);
+    }
+  };
+
 
   // todo: half the hub size width
   const frontLeftSteeringBasePosition = lovr.math.vec3(frontLeftWheelPosition.x, frontLeftWheelPosition.y, frontLeftWheelPosition.z - 0.2);
@@ -236,13 +243,19 @@ lovr.load = () => {
 
   // Suspension connects to the body to make the shock.
   let frontRightShocks: Array<SliderJoint> = [];
-  for (let i = 0; i < suspensionJointCount; i++) {
+  for (let i = 0; i < suspensionJointCount * 2; i++) {
     frontRightShocks[i] = lovr.physics.newSliderJoint(body, frontRightSuspension, 0, 1, 0);
     // todo: Suspension tuning.
     frontRightShocks[i].setLimits(-suspensionTravel, suspensionTravel);
-    frontRightShocks[i].setSpring(suspensionStrength, suspensionDamping);
-    frontRightShocks[i].setFriction(suspensionFriction);
-  }
+    // Suspension needs to be half direct slider joints and half springs.
+    if (i < suspensionJointCount) {
+      frontRightShocks[i].setSpring(suspensionStrength, suspensionDamping);
+      frontRightShocks[i].setFriction(suspensionFriction);
+    } else {
+      frontRightShocks[i].setSpring(0, 0);
+      frontRightShocks[i].setFriction(0);
+    }
+  };
 
   // todo: half the hub size width
   const frontRightSteeringBasePosition = lovr.math.vec3(frontRightWheelPosition.x, frontRightWheelPosition.y, frontRightWheelPosition.z + 0.2);
