@@ -210,9 +210,9 @@ lovr.load = () => {
 
   //? Steering.
 
-  const frontRightWheelPosition = lovr.math.vec3(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2));
+  const frontRightWheelPosition = lovr.math.vec3(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2));
 
-  const frontRightWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z - (carWidth / 2) + (wheelWidth / 2), 0.4, 0.4, 0.4);
+  const frontRightWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2), 0.4, 0.4, 0.4);
   frontRightWheelSteering.setTag("steering");
   frontRightWheelSteering.setMass(wheelMass / 3);
 
