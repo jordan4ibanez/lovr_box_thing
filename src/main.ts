@@ -143,10 +143,20 @@ lovr.load = () => {
   rearRightWheel.setMass(wheelMass);
   rearRightWheel.setFriction(wheelFriction);
 
-  
+  const rearRightSuspension = world.newBoxCollider(rearRightWheelPosition, lovr.math.vec3(suspensionSize));
+  rearRightSuspension.setMass(wheelMass);
+  rearRightSuspension.setTag("suspension");
 
+  // Wheel connects to the suspension body to make the axle.
   const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(body, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
   rearRightWheelAxle.setMotorMode("velocity");
+
+  // Suspension connects to the body to make the shock.
+  let rearRightShocks: Array<SliderJoint> = [];
+  for (let i = 0; i < suspensionJointCount; i++) {
+    rearRightShocks[i] = lovr.physics.newSliderJoint(body, rearRightSuspension, 0, 1, 0);
+    // todo: Suspension tuning.
+  }
 
   const steeringTorque = 9999999999999;
 
