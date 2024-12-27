@@ -15,8 +15,10 @@ let steeringSpeed = 3.5;
 let engineTorque = 10;
 let brakeTorque = 30;
 let suspensionTravel = 0.1;
-let suspensionStrength = 10.0;
-let suspensionDamping = 10.0;
+let suspensionStrength = 0;
+let suspensionDamping = 1.0;
+let suspensionFriction = 0.1;
+
 const suspensionHeight = 0.6;
 
 let maximized = false;
@@ -138,6 +140,7 @@ lovr.load = () => {
     // todo: Suspension tuning.
     rearLeftShocks[i].setLimits(-suspensionTravel, suspensionTravel);
     rearLeftShocks[i].setSpring(suspensionStrength, suspensionDamping);
+    rearLeftShocks[i].setFriction(suspensionFriction);
   }
 
   //* REAR RIGHT WHEEL.
@@ -163,6 +166,7 @@ lovr.load = () => {
     // todo: Suspension tuning.
     rearRightShocks[i].setLimits(-suspensionTravel, suspensionTravel);
     rearRightShocks[i].setSpring(suspensionStrength, suspensionDamping);
+    rearRightShocks[i].setFriction(suspensionFriction);
   }
 
   const steeringTorque = 9999999999999;
@@ -188,6 +192,7 @@ lovr.load = () => {
     // todo: Suspension tuning.
     frontLeftShocks[i].setLimits(-suspensionTravel, suspensionTravel);
     frontLeftShocks[i].setSpring(suspensionStrength, suspensionDamping);
+    frontLeftShocks[i].setFriction(suspensionFriction);
   }
 
   // todo: half the hub size width
@@ -236,6 +241,7 @@ lovr.load = () => {
     // todo: Suspension tuning.
     frontRightShocks[i].setLimits(-suspensionTravel, suspensionTravel);
     frontRightShocks[i].setSpring(suspensionStrength, suspensionDamping);
+    frontRightShocks[i].setFriction(suspensionFriction);
   }
 
   // todo: half the hub size width
