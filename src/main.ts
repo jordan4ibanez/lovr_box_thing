@@ -117,6 +117,7 @@ lovr.load = () => {
   const rearLeftWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2));
   const rearLeftWheel = world.newCylinderCollider(rearLeftWheelPosition, wheelRadius, wheelWidth);
   rearLeftWheel.setTag("wheel");
+  // todo: remember to divide the masses by 2
   rearLeftWheel.setMass(wheelMass);
   rearLeftWheel.setFriction(wheelFriction);
 
@@ -140,7 +141,7 @@ lovr.load = () => {
   const rearRightWheelPosition = lovr.math.vec3(basePos.x + (carLength / 2) - (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z - (carWidth / 2) + (wheelWidth / 2));
   const rearRightWheel = world.newCylinderCollider(rearRightWheelPosition, wheelRadius, wheelWidth);
   rearRightWheel.setTag("wheel");
-  // todo: remember to divide the masses by 3
+  // todo: remember to divide the masses by 2
   rearRightWheel.setMass(wheelMass);
   rearRightWheel.setFriction(wheelFriction);
 
@@ -149,7 +150,7 @@ lovr.load = () => {
   rearRightSuspension.setTag("suspension");
 
   // Wheel connects to the suspension body to make the axle.
-  const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(body, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
+  const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(rearRightSuspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
   rearRightWheelAxle.setMotorMode("velocity");
 
   // Suspension connects to the body to make the shock.
@@ -165,18 +166,30 @@ lovr.load = () => {
 
   //? Steering.
 
-  const frontLeftWheelPosition = lovr.math.vec3(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2));
+  const frontLeftWheelPosition = lovr.math.vec3(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2));
 
-  const frontLeftWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y, basePos.z + (carWidth / 2) - (wheelWidth / 2), 0.4, 0.4, 0.4);
+  const frontLeftWheelSteering = world.newBoxCollider(basePos.x - (carLength / 2) + (wheelRadius * 2), basePos.y - suspensionHeight, basePos.z + (carWidth / 2) - (wheelWidth / 2), 0.4, 0.4, 0.4);
   frontLeftWheelSteering.setTag("steering");
   frontLeftWheelSteering.setMass(wheelMass / 2);
+
+  const frontLeftSuspension = world.newBoxCollider(frontLeftWheelPosition, lovr.math.vec3(suspensionSize));
+  frontLeftSuspension.setMass(wheelMass);
+  frontLeftSuspension.setTag("suspension");
+
+  // Suspension connects to the body to make the shock.
+  let frontLeftShocks: Array<SliderJoint> = [];
+  for (let i = 0; i < suspensionJointCount; i++) {
+    frontLeftShocks[i] = lovr.physics.newSliderJoint(body, frontLeftSuspension, 0, 1, 0);
+    // todo: Suspension tuning.
+  }
 
   const frontLeftSteeringBasePosition = lovr.math.vec3(frontLeftWheelPosition.x, frontLeftWheelPosition.y, frontLeftWheelPosition.z - 0.2);
 
   //! This is an entire roll of duct tape to fix weirdness with lovr physics lol.
+  // Steering joint is the steering collider attached to the suspension collider.
   let frontLeftSteeringJoints: Array<HingeJoint> = [];
   for (let i = 0; i < steeringJointCount; i++) {
-    frontLeftSteeringJoints.push(lovr.physics.newHingeJoint(body, frontLeftWheelSteering, frontLeftSteeringBasePosition, lovr.math.vec3(0, -1, 0)));
+    frontLeftSteeringJoints.push(lovr.physics.newHingeJoint(frontLeftSuspension, frontLeftWheelSteering, frontLeftSteeringBasePosition, lovr.math.vec3(0, -1, 0)));
     frontLeftSteeringJoints[i].setMotorMode("position");
     frontLeftSteeringJoints[i].setLimits(-maxSteeringAngle, maxSteeringAngle);
     frontLeftSteeringJoints[i].setMaxMotorTorque(steeringTorque, steeringTorque);
@@ -235,8 +248,10 @@ lovr.load = () => {
   boxes.push(rearLeftSuspension);
 
   boxes.push(rearRightWheel);
+  boxes.push(rearRightSuspension);
 
   boxes.push(frontLeftWheel);
+  boxes.push(frontLeftSuspension);
   boxes.push(frontLeftWheelSteering);
 
   boxes.push(frontRightWheel);
