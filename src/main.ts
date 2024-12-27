@@ -14,10 +14,10 @@ let maxSteeringAngle = math.pi / 5;
 let steeringSpeed = 3.5;
 let engineTorque = 10;
 let brakeTorque = 30;
-let suspensionTravel = 0.1;
+let suspensionTravel = 0.05;
 let suspensionStrength = 10;
-let suspensionDamping = 1.0;
-let suspensionFriction = 0.7;
+let suspensionDamping = 0.8;
+let suspensionFriction = 0.3;
 
 const suspensionHeight = 0.6;
 
@@ -135,13 +135,19 @@ lovr.load = () => {
 
   // Suspension connects to the body to make the shock.
   let rearLeftShocks: Array<SliderJoint> = [];
-  for (let i = 0; i < suspensionJointCount; i++) {
+  for (let i = 0; i < suspensionJointCount * 2; i++) {
     rearLeftShocks[i] = lovr.physics.newSliderJoint(body, rearLeftSuspension, 0, 1, 0);
     // todo: Suspension tuning.
     rearLeftShocks[i].setLimits(-suspensionTravel, suspensionTravel);
-    rearLeftShocks[i].setSpring(suspensionStrength, suspensionDamping);
-    rearLeftShocks[i].setFriction(suspensionFriction);
-  }
+    // Suspension needs to be half direct slider joints and half springs.
+    if (i < suspensionJointCount) {
+      rearLeftShocks[i].setSpring(suspensionStrength, suspensionDamping);
+      rearLeftShocks[i].setFriction(suspensionFriction);
+    } else {
+      rearLeftShocks[i].setSpring(0, 0);
+      rearLeftShocks[i].setFriction(0);
+    }
+  };
 
   //* REAR RIGHT WHEEL.
 
@@ -161,13 +167,20 @@ lovr.load = () => {
 
   // Suspension connects to the body to make the shock.
   let rearRightShocks: Array<SliderJoint> = [];
-  for (let i = 0; i < suspensionJointCount; i++) {
-    rearRightShocks[i] = lovr.physics.newSliderJoint(body, rearRightSuspension, 0, -1, 0);
+  for (let i = 0; i < suspensionJointCount * 2; i++) {
+    rearRightShocks[i] = lovr.physics.newSliderJoint(body, rearRightSuspension, 0, 1, 0);
     // todo: Suspension tuning.
     rearRightShocks[i].setLimits(-suspensionTravel, suspensionTravel);
-    rearRightShocks[i].setSpring(suspensionStrength, suspensionDamping);
-    rearRightShocks[i].setFriction(suspensionFriction);
-  }
+    // Suspension needs to be half direct slider joints and half springs.
+    if (i < suspensionJointCount) {
+      rearRightShocks[i].setSpring(suspensionStrength, suspensionDamping);
+      rearRightShocks[i].setFriction(suspensionFriction);
+    } else {
+      rearRightShocks[i].setSpring(0, 0);
+      rearRightShocks[i].setFriction(0);
+    }
+  };
+
 
   const steeringTorque = 9999999999999;
 
