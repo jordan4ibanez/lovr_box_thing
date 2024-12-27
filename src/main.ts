@@ -14,6 +14,10 @@ let maxSteeringAngle = math.pi / 5;
 let steeringSpeed = 3.5;
 let engineTorque = 10;
 let brakeTorque = 30;
+let suspensionTravel = 0.1;
+let suspensionStrength = 10.0;
+let suspensionDamping = 10.0;
+const suspensionHeight = 0.6;
 
 let maximized = false;
 
@@ -104,7 +108,6 @@ lovr.load = () => {
   const wheelWidth = 0.4;
 
   const suspensionSize = 0.4;
-  const suspensionHeight = 0.3;
 
   // todo: this can be turned into an api for making custom cars. :)
 
@@ -133,6 +136,8 @@ lovr.load = () => {
   for (let i = 0; i < suspensionJointCount; i++) {
     rearLeftShocks[i] = lovr.physics.newSliderJoint(body, rearLeftSuspension, 0, 1, 0);
     // todo: Suspension tuning.
+    rearLeftShocks[i].setLimits(-suspensionTravel, suspensionTravel);
+    rearLeftShocks[i].setSpring(suspensionStrength, suspensionDamping);
   }
 
   //* REAR RIGHT WHEEL.
@@ -154,8 +159,10 @@ lovr.load = () => {
   // Suspension connects to the body to make the shock.
   let rearRightShocks: Array<SliderJoint> = [];
   for (let i = 0; i < suspensionJointCount; i++) {
-    rearRightShocks[i] = lovr.physics.newSliderJoint(body, rearRightSuspension, 0, 1, 0);
+    rearRightShocks[i] = lovr.physics.newSliderJoint(body, rearRightSuspension, 0, -1, 0);
     // todo: Suspension tuning.
+    rearRightShocks[i].setLimits(-suspensionTravel, suspensionTravel);
+    rearRightShocks[i].setSpring(suspensionStrength, suspensionDamping);
   }
 
   const steeringTorque = 9999999999999;
@@ -179,6 +186,8 @@ lovr.load = () => {
   for (let i = 0; i < suspensionJointCount; i++) {
     frontLeftShocks[i] = lovr.physics.newSliderJoint(body, frontLeftSuspension, 0, 1, 0);
     // todo: Suspension tuning.
+    frontLeftShocks[i].setLimits(-suspensionTravel, suspensionTravel);
+    frontLeftShocks[i].setSpring(suspensionStrength, suspensionDamping);
   }
 
   // todo: half the hub size width
@@ -225,6 +234,8 @@ lovr.load = () => {
   for (let i = 0; i < suspensionJointCount; i++) {
     frontRightShocks[i] = lovr.physics.newSliderJoint(body, frontRightSuspension, 0, 1, 0);
     // todo: Suspension tuning.
+    frontRightShocks[i].setLimits(-suspensionTravel, suspensionTravel);
+    frontRightShocks[i].setSpring(suspensionStrength, suspensionDamping);
   }
 
   // todo: half the hub size width
