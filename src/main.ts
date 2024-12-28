@@ -14,7 +14,7 @@ let maxSteeringAngle = math.pi / 5;
 let steeringSpeed = 3.5;
 let engineTorque = 10;
 let brakeTorque = 30;
-let suspensionTravel = 0.05;
+let suspensionTravel = 0.02;
 let suspensionStrength = 12;
 let suspensionDamping = 0.89;
 let suspensionFriction = 0.4;
@@ -26,7 +26,7 @@ let wheel: Model;
 const frontAxleStrength = 100000;
 const frontAxleDamping = 2;
 
-const suspensionHeight = 0.6;
+const suspensionHeight = 0.5;
 
 let maximized = false;
 
@@ -498,6 +498,11 @@ lovr.draw = (pass: Pass) => {
         pass.setShader("normal");
         pass.draw(wheel, x, y, z, 1, angle, angleX, angleY, angleZ, 1);
         pass.setShader();
+        continue;
+      }
+
+      //! And here too
+      if (tag == "suspension" || tag == "steering") {
         continue;
       }
 
