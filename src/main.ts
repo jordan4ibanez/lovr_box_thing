@@ -131,6 +131,7 @@ lovr.load = () => {
   rearLeftWheel.setTag("wheel");
   rearLeftWheel.setMass(wheelMass / 2);
   rearLeftWheel.setFriction(wheelFriction);
+  rearLeftWheel.setOrientation(math.pi, 0, 1, 0);
 
   const rearLeftSuspension = world.newBoxCollider(rearLeftWheelPosition, lovr.math.vec3(suspensionSize));
   rearLeftSuspension.setMass(wheelMass / 2);
@@ -243,6 +244,7 @@ lovr.load = () => {
   frontLeftWheel.setTag("wheel");
   frontLeftWheel.setMass(wheelMass / 3);
   frontLeftWheel.setFriction(wheelFriction);
+  frontLeftWheel.setOrientation(math.pi, 0, 1, 0);
 
   const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
   frontLeftWheelAxle.setSpring(frontAxleStrength, frontAxleDamping);
