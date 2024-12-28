@@ -22,6 +22,7 @@ let suspensionFriction = 0.4;
 let camaro: Model;
 let camaroTexture: Texture;
 let wheel: Model;
+let wheelTexture: Texture;
 
 const frontAxleStrength = 100000;
 const frontAxleDamping = 2;
@@ -78,9 +79,9 @@ lovr.load = () => {
 
   camaroTexture = lovr.graphics.newTexture("textures/red_camaro.png");
 
-  camaro.getMesh(1).setMaterial(camaroTexture);
-
   wheel = lovr.graphics.newModel("models/wheel.gltf");
+
+  wheelTexture = lovr.graphics.newTexture("textures/wheel.png");
 
   // todo: Make this some kind of physics module or something.
   world = lovr.physics.newWorld(0, -9.81, 0, false, ["body", "wheel", "suspension", "steering", "wall", "ground"]);
@@ -468,6 +469,7 @@ lovr.draw = (pass: Pass) => {
   // pass.setMaterial();
 
   // let index = colors.length - 1;
+  // pass.setShader("unlit");
 
   // Draw the shapes in the world.
   for (const box of Object.values(boxes)) {
@@ -484,20 +486,17 @@ lovr.draw = (pass: Pass) => {
 
       //! this is some duct tape to make it render the camaro.
       if (tag == "body") {
-
-        pass.setShader("normal");
         pass.setMaterial(camaroTexture);
         pass.draw(camaro, x, y, z, 1, angle, angleX, angleY, angleZ, 1);
-        pass.setShader(null);
         pass.setMaterial();
         continue;
       }
 
       //! Same here.
       if (tag == "wheel") {
-        pass.setShader("normal");
+        pass.setMaterial(wheelTexture);
         pass.draw(wheel, x, y, z, 1, angle, angleX, angleY, angleZ, 1);
-        pass.setShader();
+        pass.setMaterial();
         continue;
       }
 
@@ -543,6 +542,7 @@ lovr.draw = (pass: Pass) => {
   }
 
 
+  pass.setShader();
   pass.setColor(1, 1, 1);
 
   // Just draw the FPS for now.

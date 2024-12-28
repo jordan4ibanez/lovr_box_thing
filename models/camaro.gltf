@@ -46,12 +46,9 @@
 			},
 			"name":"CarMaterial",
 			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.800000011920929,
-					0.800000011920929,
-					0.800000011920929,
-					1
-				],
+				"baseColorTexture":{
+					"index":0
+				},
 				"roughnessFactor":0.5527864098548889
 			}
 		}
@@ -70,6 +67,19 @@
 					"material":0
 				}
 			]
+		}
+	],
+	"textures":[
+		{
+			"sampler":0,
+			"source":0
+		}
+	],
+	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"Red",
+			"uri":"Red.png"
 		}
 	],
 	"accessors":[
@@ -132,6 +142,12 @@
 			"byteLength":9336,
 			"byteOffset":87904,
 			"target":34963
+		}
+	],
+	"samplers":[
+		{
+			"magFilter":9729,
+			"minFilter":9987
 		}
 	],
 	"buffers":[
