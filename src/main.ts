@@ -7,7 +7,6 @@ let globalDelta = 0.0;
 let recenterFunc: () => void;
 let steeringJointCount = 40;
 let suspensionJointCount = 20;
-let axleCount = 30;
 let wheelFriction = 6;
 let suspensionMass = 1.5;
 let wheelMass = 0.9;
@@ -135,13 +134,8 @@ lovr.load = () => {
   rearLeftSuspension.setTag("suspension");
 
   // Wheel connects to the suspension body to make the axle.
-  let rearLeftAxles: Array<HingeJoint> = [];
-  for (let i = 0; i < axleCount; i++) {
-    rearLeftAxles.push(lovr.physics.newHingeJoint(rearLeftSuspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1)));
-  }
-  // Only motor 0 gets the motor, or else this will be ridiculously powerful.
-  rearLeftAxles[0].setMotorMode("velocity");
-
+  const rearLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(rearLeftSuspension, rearLeftWheel, rearLeftWheelPosition, lovr.math.vec3(0, 0, 1));
+  rearLeftWheelAxle.setMotorMode("velocity");
 
   // Suspension connects to the body to make the shock.
   let rearLeftShocks: Array<SliderJoint> = [];
@@ -172,12 +166,8 @@ lovr.load = () => {
   rearRightSuspension.setTag("suspension");
 
   // Wheel connects to the suspension body to make the axle.
-  let rearRightAxles: Array<HingeJoint> = [];
-  for (let i = 0; i < axleCount; i++) {
-    rearRightAxles.push(lovr.physics.newHingeJoint(rearRightSuspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1)));
-  }
-  // Only motor 0 gets the motor, or else this will be ridiculously powerful.
-  rearRightAxles[0].setMotorMode("velocity");
+  const rearRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(rearRightSuspension, rearRightWheel, rearRightWheelPosition, lovr.math.vec3(0, 0, 1));
+  rearRightWheelAxle.setMotorMode("velocity");
 
   // Suspension connects to the body to make the shock.
   let rearRightShocks: Array<SliderJoint> = [];
@@ -251,10 +241,8 @@ lovr.load = () => {
   frontLeftWheel.setMass(wheelMass / 3);
   frontLeftWheel.setFriction(wheelFriction);
 
-  let frontLeftAxles: Array<HingeJoint> = [];
-  for (let i = 0; i < axleCount; i++) {
-    frontLeftAxles.push(lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1)));
-  }
+  const frontLeftWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontLeftWheelSteering, frontLeftWheel, frontLeftWheelPosition, lovr.math.vec3(0, 0, 1));
+  frontLeftWheelAxle.setSpring(frontAxleStrength, frontAxleDamping);
 
   //* FRONT RIGHT WHEEL.
 
@@ -306,10 +294,8 @@ lovr.load = () => {
   frontRightWheel.setMass(wheelMass / 3);
   frontRightWheel.setFriction(wheelFriction);
 
-  let frontRightAxles: Array<HingeJoint> = [];
-  for (let i = 0; i < axleCount; i++) {
-    frontRightAxles.push(lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1)));
-  }
+  const frontRightWheelAxle: HingeJoint = lovr.physics.newHingeJoint(frontRightWheelSteering, frontRightWheel, frontRightWheelPosition, lovr.math.vec3(0, 0, 1));
+  frontRightWheelAxle.setSpring(frontAxleStrength, frontAxleDamping);
 
   //* RENDERING.
 
@@ -330,31 +316,31 @@ lovr.load = () => {
   boxes.push(frontRightWheelSteering);
 
   keyboard.setKeyDownCallback("p", () => {
-    rearLeftAxles[0].setMaxMotorTorque(engineTorque, engineTorque);
-    rearLeftAxles[0].setMotorTarget(400);
-    rearRightAxles[0].setMaxMotorTorque(engineTorque, engineTorque);
-    rearRightAxles[0].setMotorTarget(400);
+    rearLeftWheelAxle.setMaxMotorTorque(engineTorque, engineTorque);
+    rearLeftWheelAxle.setMotorTarget(400);
+    rearRightWheelAxle.setMaxMotorTorque(engineTorque, engineTorque);
+    rearRightWheelAxle.setMotorTarget(400);
   });
 
   keyboard.setKeyReleasedCallback("p", () => {
-    rearLeftAxles[0].setMaxMotorTorque(0, 0);
-    rearLeftAxles[0].setMotorTarget(0);
-    rearRightAxles[0].setMaxMotorTorque(0, 0);
-    rearRightAxles[0].setMotorTarget(0);
+    rearLeftWheelAxle.setMaxMotorTorque(0, 0);
+    rearLeftWheelAxle.setMotorTarget(0);
+    rearRightWheelAxle.setMaxMotorTorque(0, 0);
+    rearRightWheelAxle.setMotorTarget(0);
   });
 
   keyboard.setKeyDownCallback(";", () => {
-    rearLeftAxles[0].setMaxMotorTorque(brakeTorque, brakeTorque);
-    rearLeftAxles[0].setMotorTarget(0);
-    rearRightAxles[0].setMaxMotorTorque(brakeTorque, brakeTorque);
-    rearRightAxles[0].setMotorTarget(0);
+    rearLeftWheelAxle.setMaxMotorTorque(brakeTorque, brakeTorque);
+    rearLeftWheelAxle.setMotorTarget(0);
+    rearRightWheelAxle.setMaxMotorTorque(brakeTorque, brakeTorque);
+    rearRightWheelAxle.setMotorTarget(0);
   });
 
   keyboard.setKeyReleasedCallback(";", () => {
-    rearLeftAxles[0].setMaxMotorTorque(0, 0);
-    rearLeftAxles[0].setMotorTarget(0);
-    rearRightAxles[0].setMaxMotorTorque(0, 0);
-    rearRightAxles[0].setMotorTarget(0);
+    rearLeftWheelAxle.setMaxMotorTorque(0, 0);
+    rearLeftWheelAxle.setMotorTarget(0);
+    rearRightWheelAxle.setMaxMotorTorque(0, 0);
+    rearRightWheelAxle.setMotorTarget(0);
   });
 
   let angle = 0;
