@@ -490,6 +490,7 @@ lovr.draw = (pass: Pass) => {
         pass.draw(camaro, x, y, z, 1, angle, angleX, angleY, angleZ, 1);
         pass.setShader(null);
         pass.setMaterial();
+        continue;
       }
 
       //! Same here.
@@ -497,6 +498,7 @@ lovr.draw = (pass: Pass) => {
         pass.setShader("normal");
         pass.draw(wheel, x, y, z, 1, angle, angleX, angleY, angleZ, 1);
         pass.setShader();
+        continue;
       }
 
       const selectedColor = colorMap.get(tag);
