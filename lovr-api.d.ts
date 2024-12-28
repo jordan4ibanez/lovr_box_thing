@@ -158,6 +158,8 @@ declare interface Model {
   setNodeTransform(name: string, position: Vec3, scale: Vec3, orientation: Quat, blend: number): void;
   setNodeTransform(index: number, transform: Mat4, blend: number): void;
   setNodeTransform(name: string, transform: Mat4, blend: number): void;
+  getMesh(index: number): Mesh;
+  getMeshCount(): number;
 }
 
 declare interface Object {
@@ -957,7 +959,7 @@ declare interface Pass extends Object {
   send(binding: number, texture: Texture): void;
   send(binding: number, sampler: Sampler): void;
   setShader(shader: Shader): void;
-  setShader(defaul: DefaultShader): void;
+  setShader(defaul: DefaultShader | null): void;
   setShader(): void;
   barrier(): void;
   compute(x: number, y: number, z: number): void;
@@ -1119,6 +1121,7 @@ declare interface Mesh extends Object {
   setIndices(blob: Blob, type: DataType): void;
   setIndices(): void;
   setMaterial(material: Material): void;
+  setMaterial(texture: Texture): void;
   setVertices(vertices: Array<number>, index: number, count: number | null): void;
   setVertices(blob: Blob, index: number, count: number | null): void;
 }
@@ -1960,9 +1963,9 @@ declare namespace lovr {
     function newMesh(format: LuaTable, vertices: LuaTable, storage: MeshStorage): Mesh;
     function newMesh(format: LuaTable, blob: Blob, storage: MeshStorage): Mesh;
     function newMesh(buffer: Buffer): Mesh;
-    function newModel(filename: string, options: ModelOptions): Model;
-    function newModel(blob: Blob, options: ModelOptions): Model;
-    function newModel(modelData: ModelData, options: ModelOptions): Model;
+    function newModel(filename: string, options?: ModelOptions): Model;
+    function newModel(blob: Blob, options?: ModelOptions): Model;
+    function newModel(modelData: ModelData, options?: ModelOptions): Model;
     function newPass(...textures: Texture[]): Pass;
     function newPass(canvas: Canvas): Pass;
     function newPass(): Pass;
