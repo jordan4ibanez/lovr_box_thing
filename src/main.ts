@@ -21,6 +21,7 @@ let suspensionFriction = 0.4;
 
 let camaro: Model;
 let camaroTexture: Texture;
+let wheel: Model;
 
 const frontAxleStrength = 100000;
 const frontAxleDamping = 2;
@@ -79,6 +80,8 @@ lovr.load = () => {
 
   camaro.getMesh(1).setMaterial(camaroTexture);
 
+  wheel = lovr.graphics.newModel("models/wheel.gltf");
+
   // todo: Make this some kind of physics module or something.
   world = lovr.physics.newWorld(0, -9.81, 0, false, ["body", "wheel", "suspension", "steering", "wall", "ground"]);
 
@@ -107,7 +110,7 @@ lovr.load = () => {
 
   const basePos = lovr.math.newVec3(0, 0, 0);
   const carWidth = 2.4;
-  const carHeight = 1;
+  const carHeight = 1.4;
   const carLength = 5.29;
 
   const wheelRadius = 0.4;
@@ -467,9 +470,7 @@ lovr.draw = (pass: Pass) => {
   // Draw the shapes in the world.
   for (const box of Object.values(boxes)) {
 
-    // const selectedColor = colors[index % colors.length];
 
-    // pass.setColor(selectedColor.x, selectedColor.y, selectedColor.z);
 
     for (const shape of Object.values(box.getShapes())) {
       let [x, y, z, angle, angleX, angleY, angleZ] = box.getPose();
@@ -479,17 +480,21 @@ lovr.draw = (pass: Pass) => {
         throw new Error("Need to add in this tag!");
       }
 
+      //! this is some duct tape to make it render the camaro.
       if (tag == "body") {
-        print("body");
-
-        const [sizeX, sizeY, sizeZ] = (shape as BoxShape).getDimensions();
-        pass.box(x, y, z, sizeX, sizeY, sizeZ, angle, angleX, angleY, angleZ, "line");
 
         pass.setShader("normal");
         pass.setMaterial(camaroTexture);
         pass.draw(camaro, x, y, z, 1, angle, angleX, angleY, angleZ, 1);
         pass.setShader(null);
         pass.setMaterial();
+      }
+
+      //! Same here.
+      if (tag == "wheel") {
+        pass.setShader("normal");
+        pass.draw(wheel, x, y, z, 1, angle, angleX, angleY, angleZ, 1);
+        pass.setShader();
       }
 
       const selectedColor = colorMap.get(tag);
@@ -515,7 +520,7 @@ lovr.draw = (pass: Pass) => {
         case "cylinder": {
           let radius = (shape as CylinderShape).getRadius();
           let length = (shape as CylinderShape).getLength();
-          pass.cylinder(x, y, z, radius, length, angle, angleX, angleY, angleZ, false, 0, 2 * math.pi, 12);
+          pass.cylinder(x, y, z, radius, length, angle, angleX, angleY, angleZ, true, 0, 2 * math.pi, 12);
           break;
         }
         case "sphere": {
