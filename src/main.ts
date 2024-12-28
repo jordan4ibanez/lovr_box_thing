@@ -18,7 +18,9 @@ let suspensionTravel = 0.05;
 let suspensionStrength = 12;
 let suspensionDamping = 0.89;
 let suspensionFriction = 0.4;
-// let axleStrength =
+
+let camaro: Model;
+let camaroTexture: Texture;
 
 const frontAxleStrength = 100000;
 const frontAxleDamping = 2;
@@ -70,30 +72,28 @@ lovr.load = () => {
   // window.setMode(displayWidth / 2, displayHeight / 2);
   // window.maximize();
 
-  const crownVicWeight = scalePoundsToRc(4129);
+
+  camaro = lovr.graphics.newModel("models/camaro.gltf");
+
+  camaroTexture = lovr.graphics.newTexture("textures/red_camaro.png");
+
+  camaro.getMesh(1).setMaterial(camaroTexture);
 
   // todo: Make this some kind of physics module or something.
   world = lovr.physics.newWorld(0, -9.81, 0, false, ["body", "wheel", "suspension", "steering", "wall", "ground"]);
-
-  // throw error("was creating a hub for the rear wheels");
-
-  // throw error("was creating a hinge joint with a hub for the front wheels");
 
   world.disableCollisionBetween("body", "wheel");
   world.disableCollisionBetween("body", "suspension");
   world.disableCollisionBetween("wheel", "wall");
   world.disableCollisionBetween("wheel", "suspension");
   world.disableCollisionBetween("suspension", "wall");
+  world.disableCollisionBetween("suspension", "ground");
   world.disableCollisionBetween("steering", "wheel");
   world.disableCollisionBetween("steering", "wall");
   world.disableCollisionBetween("steering", "ground");
   world.disableCollisionBetween("steering", "suspension");
   world.disableCollisionBetween("steering", "body");
 
-  // world.disableCollisionBetween("suspension", "ground");
-
-
-  // world.disableCollisionBetween("hub", "ground");
 
   const groundWidth = 1000;
   let ground = world.newBoxCollider(0, 0, 0, groundWidth, 1, groundWidth);
@@ -106,9 +106,9 @@ lovr.load = () => {
   // -x is forward.
 
   const basePos = lovr.math.newVec3(0, 0, 0);
-  const carWidth = 2;
+  const carWidth = 2.4;
   const carHeight = 1;
-  const carLength = 4.5;
+  const carLength = 5.29;
 
   const wheelRadius = 0.4;
   const wheelWidth = 0.4;
@@ -460,6 +460,7 @@ const colorMap = new Map<string, Vec3>([
 ]);
 
 lovr.draw = (pass: Pass) => {
+  // pass.setMaterial();
 
   // let index = colors.length - 1;
 
@@ -477,6 +478,20 @@ lovr.draw = (pass: Pass) => {
       if (tag == null) {
         throw new Error("Need to add in this tag!");
       }
+
+      if (tag == "body") {
+        print("body");
+
+        const [sizeX, sizeY, sizeZ] = (shape as BoxShape).getDimensions();
+        pass.box(x, y, z, sizeX, sizeY, sizeZ, angle, angleX, angleY, angleZ, "line");
+
+        pass.setShader("normal");
+        pass.setMaterial(camaroTexture);
+        pass.draw(camaro, x, y, z, 1, angle, angleX, angleY, angleZ, 1);
+        pass.setShader(null);
+        pass.setMaterial();
+      }
+
       const selectedColor = colorMap.get(tag);
       if (selectedColor == null) {
         throw new Error("No color for " + tag);
